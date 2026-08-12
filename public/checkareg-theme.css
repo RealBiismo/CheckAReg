@@ -17,6 +17,18 @@ body{background:radial-gradient(circle at 50% 8%,rgba(7,151,255,.12),transparent
 @media(max-width:760px){.demo-nav{display:none}.home-header-actions{min-width:0}.home-page .hero-shell:before{width:100%}.home-page .hero-copy h1{font-size:51px}.demo-feature-grid,.demo-how{grid-template-columns:1fr}.demo-feature-grid article{min-height:240px;border-right:0;border-bottom:1px solid var(--line)}.demo-features{padding:80px 0}.demo-how{padding:80px 14px;gap:45px}.demo-footer p{display:none}}
 
 /* Final demo-faithful homepage layout and transparent brand treatment. */
+.home-header {
+  padding: 0 !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  overflow: visible !important;
+}
+
+.home-header > .brand {
+  flex: 0 0 158px;
+}
+
 .brand img,
 .transparent-brand img,
 .notifications-brand img,
@@ -52,6 +64,11 @@ body{background:radial-gradient(circle at 50% 8%,rgba(7,151,255,.12),transparent
 
 .home-page .hero-copy > p {
   margin: 0 auto !important;
+}
+
+.home-page .search-panel {
+  width: min(790px, 100%) !important;
+  max-width: 790px !important;
 }
 
 @media (min-width: 720px) {
