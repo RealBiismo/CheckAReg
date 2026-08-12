@@ -1,0 +1,125 @@
+/* Android/coarse-pointer compatibility layer. Keeps the existing visual layout intact. */
+
+html,
+body {
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  html {
+    touch-action: manipulation;
+  }
+
+  body {
+    min-height: 100dvh;
+    overscroll-behavior-y: none;
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  [role="button"] {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.08);
+  }
+
+  button,
+  .primary-button,
+  .secondary-button,
+  .header-action,
+  .back-link,
+  .notification-bell,
+  .icon-button,
+  .text-button,
+  .account-menu-button {
+    touch-action: manipulation;
+  }
+
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+    font-size: max(16px, 1em);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea {
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .plate input {
+    font-size: clamp(26px, 8vw, 35px) !important;
+  }
+
+  .install-prompt {
+    top: auto;
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    transform: translate(-50%, calc(100% + 30px));
+  }
+
+  .install-prompt.is-visible {
+    transform: translate(-50%, 0);
+  }
+
+  .install-prompt button,
+  .notification-bell,
+  .icon-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .primary-button,
+  .secondary-button,
+  .header-action,
+  .back-link,
+  .account-menu-button {
+    min-height: 48px;
+  }
+
+  .account-main,
+  .home-main,
+  .credit-store-main,
+  .notification-page-main {
+    max-width: 100%;
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    max-width: 100%;
+  }
+}
+
+/* Standalone PWA window: account for Android system bars without changing browser layout. */
+@media (display-mode: standalone) {
+  body {
+    min-height: 100dvh;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .site-header {
+    padding-top: max(env(safe-area-inset-top, 0px), 0px);
+  }
+}
+
+@media (max-width: 420px) and (hover: none) and (pointer: coarse) {
+  .install-prompt {
+    width: calc(100% - 16px);
+  }
+
+  .install-prompt__copy strong {
+    font-size: 14px;
+  }
+
+  .install-prompt__copy span {
+    font-size: 11px;
+  }
+}

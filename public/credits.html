@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#05070b">
+  <meta name="description" content="Check A Reg credits, AI Mechanic questions and Check A Reg+ membership.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Check A Reg">
+  <title>Plans & credits — Check A Reg</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="classic.css">
+  <link rel="stylesheet" href="pwa-install.css">
+  <link rel="stylesheet" href="ui-overrides.css">
+  <link rel="stylesheet" href="credit-store-v2.css">
+  <link rel="stylesheet" href="checkareg-theme.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="shortcut icon" href="/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+</head>
+<body class="account-page credit-store-page">
+  <div id="appSplash" class="app-splash" role="status" aria-label="Loading Check A Reg">
+    <div class="app-splash-logo"><img src="/assets/checkareg.png" alt=""></div>
+    <p>MOT <span>•</span> TAX <span>•</span> HISTORY</p>
+  </div>
+
+  <header class="site-header account-header store-header">
+    <a class="back-link" href="/account.html" aria-label="Back to my garage"><span aria-hidden="true">←</span> Garage</a>
+    <a class="brand compact-brand transparent-brand" href="/" aria-label="Check A Reg home"><img src="/assets/checkareg.png" alt="Check A Reg"></a>
+    <button id="signOutButton" class="header-action" type="button">Sign out</button>
+  </header>
+
+  <main class="account-main credit-store-main store-v2">
+    <section class="store-v2-hero">
+      <div>
+        <span class="eyebrow">CHECK A REG SERVICES</span>
+        <h1>Plans & credits.</h1>
+        <p>Top up vehicle checks, unlock AI Mechanic questions, or get the full Check A Reg+ membership.</p>
+      </div>
+      <div class="store-balance-strip" aria-live="polite">
+        <article><span>Credits</span><strong id="storeCreditBalance">—</strong></article>
+        <article><span>AI questions</span><strong id="storeAiQuestions">—</strong></article>
+        <article><span>Plan</span><strong id="storePlan">—</strong></article>
+      </div>
+    </section>
+
+    <p id="purchaseStatus" class="purchase-status" role="status"></p>
+
+    <section class="store-service-grid" aria-label="Check A Reg services">
+      <article id="plusPlanCard" class="service-card plus-card">
+        <div class="service-card-top">
+          <div><span class="service-kicker">BEST EXPERIENCE</span><h2>CHECK A REG<span>+</span></h2></div>
+          <div class="plus-price"><strong>£7.99</strong><small>/ month</small></div>
+        </div>
+        <p class="service-lead">For drivers who use Check A Reg as their ongoing vehicle hub.</p>
+        <div class="plus-benefits">
+          <span><strong>60</strong> credits every month</span>
+          <span><strong>200</strong> AI Mechanic questions / month</span>
+          <span><strong>6</strong> vehicles in My Garage</span>
+          <span>All Garage reminders & ownership tools</span>
+          <span>Credits roll over while unused</span>
+        </div>
+        <button id="plusPlanButton" class="primary-button plus-cta" type="button">Start Check A Reg+</button>
+        <small id="plusPlanNote" class="service-note">Cancel anytime through secure Stripe billing.</small>
+      </article>
+
+      <article class="service-card ai-service-card">
+        <div class="service-card-top">
+          <div><span class="service-kicker">PAY AS YOU GO</span><h2>✦ AI Mechanic</h2></div>
+          <div class="ai-service-price"><strong>4</strong><small>credits</small></div>
+        </div>
+        <p class="service-lead">Unlock a block of questions and use them across any saved vehicle.</p>
+        <div class="ai-pack-number"><strong>10</strong><span>AI questions</span></div>
+        <ul class="service-mini-list">
+          <li>Photos supported</li>
+          <li>Questions do not expire</li>
+          <li>Saved diagnosis history</li>
+        </ul>
+        <button id="buyAiQuestionsButton" class="secondary-button ai-pack-button" type="button">Unlock 10 questions · 4 credits</button>
+        <small class="service-note">Check A Reg+ includes a much larger monthly AI allowance.</small>
+      </article>
+    </section>
+
+    <section class="compact-credit-section" aria-labelledby="creditPacksTitle">
+      <div class="section-heading compact-store-heading">
+        <div><span class="eyebrow">ONE-OFF TOP UP</span><h2 id="creditPacksTitle">Vehicle check credits</h2></div>
+        <span class="secure-checkout-label">Secure checkout by Stripe</span>
+      </div>
+      <div id="creditPackGrid" class="credit-pack-grid compact-credit-grid" aria-live="polite"><p class="credit-store-loading">Loading credit packs…</p></div>
+      <p class="credit-store-note">2 credits = 1 extra vehicle check. Purchased credits do not expire.</p>
+    </section>
+
+    <section class="purchase-history compact-purchase-history" aria-labelledby="purchaseHistoryTitle">
+      <div class="section-heading"><div><span class="eyebrow">YOUR RECEIPTS</span><h2 id="purchaseHistoryTitle">Credit purchase history</h2></div></div>
+      <div id="purchaseHistoryList" class="purchase-history-list"><p>No purchases yet.</p></div>
+    </section>
+  </main>
+
+  <div id="loadingOverlay" class="loading-overlay is-visible" role="status" aria-live="polite" aria-hidden="false">
+    <div class="loader-card"><div class="progress-wheel" aria-hidden="true"></div><strong>Opening plans & credits</strong><span>Loading your Check A Reg services…</span></div>
+  </div>
+
+  <script src="splash.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.2/dist/umd/supabase.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="pwa.js" defer></script>
+  <script src="credits.js" defer></script>
+</body>
+</html>

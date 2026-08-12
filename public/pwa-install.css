@@ -1,0 +1,407 @@
+@import url("android-compat.css");
+
+.install-prompt {
+  position: fixed;
+  z-index: 120;
+  top: max(12px, env(safe-area-inset-top));
+  left: 50%;
+  width: min(560px, calc(100% - 24px));
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  background: rgba(13, 13, 13, 0.96);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.62);
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 30px));
+  transition: opacity 220ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  backdrop-filter: blur(18px);
+}
+
+.install-prompt.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.install-prompt__icon {
+  width: 58px;
+  height: 58px;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: #000;
+  object-fit: cover;
+}
+
+.install-prompt__copy {
+  min-width: 0;
+}
+
+.install-prompt__copy strong {
+  display: block;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.install-prompt__copy span {
+  display: block;
+  margin-top: 3px;
+  color: #aaa;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.install-prompt__actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.install-prompt button {
+  width: auto;
+  min-height: 38px;
+  margin: 0;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.install-prompt__install {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+}
+
+.install-prompt__close {
+  width: 38px !important;
+  padding: 0 !important;
+  background: rgba(255, 255, 255, 0.08);
+  color: #aaa;
+  font-size: 19px !important;
+}
+
+.install-prompt__close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+@media (max-width: 520px) {
+  .install-prompt {
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .install-prompt__icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 13px;
+  }
+
+  .install-prompt__actions {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+
+  .install-prompt__install {
+    flex: 1;
+  }
+}
+
+/* Keep garage/admin controls clear of the iPhone status bar and Dynamic Island. */
+@media (max-width: 820px) {
+  body.account-page .account-header {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 16px) !important;
+    padding-left: max(12px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(12px, env(safe-area-inset-right, 0px)) !important;
+    min-height: calc(72px + env(safe-area-inset-top, 0px)) !important;
+    box-sizing: border-box;
+    overflow: visible !important;
+  }
+
+  body.account-page .account-header .back-link,
+  body.account-page .account-header .account-header-actions,
+  body.account-page .account-header .notification-bell,
+  body.account-page .account-header #signOutButton {
+    position: relative !important;
+    top: auto !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+}
+
+/* Explain the live reminder cadence directly on each enabled saved vehicle. */
+.reminder-vehicle-option input[type="checkbox"]:checked + span::after {
+  content: "Alerts: 30, 14, 7 and 1 day before each MOT/tax expiry, plus on the expiry day.";
+  display: block;
+  margin-top: 5px;
+  color: #8fd9b4;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+@media (max-width: 520px) {
+  .reminder-vehicle-option input[type="checkbox"]:checked + span::after {
+    max-width: 260px;
+    font-size: 10px;
+  }
+}
+
+/* Referral card: compact, balanced, and easy to scan on mobile. */
+#referralSection {
+  margin-top: 24px;
+  padding-top: 24px;
+}
+
+#referralSection .section-heading {
+  align-items: flex-start;
+  gap: 14px;
+}
+
+#referralSection .section-heading h2 {
+  max-width: 680px;
+  margin-bottom: 0;
+}
+
+#referralSection > p:not(.garage-status) {
+  max-width: 760px;
+  margin: 10px 0 18px;
+  color: #c7c7c7;
+  line-height: 1.55;
+}
+
+#referralSection .credit-summary {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+#referralSection .credit-card {
+  min-height: 132px;
+  padding: 18px;
+}
+
+#referralSection .credit-card strong {
+  font-size: clamp(28px, 5vw, 42px);
+  line-height: 1;
+}
+
+#referralSection .garage-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+#referralSection #referralLink {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#referralSection #referralShareButton {
+  min-width: 140px;
+}
+
+#referralSection #referralStatus:empty {
+  display: none;
+}
+
+@media (max-width: 620px) {
+  #referralSection {
+    margin-top: 18px;
+    padding-top: 18px;
+  }
+
+  #referralSection .section-heading {
+    display: block;
+  }
+
+  #referralSection .section-heading h2 {
+    margin-top: 6px;
+    font-size: clamp(28px, 9vw, 38px);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+  }
+
+  #referralSection .credit-rate {
+    display: inline-flex;
+    width: auto;
+    margin-top: 12px;
+    padding: 8px 12px;
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  #referralSection > p:not(.garage-status) {
+    margin: 12px 0 14px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  #referralSection .credit-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px;
+  }
+
+  #referralSection .credit-card {
+    min-height: 116px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  #referralSection .credit-card > span,
+  #referralSection .credit-card small {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  #referralSection .credit-card strong {
+    margin: 10px 0 8px;
+    font-size: 30px;
+  }
+
+  #referralSection .garage-search {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  #referralSection #referralLink {
+    height: 50px;
+    font-size: 12px;
+  }
+
+  #referralSection #referralShareButton {
+    width: 100%;
+    min-width: 0;
+    min-height: 50px;
+  }
+
+  #referralSection .garage-status {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+}
+
+/* Vehicle identity: manufacturer badge plus explicit make/model details. */
+.vehicle-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 7px;
+}
+
+.vehicle-title-row .car-title {
+  min-width: 0;
+  margin: 0;
+}
+
+.vehicle-brand-mark {
+  width: 50px;
+  height: 50px;
+  flex: 0 0 50px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.vehicle-brand-logo {
+  width: 32px;
+  height: 32px;
+  display: block;
+  object-fit: contain;
+  filter: invert(1);
+}
+
+.vehicle-brand-fallback {
+  color: #e8efff;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.vehicle-identity-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.vehicle-identity-meta > span {
+  min-width: 104px;
+  padding: 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.vehicle-identity-meta small,
+.vehicle-identity-meta strong {
+  display: block;
+}
+
+.vehicle-identity-meta small {
+  color: #8e98aa;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.vehicle-identity-meta strong {
+  margin-top: 3px;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+@media (max-width: 520px) {
+  .vehicle-title-row {
+    gap: 9px;
+  }
+
+  .vehicle-brand-mark {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+    border-radius: 12px;
+  }
+
+  .vehicle-brand-logo {
+    width: 27px;
+    height: 27px;
+  }
+
+  .vehicle-brand-fallback {
+    font-size: 12px;
+  }
+
+  .vehicle-identity-meta {
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .vehicle-identity-meta > span {
+    min-width: 0;
+    flex: 1 1 100px;
+    padding: 7px 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .install-prompt {
+    transition: none;
+  }
+}

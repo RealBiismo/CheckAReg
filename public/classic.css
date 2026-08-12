@@ -1,0 +1,399 @@
+/* Classic BIISMO REG visual layer.
+   Keeps the current application structure and behaviour while restoring the
+   original pure-black, centred, glass-card presentation. */
+
+:root {
+  --bg: #000;
+  --surface: #111;
+  --surface-2: #1a1a1a;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.2);
+  --text: #fff;
+  --muted: #aaa;
+  --blue: #2563eb;
+  --blue-strong: #1d4ed8;
+  --green: #4ade80;
+  --amber: #facc15;
+  --red: #f87171;
+  --plate: #ffd800;
+  --shadow: none;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.site-header {
+  width: 100%;
+  min-height: 0;
+  padding: 20px 18px 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  border-bottom: 0;
+}
+
+.brand img {
+  width: 260px;
+  max-width: 80vw;
+}
+
+.header-action,
+.back-link {
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.header-action:hover,
+.back-link:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+main {
+  width: min(940px, calc(100% - 36px));
+}
+
+.hero-shell {
+  width: 100%;
+  min-height: 0;
+  padding: 40px 0 60px;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 22px;
+}
+
+.hero-copy {
+  text-align: center;
+}
+
+.hero-copy .eyebrow {
+  display: none;
+}
+
+.hero-copy h1,
+.account-hero h1 {
+  max-width: none;
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.hero-copy > p {
+  margin-top: 8px;
+  color: #aaa;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.search-panel,
+.auth-dialog,
+.result-card,
+.garage-card,
+.empty-garage {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: none;
+  backdrop-filter: blur(20px);
+}
+
+.search-panel {
+  width: 100%;
+  max-width: 720px;
+  padding: 32px 22px;
+  border-radius: 24px;
+}
+
+.search-heading {
+  margin-bottom: 18px;
+  color: #aaa;
+}
+
+.secure-label {
+  color: #4ade80;
+}
+
+.plate {
+  height: 70px;
+  margin: 0;
+  border: 0;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.gb {
+  width: auto;
+  flex: 0 0 auto;
+  padding: 0 16px;
+  background: #003399;
+  font-size: 16px;
+}
+
+.plate input {
+  background: #ffd800;
+  color: #000;
+  font-family: "Charles Wright", "UKNumberPlate", "FE-Schrift", Arial, sans-serif;
+  font-size: 32px;
+  line-height: 70px;
+  letter-spacing: 6px;
+}
+
+.primary-button {
+  min-height: 52px;
+  margin-top: 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.secondary-button,
+.card-action {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.trust-row {
+  color: #888;
+}
+
+.data-note {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px 30px;
+  display: block;
+  border: 0;
+  color: #aaa;
+  text-align: center;
+}
+
+.data-note strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 18px;
+}
+
+.data-note a {
+  display: inline-block;
+  margin-top: 7px;
+  color: #89cfff;
+}
+
+.result-card {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 24px 20px;
+  border-radius: 20px;
+}
+
+.result-heading {
+  padding-bottom: 0;
+  flex-direction: column-reverse;
+  justify-content: center;
+  border-bottom: 0;
+  text-align: center;
+}
+
+.car-title {
+  margin-top: 14px;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+
+.result-plate {
+  border: 0;
+  border-radius: 12px;
+}
+
+.result-reg {
+  padding: 10px 22px;
+  font-size: 34px;
+  letter-spacing: 5px;
+}
+
+.primary-grid,
+.detail-grid {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.info-box,
+.mot-card,
+.garage-status-grid > div {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.info-box {
+  min-height: 80px;
+  padding: 12px;
+  border-radius: 14px;
+}
+
+.info-title {
+  margin-bottom: 4px;
+  color: #8b8b8b;
+  font-size: 11px;
+}
+
+.info-value {
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
+.auth-dialog {
+  background: #111;
+  border-radius: 20px;
+}
+
+.auth-tabs {
+  border-radius: 999px;
+  background: #1a1a1a;
+}
+
+.auth-tab {
+  border-radius: 999px;
+}
+
+.auth-tab.is-active {
+  background: #2563eb;
+}
+
+#authForm input,
+.garage-search input {
+  border-color: #333;
+  background: #000;
+}
+
+.loading-overlay {
+  background: rgba(0, 0, 0, 0.82);
+}
+
+.loader-card {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: #111;
+  box-shadow: none;
+}
+
+.account-header {
+  min-height: 86px;
+  padding: 16px 18px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+
+.account-header .back-link {
+  justify-self: start;
+}
+
+.account-header .header-action {
+  justify-self: end;
+}
+
+.compact-brand img {
+  width: 210px;
+}
+
+.account-hero {
+  padding: 48px 0 42px;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 28px;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.account-hero .eyebrow,
+.section-heading .eyebrow {
+  color: #89cfff;
+}
+
+.garage-search {
+  width: min(560px, 100%);
+}
+
+.garage-card,
+.empty-garage {
+  border-radius: 20px;
+}
+
+@media (max-width: 680px) {
+  .site-header {
+    width: 100%;
+    min-height: 0;
+  }
+
+  .brand img {
+    width: 230px;
+  }
+
+  .hero-shell {
+    padding: 34px 0 48px;
+    gap: 18px;
+  }
+
+  .hero-copy h1,
+  .account-hero h1 {
+    font-size: 32px;
+  }
+
+  .search-panel {
+    padding: 26px 18px;
+  }
+
+  .plate {
+    height: 60px;
+  }
+
+  .plate .gb {
+    width: auto;
+    flex-basis: auto;
+    padding: 0 12px;
+  }
+
+  .plate input {
+    font-size: 26px;
+    line-height: 60px;
+    letter-spacing: 4px;
+  }
+
+  .primary-grid,
+  .detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .account-header {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .account-header .compact-brand {
+    display: none;
+  }
+
+  .account-header .back-link,
+  .account-header .header-action {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .primary-grid,
+  .detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .info-box {
+    min-height: 70px;
+    padding: 10px;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+}

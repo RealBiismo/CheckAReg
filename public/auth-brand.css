@@ -1,0 +1,27 @@
+/* BIISMO REG-owned presentation for Supabase-backed authentication. */
+.auth-dialog{overflow:hidden!important;border:1px solid rgba(255,255,255,.12)!important;background:linear-gradient(180deg,#0b0f16,#070a0f)!important;box-shadow:0 30px 90px rgba(0,0,0,.6)!important}
+.biismo-auth-brand{display:flex;align-items:center;gap:11px;margin:-2px 0 15px;padding:11px 12px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.035)}
+.biismo-auth-brand img{width:34px;height:34px;border-radius:10px;display:block}
+.biismo-auth-brand div{display:flex;flex-direction:column;gap:1px;min-width:0}
+.biismo-auth-brand strong{font-size:12px;letter-spacing:.14em;color:#fff}
+.biismo-auth-brand span{font-size:10px;color:#8d98a9}
+.auth-dialog .dialog-topline .eyebrow{color:#8a84ff!important}
+.auth-dialog #authTitle{letter-spacing:-.02em}
+.auth-dialog input{background:#0d1219!important;border-color:rgba(255,255,255,.12)!important}
+.auth-dialog input:focus{border-color:rgba(107,94,255,.85)!important;box-shadow:0 0 0 3px rgba(97,81,255,.12)!important}
+.auth-dialog .auth-tab.is-active{background:linear-gradient(145deg,rgba(100,79,255,.34),rgba(55,77,190,.2))!important;border-color:rgba(127,116,255,.55)!important}
+.auth-dialog .google-button{background:#f7f8fa!important;color:#11151b!important;border-color:rgba(255,255,255,.5)!important;font-weight:800!important}
+.auth-dialog .google-mark{background:#fff!important;border-radius:50%;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.auth-dialog .primary-button{background:linear-gradient(145deg,#5f4dff,#2f66db)!important;box-shadow:0 10px 24px rgba(63,73,225,.22)!important}
+.auth-dialog .auth-legal{padding-top:10px;border-top:1px solid rgba(255,255,255,.06);color:#707b8a!important;font-size:10px!important;line-height:1.45!important}
+.auth-dialog .auth-message.is-success{color:#73e6a2!important}
+.auth-dialog .auth-message.is-error{color:#ff8f9a!important}
+.auth-dialog.is-recovery .biismo-auth-brand{margin-bottom:18px}
+.auth-dialog.is-recovery .dialog-topline .eyebrow{visibility:hidden}
+.auth-dialog.is-recovery .dialog-topline .eyebrow::after{content:'PASSWORD RECOVERY';visibility:visible;display:block}
+@media(max-width:560px){
+  .auth-dialog{width:calc(100vw - 20px)!important;max-width:none!important;padding:16px!important;border-radius:22px!important}
+  .biismo-auth-brand{margin-bottom:13px;padding:10px}
+  .biismo-auth-brand img{width:32px;height:32px}
+  .auth-dialog #authTitle{font-size:24px!important}
+}

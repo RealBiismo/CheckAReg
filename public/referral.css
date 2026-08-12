@@ -1,0 +1,120 @@
+.referral-invite-banner {
+  width: min(100%, 980px);
+  margin: 0 auto 16px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border: 1px solid rgba(82, 137, 255, 0.28);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(38, 75, 158, 0.18), rgba(12, 17, 27, 0.96));
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.24);
+}
+
+.referral-invite-copy {
+  min-width: 0;
+}
+
+.referral-invite-copy .eyebrow {
+  display: block;
+  margin-bottom: 5px;
+  color: #83aaff;
+}
+
+.referral-invite-copy > strong {
+  display: block;
+  color: #fff;
+  font-size: clamp(18px, 3vw, 24px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.referral-invite-copy p {
+  max-width: 690px;
+  margin: 7px 0 0;
+  color: rgba(218, 226, 240, 0.68);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.referral-invite-action {
+  width: auto;
+  min-width: 190px;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.referral-claim-notice {
+  margin: 0 0 16px;
+  padding: 13px 15px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border: 1px solid rgba(84, 136, 255, 0.25);
+  border-radius: 14px;
+  background: rgba(42, 78, 158, 0.12);
+  color: #eaf0ff;
+}
+
+.referral-claim-notice > span {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(85, 135, 255, 0.16);
+  color: #94b4ff;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.referral-claim-notice > strong {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.referral-claim-notice.is-rewarded {
+  border-color: rgba(74, 214, 139, 0.25);
+  background: rgba(42, 145, 92, 0.1);
+}
+
+.referral-claim-notice.is-rewarded > span {
+  background: rgba(74, 214, 139, 0.14);
+  color: #72e5aa;
+}
+
+@media (max-width: 620px) {
+  .referral-invite-banner {
+    margin-bottom: 12px;
+    padding: 14px;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+    border-radius: 15px;
+  }
+
+  .referral-invite-copy > strong {
+    font-size: 19px;
+  }
+
+  .referral-invite-copy p {
+    font-size: 12px;
+  }
+
+  .referral-invite-action {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+  }
+
+  .referral-claim-notice {
+    margin-bottom: 12px;
+    padding: 11px 12px;
+  }
+
+  .referral-claim-notice > strong {
+    font-size: 12px;
+  }
+}

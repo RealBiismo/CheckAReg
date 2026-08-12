@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#05070b">
+  <meta name="description" content="Your saved vehicles and Check A Reg account.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Check A Reg">
+  <title>My Garage — Check A Reg</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="classic.css">
+  <link rel="stylesheet" href="pwa-install.css">
+  <link rel="stylesheet" href="ui-overrides.css">
+  <link rel="stylesheet" href="account-header-polish.css">
+  <link rel="stylesheet" href="checkareg-theme.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="shortcut icon" href="/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+</head>
+<body class="account-page">
+  <div id="appSplash" class="app-splash" role="status" aria-label="Loading Check A Reg">
+    <div class="app-splash-logo"><img src="/assets/checkareg.png" alt=""></div>
+    <p>MOT <span>•</span> TAX <span>•</span> HISTORY</p>
+  </div>
+
+  <header class="site-header account-header">
+    <a class="back-link" href="/" aria-label="Back to vehicle checker"><span aria-hidden="true">←</span> Back to checker</a>
+    <a class="brand compact-brand transparent-brand" href="/" aria-label="Check A Reg home"><img src="/assets/checkareg.png" alt="Check A Reg"></a>
+    <div class="account-header-actions">
+      <button id="notificationBellButton" class="notification-bell" type="button" aria-label="Open notifications" aria-controls="notificationDrawer" aria-expanded="false">
+        <span class="notification-bell-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
+        </span>
+        <strong id="notificationBadge" hidden>0</strong>
+      </button>
+      <button id="signOutButton" class="header-action" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <main class="account-main">
+    <nav id="accountMenu" class="account-menu" aria-label="Account sections" hidden>
+      <button id="garageMenuButton" class="account-menu-button is-active" type="button" aria-controls="garageView" aria-selected="true">Garage</button>
+      <button id="adminMenuButton" class="account-menu-button" type="button" aria-controls="adminView" aria-selected="false">Admin control centre</button>
+    </nav>
+
+    <section id="garageView" class="account-view" aria-labelledby="garageMenuButton">
+      <section class="account-hero">
+        <div>
+          <span class="eyebrow">PRIVATE GARAGE</span>
+          <h1>Your saved vehicles.</h1>
+          <p id="accountEmail">Loading your account…</p>
+        </div>
+        <form id="garageSearchForm" class="garage-search">
+          <label class="sr-only" for="garageRegInput">Search another registration</label>
+          <input id="garageRegInput" type="text" maxlength="8" placeholder="Enter another reg" autocomplete="off">
+          <button class="primary-button" type="submit">Check vehicle</button>
+        </form>
+      </section>
+
+      <section class="credits-section" aria-labelledby="creditsTitle">
+        <div class="section-heading">
+          <div><span class="eyebrow">SEARCH ACCESS</span><h2 id="creditsTitle">Daily checks &amp; credits</h2></div>
+          <div class="credit-section-actions"><span class="credit-rate">2 credits = 1 extra check</span><a class="primary-button button-link buy-credits-link" href="/credits.html">Buy credits</a></div>
+        </div>
+        <div class="credit-summary">
+          <article class="credit-card"><span>Free checks remaining today</span><strong id="freeSearchesRemaining">—</strong><small>Resets at midnight UK time</small></article>
+          <article class="credit-card"><span>Credit balance</span><strong id="creditBalance">—</strong><small>Extra checks cost 2 credits</small></article>
+        </div>
+      </section>
+
+      <section class="reminder-section" aria-labelledby="reminderTitle">
+        <div class="reminder-topline">
+          <div class="reminder-copy">
+            <span class="eyebrow">STAY ROAD-READY</span>
+            <h2 id="reminderTitle">MOT &amp; tax reminders</h2>
+            <p>Enable notifications, then choose exactly which saved registrations should receive expiry reminders.</p>
+            <p id="reminderStatus" class="reminder-status" role="status">Checking notification support…</p>
+          </div>
+          <button id="enableNotificationsButton" class="secondary-button" type="button">Enable notifications</button>
+        </div>
+        <div id="reminderVehicleList" class="reminder-vehicle-list"></div>
+      </section>
+
+      <section class="saved-section" aria-labelledby="savedTitle">
+        <div class="section-heading">
+          <div><span class="eyebrow">COLLECTION</span><h2 id="savedTitle">Saved vehicles</h2></div>
+          <div class="garage-heading-meta"><span class="garage-limit">Maximum 3 vehicles per account</span><span id="savedVehicleCount" class="saved-count">0 vehicles</span></div>
+        </div>
+        <p id="garageStatus" class="garage-status" role="status"></p>
+        <div id="savedVehicles" class="saved-grid"><p class="empty-state">Loading saved vehicles…</p></div>
+      </section>
+    </section>
+
+    <section id="adminView" class="account-view" aria-labelledby="adminMenuButton" hidden>
+      <section class="admin-control-centre">
+        <section class="dashboard-hero">
+          <div><span class="eyebrow">OWNER WORKSPACE</span><h1>Admin control centre.</h1><p>Monitor the app, manage accounts, issue credits and send notifications from one place.</p></div>
+          <button id="adminDashboardRefreshButton" class="secondary-button compact-button" type="button">Refresh dashboard</button>
+        </section>
+
+        <section class="admin-overview" aria-label="App overview">
+          <article><span>Total accounts</span><strong id="adminTotalUsers">—</strong></article>
+          <article><span>Active accounts</span><strong id="adminActiveUsers">—</strong></article>
+          <article><span>Suspended</span><strong id="adminBannedUsers">—</strong></article>
+          <article><span>Searches today</span><strong id="adminSearchesToday">—</strong></article>
+          <article><span>Credits in circulation</span><strong id="adminCreditsTotal">—</strong></article>
+        </section>
+
+        <div class="admin-dashboard-grid">
+          <section class="admin-panel admin-user-panel">
+            <div class="admin-panel-heading"><div><span class="eyebrow">ACCOUNT LOOKUP</span><h2>Manage a user</h2></div></div>
+            <form id="adminUserSearchForm" class="admin-user-search"><label for="adminUserEmail">Email address</label><div><input id="adminUserEmail" type="email" placeholder="name@example.com" autocomplete="off"><button id="adminUserSearchButton" class="primary-button" type="submit">Find user</button></div></form>
+            <p id="adminUserStatus" class="admin-status" role="status"></p>
+            <div id="adminUserResult" class="admin-user-result" hidden>
+              <div class="admin-user-heading"><div><span class="eyebrow">SELECTED ACCOUNT</span><h3 id="selectedUserEmail">—</h3></div><span id="adminAccountStatusBadge" class="account-status-badge">Active</span></div>
+              <div class="admin-user-stats"><article><span>Credits</span><strong id="selectedUserCredits">—</strong></article><article><span>Searches today</span><strong id="selectedUserSearches">—</strong></article><article><span>Free remaining</span><strong id="selectedUserFreeRemaining">—</strong></article><article><span>Free used</span><strong id="selectedUserFreeUsed">—</strong></article><article><span>Saved vehicles</span><strong id="selectedUserVehicles">—</strong></article><article><span>Push devices</span><strong id="selectedUserPushDevices">—</strong></article><article><span>Joined</span><strong id="selectedUserJoined">—</strong></article></div>
+              <div class="admin-credit-controls"><label for="adminCreditAmount">Credit amount</label><input id="adminCreditAmount" type="number" min="0" max="100000" step="1" value="2"><div class="admin-action-buttons"><button id="adminAddCreditsButton" class="primary-button" type="button">Add credits</button><button id="adminSetCreditsButton" class="secondary-button" type="button">Set balance</button><button id="adminResetCreditsButton" class="secondary-button" type="button">Reset to 0</button></div></div>
+              <div class="admin-access-controls"><div><span class="eyebrow">ACCOUNT ACCESS</span><p id="adminAccessCopy">Suspend this account from using BIISMO REG.</p></div><button id="adminBanUserButton" class="danger-button" type="button">Ban user</button></div>
+              <div class="admin-direct-notification"><span class="eyebrow">DIRECT PUSH</span><label for="adminDirectNotificationTitle">Title</label><input id="adminDirectNotificationTitle" type="text" maxlength="80" value="BIISMO REG"><label for="adminDirectNotificationMessage">Message</label><textarea id="adminDirectNotificationMessage" maxlength="240" rows="3" placeholder="Type a message for this account…"></textarea><button id="adminDirectNotificationButton" class="secondary-button" type="button">Send to this account</button><p id="adminDirectNotificationStatus" class="admin-status" role="status"></p></div>
+            </div>
+          </section>
+
+          <section class="admin-panel admin-broadcast-panel" aria-labelledby="adminBroadcastTitle">
+            <div class="admin-panel-heading"><div><span class="eyebrow">BROADCAST PUSH</span><h2 id="adminBroadcastTitle">Notify everyone</h2></div></div>
+            <p>This sends once to every opted-in BIISMO REG account and also creates an in-app notification.</p>
+            <div class="admin-broadcast-stats"><article><span>Opted-in accounts</span><strong id="broadcastAccountCount">—</strong></article><article><span>Enabled devices</span><strong id="broadcastDeviceCount">—</strong></article></div>
+            <label for="adminNotificationTitle">Notification title</label><input id="adminNotificationTitle" type="text" maxlength="80" value="BIISMO REG" autocomplete="off"><label for="adminNotificationMessage">Message</label><textarea id="adminNotificationMessage" maxlength="240" rows="5" placeholder="Type the notification message…"></textarea><button id="adminSendNotificationButton" class="primary-button" type="button" disabled>Send to all opted-in accounts</button><p id="adminNotificationStatus" class="admin-status" role="status"></p><button id="adminHistoryToggleButton" class="history-toggle secondary-button" type="button" aria-expanded="false" aria-controls="adminBroadcastHistoryPanel">Show broadcast history</button>
+          </section>
+        </div>
+
+        <section id="adminBroadcastHistoryPanel" class="admin-panel admin-history-panel" aria-labelledby="broadcastHistoryTitle" hidden><div class="notification-list-heading"><div><span class="eyebrow">AUDIT LOG</span><h2 id="broadcastHistoryTitle">Broadcast history</h2></div><button id="refreshBroadcastHistoryButton" class="secondary-button compact-button" type="button">Refresh</button></div><div id="broadcastHistoryList" class="broadcast-history-list"><p class="notification-empty">No broadcasts yet.</p></div></section>
+
+        <section class="admin-quick-tools" aria-label="Recent app activity"><article class="admin-panel"><div class="admin-panel-heading"><div><span class="eyebrow">RECENT</span><h2>Signups</h2></div></div><div id="recentSignupsList" class="admin-activity-list"><p class="notification-empty">Loading signups…</p></div></article><article class="admin-panel"><div class="admin-panel-heading"><div><span class="eyebrow">RECENT</span><h2>Vehicle searches</h2></div></div><div id="recentSearchesList" class="admin-activity-list"><p class="notification-empty">Loading searches…</p></div></article><article class="admin-panel"><div class="admin-panel-heading"><div><span class="eyebrow">ACCESS</span><h2>Banned users</h2></div></div><div id="bannedUsersList" class="admin-activity-list"><p class="notification-empty">Loading banned users…</p></div></article></section>
+      </section>
+    </section>
+  </main>
+
+  <div id="notificationDrawer" class="notification-drawer" hidden><button id="notificationDrawerBackdrop" class="notification-drawer-backdrop" type="button" aria-label="Close notifications"></button><aside class="notification-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="notificationDrawerTitle"><div class="notification-list-heading"><div><span class="eyebrow">YOUR UPDATES</span><h2 id="notificationDrawerTitle">Notifications</h2></div><button id="closeNotificationDrawerButton" class="drawer-close" type="button" aria-label="Close notifications">×</button></div><button id="markAllNotificationsReadButton" class="notification-mark-all" type="button">Mark all as read</button><p id="notificationDrawerStatus" class="admin-status" role="status"></p><div id="notificationList" class="notification-list"></div></aside></div>
+
+  <div id="notificationConsentModal" class="notification-consent" role="dialog" aria-modal="true" aria-labelledby="notificationConsentTitle" hidden><div class="notification-consent-card"><img src="icon-192.png" alt="" width="56" height="56"><span class="eyebrow">BIISMO ALERTS</span><h2 id="notificationConsentTitle">Want useful vehicle notifications?</h2><p>Allow notifications to receive MOT and tax reminders for registrations you choose, plus occasional BIISMO REG updates.</p><div><button id="notificationAllowButton" class="primary-button" type="button">Allow notifications</button><button id="notificationNotNowButton" class="secondary-button" type="button">Not now</button></div></div></div>
+
+  <div id="loadingOverlay" class="loading-overlay is-visible" role="status" aria-live="polite" aria-hidden="false"><div class="loader-card"><div class="progress-wheel" aria-hidden="true"></div><strong>Opening your garage</strong><span>Loading your securely saved vehicles…</span></div></div>
+
+  <script src="splash.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.2/dist/umd/supabase.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="pwa.js" defer></script>
+  <script src="account.js" defer></script>
+  <script src="admin-controls.js" defer></script>
+  <script src="admin-user-detail-fix.js" defer></script>
+</body>
+</html>

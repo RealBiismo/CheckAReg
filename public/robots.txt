@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /account.html
+Disallow: /credits.html
+Disallow: /api/
+
+Sitemap: https://biismoreg.com/sitemap.xml

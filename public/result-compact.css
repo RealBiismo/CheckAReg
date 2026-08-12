@@ -1,0 +1,86 @@
+/* Compact vehicle result tiles. Keeps the same information with less visual bulk. */
+#result .vehicle-grid {
+  gap: 8px !important;
+}
+
+#result .car-title {
+  white-space: nowrap;
+  font-size: clamp(22px, 4.2vw, 38px) !important;
+  line-height: 1.05 !important;
+}
+
+#result .info-box {
+  min-height: 0 !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  border-color: rgba(255,255,255,.08) !important;
+  box-shadow: none !important;
+  background: rgba(255,255,255,.025) !important;
+}
+
+#result .info-title {
+  margin-bottom: 3px !important;
+  font-size: 10px !important;
+  line-height: 1.15 !important;
+  letter-spacing: .07em !important;
+}
+
+#result .info-value {
+  font-size: clamp(15px, 1.55vw, 19px) !important;
+  line-height: 1.15 !important;
+}
+
+#result .info-box .tax-green,
+#result .info-box .tax-amber,
+#result .info-box .tax-red {
+  margin-top: 3px !important;
+  font-size: 10px !important;
+  line-height: 1.25 !important;
+}
+
+#result .primary-grid {
+  margin-top: 12px !important;
+}
+
+#result .detail-grid {
+  margin-top: 8px !important;
+}
+
+#result .detail-grid .info-box {
+  padding-block: 8px !important;
+}
+
+#result .detail-grid .info-value {
+  font-size: 14px !important;
+}
+
+@media (max-width: 820px) {
+  #result .vehicle-grid {
+    gap: 6px !important;
+  }
+
+  #result .car-title {
+    font-size: clamp(18px, 6vw, 28px) !important;
+  }
+
+  #result .info-box {
+    padding: 8px 10px !important;
+    border-radius: 10px !important;
+  }
+
+  #result .info-title {
+    font-size: 9px !important;
+  }
+
+  #result .info-value {
+    font-size: 14px !important;
+  }
+
+  #result .detail-grid .info-box {
+    padding-block: 7px !important;
+  }
+
+  #result .detail-grid .info-value {
+    font-size: 13px !important;
+  }
+}

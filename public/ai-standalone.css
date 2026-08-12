@@ -1,0 +1,139 @@
+/* Standalone Biismo AI chat: no Garage vehicle dependency. */
+.ai-standalone-hidden{display:none!important}
+
+/* The legacy setup form remains in the DOM only for compatibility with the chat code. */
+#newCaseView>label[for="vehicleSelect"],
+#vehicleSelect,
+.ai-category-fieldset{
+  display:none!important;
+}
+
+.ai-hero p{max-width:690px}
+
+@media(max-width:850px){
+  .ai-mobile-draft-vehicle{display:none!important}
+  body.ai-mobile-new-chat .ai-mobile-draft-vehicle{display:none!important}
+
+  /* Fresh chats should look like a clean chatbot, not a vehicle card. */
+  body.ai-mobile-new-chat .ai-chat-top{
+    position:static!important;
+    top:auto!important;
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:18px 8px 8px!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+  body.ai-mobile-new-chat .ai-chat-top>div{
+    width:100%!important;
+    max-width:100%!important;
+    text-align:center!important;
+  }
+  body.ai-mobile-new-chat #chatVehicle{
+    display:none!important;
+  }
+  body.ai-mobile-new-chat #chatTitle{
+    margin:0!important;
+    text-align:center!important;
+    font-size:22px!important;
+    line-height:1.2!important;
+  }
+  body.ai-mobile-new-chat .ai-chat-top-actions,
+  body.ai-mobile-new-chat #backToNewButton,
+  body.ai-mobile-new-chat #removeAiChatButton{
+    display:none!important;
+  }
+
+  body.ai-mobile-new-chat #chatMessages{
+    min-height:calc(100dvh - 270px)!important;
+    padding-top:8px!important;
+  }
+  body.ai-mobile-new-chat #chatMessages:empty::before{
+    content:'Ask about any car, van or motorcycle — faults, warning lights, repairs, maintenance, parts, specs or photos.'!important;
+    display:block!important;
+    max-width:560px!important;
+    margin:10px auto 0!important;
+    padding:0 10px!important;
+    color:#8f98a8!important;
+    font-size:14px!important;
+    line-height:1.55!important;
+    text-align:center!important;
+  }
+
+  /* Compact ChatGPT-style composer. Higher specificity intentionally overrides
+     the runtime mobile polish injected by ai-mobile-v2.js. */
+  body.ai-page .ai-chat-compose{
+    min-height:104px!important;
+    grid-template-rows:minmax(40px,auto) 42px!important;
+    grid-template-columns:44px minmax(0,1fr) 44px!important;
+    padding:10px 12px 8px!important;
+    row-gap:2px!important;
+    border-radius:26px!important;
+  }
+  body.ai-page .ai-chat-compose textarea{
+    min-height:42px!important;
+    max-height:116px!important;
+    padding:8px 4px 2px!important;
+    line-height:1.35!important;
+  }
+  body.ai-page .ai-chat-compose .ai-compose-photo{
+    width:40px!important;
+    min-width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+    font-size:31px!important;
+    bottom:auto!important;
+  }
+  body.ai-page .ai-chat-compose .ai-send-button{
+    width:42px!important;
+    min-width:42px!important;
+    height:42px!important;
+    min-height:42px!important;
+    font-size:24px!important;
+    bottom:auto!important;
+  }
+  body.ai-page .ai-chat-compose-wrap>.ai-status{
+    margin-top:5px!important;
+  }
+}
+
+@media(max-width:430px){
+  body.ai-page .ai-chat-compose{
+    min-height:100px!important;
+    grid-template-rows:minmax(38px,auto) 40px!important;
+    padding:9px 11px 7px!important;
+  }
+  body.ai-page .ai-chat-compose textarea{
+    min-height:40px!important;
+    padding-top:7px!important;
+  }
+  body.ai-page .ai-chat-compose .ai-compose-photo{
+    width:38px!important;
+    min-width:38px!important;
+    height:38px!important;
+    min-height:38px!important;
+  }
+  body.ai-page .ai-chat-compose .ai-send-button{
+    width:40px!important;
+    min-width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+  }
+}
+
+@media(min-width:851px){
+  #newCaseView{
+    max-width:820px;
+    margin:0 auto;
+  }
+  #newCaseView .ai-panel-heading{
+    justify-content:center;
+    text-align:center;
+  }
+  #newCaseView .ai-panel-heading>div{width:100%}
+  #newCaseView .ai-panel-heading h2{font-size:clamp(30px,4vw,46px)}
+  #issueText{min-height:150px}
+}

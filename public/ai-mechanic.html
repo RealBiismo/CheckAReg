@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#05070b">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Check A Reg AI — Vehicle Mechanic</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="classic.css">
+  <link rel="stylesheet" href="ai-mechanic.css">
+  <link rel="stylesheet" href="ai-chat-mobile.css">
+  <link rel="stylesheet" href="ai-mobile-v2.css">
+  <link rel="stylesheet" href="ai-standalone.css">
+  <link rel="stylesheet" href="checkareg-theme.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+</head>
+<body class="ai-page">
+  <header class="site-header ai-header">
+    <a class="back-link" href="/" aria-label="Return to Check A Reg"><span aria-hidden="true">←</span> Return to Check A Reg</a>
+    <a class="brand compact-brand transparent-brand" href="/" aria-label="Check A Reg home"><img src="/assets/checkareg.png" alt="Check A Reg"></a>
+    <div class="ai-header-actions">
+      <a class="header-action ai-buy-credits" href="/credits.html">Buy credits</a>
+    </div>
+  </header>
+
+  <main class="ai-main">
+    <section class="ai-hero">
+      <div>
+        <span class="eyebrow">CHECK A REG AI</span>
+        <h1>Vehicle AI mechanic.</h1>
+        <p>Ask about faults, warning lights, repairs, servicing, parts, vehicle specs or attach photos for Check A Reg AI to analyse.</p>
+      </div>
+      <div class="ai-price-card">
+        <strong>10 questions</strong>
+        <span>for 4 credits</span>
+        <small>Or 200 / month with Check A Reg+</small>
+        <a class="secondary-button button-link ai-price-buy" href="/credits.html">Buy credits</a>
+      </div>
+    </section>
+
+    <section id="aiSignedOut" class="ai-panel ai-empty" hidden>
+      <span class="eyebrow">ACCOUNT REQUIRED</span>
+      <h2>Sign in to use Biismo AI</h2>
+      <p>Your Biismo AI chats stay saved to your account until you remove them.</p>
+      <a class="primary-button button-link" href="/?login=1">Sign in</a>
+    </section>
+
+    <section id="aiUnavailable" class="ai-panel ai-empty" hidden>
+      <span class="eyebrow">PAID FEATURE</span>
+      <h2>Biismo AI is being activated</h2>
+      <p id="aiUnavailableText">Biismo AI is currently unavailable.</p>
+      <a class="secondary-button button-link" href="/">Return to BiismoReg</a>
+    </section>
+
+    <section id="aiWorkspace" class="ai-workspace" hidden>
+      <aside class="ai-sidebar">
+        <button id="newCaseButton" class="primary-button" type="button">+ New chat</button>
+        <div class="ai-sidebar-heading"><span>Previous chats</span><button id="refreshCasesButton" type="button">Refresh</button></div>
+        <div id="caseList" class="ai-case-list"><p class="ai-muted">No Biismo AI chats yet.</p></div>
+      </aside>
+
+      <section class="ai-panel ai-diagnosis-panel">
+        <div id="newCaseView">
+          <div class="ai-panel-heading">
+            <div><span class="eyebrow">CHECK A REG AI</span><h2>Ask your vehicle question</h2></div>
+            <span id="creditBadge" class="ai-credit-badge">— AI questions</span>
+          </div>
+
+          <label for="vehicleSelect">Vehicle</label>
+          <select id="vehicleSelect"><option value="00000000-0000-0000-0000-000000000000">Biismo AI</option></select>
+
+          <fieldset class="ai-category-fieldset">
+            <legend>Issue type</legend>
+            <div id="categoryGrid" class="ai-category-grid">
+              <button type="button" data-category="Warning light">Warning light</button>
+              <button type="button" data-category="Strange noise">Strange noise</button>
+              <button type="button" data-category="Engine issue">Engine</button>
+              <button type="button" data-category="Brakes">Brakes</button>
+              <button type="button" data-category="Tyres">Tyres</button>
+              <button type="button" data-category="Electrical">Electrical</button>
+              <button type="button" data-category="Leak">Leak</button>
+              <button type="button" data-category="Other">Something else</button>
+            </div>
+          </fieldset>
+
+          <label for="issueText">Message</label>
+          <textarea id="issueText" rows="5" maxlength="2000" enterkeyhint="send" placeholder="Ask Biismo AI anything about a vehicle…"></textarea>
+
+          <div class="ai-photo-row">
+            <div><strong>Add photos</strong><span>Warning lights, damage, components, tyres, leaks or anything vehicle-related. Up to 3.</span></div>
+            <label class="secondary-button ai-photo-button">Choose photos<input id="photoInput" type="file" accept="image/*" multiple hidden></label>
+          </div>
+          <div id="photoPreview" class="ai-photo-preview"></div>
+
+          <p class="ai-disclaimer">Biismo AI provides guidance, not a confirmed mechanical diagnosis. Stop driving and seek professional help if the vehicle may be unsafe.</p>
+          <button id="startDiagnosisButton" class="primary-button ai-start-button" type="button">Ask Biismo AI</button>
+          <div class="ai-access-row"><a href="/credits.html">Buy credits / AI questions</a><span>•</span><a href="/credits.html">View Check A Reg+</a></div>
+          <p id="aiStatus" class="ai-status" role="status"></p>
+        </div>
+
+        <div id="chatView" class="ai-chat-view" hidden>
+          <div class="ai-chat-top">
+            <div><span id="chatVehicle" class="eyebrow">CHECK A REG AI</span><h2 id="chatTitle">New chat</h2></div>
+            <button id="backToNewButton" class="secondary-button" type="button">New chat</button>
+          </div>
+          <div id="chatMessages" class="ai-chat-messages" aria-live="polite"></div>
+          <div id="chatPhotoPreview" class="ai-photo-preview"></div>
+          <div class="ai-chat-compose-wrap">
+            <div class="ai-chat-compose">
+              <label class="secondary-button ai-photo-button ai-compose-photo" aria-label="Add photos">＋<input id="chatPhotoInput" type="file" accept="image/*" multiple hidden></label>
+              <textarea id="chatInput" rows="1" maxlength="1600" enterkeyhint="send" placeholder="Ask Biismo AI"></textarea>
+              <button id="sendChatButton" class="primary-button ai-send-button" type="button" aria-label="Send message">↑</button>
+            </div>
+            <p id="chatStatus" class="ai-status" role="status"></p>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="ai-viewport-lock.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.2/dist/umd/supabase.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="ai-mechanic.js" defer></script>
+  <script src="ai-chat-history.js" defer></script>
+  <script src="ai-mobile-v2.js" defer></script>
+  <script src="ai-standalone.js" defer></script>
+  <script src="ai-thinking-inline.js" defer></script>
+</body>
+</html>

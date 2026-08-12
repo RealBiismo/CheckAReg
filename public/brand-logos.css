@@ -1,0 +1,87 @@
+.vehicle-title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.vehicle-title-row .car-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.vehicle-brand-mark {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+.vehicle-brand-logo {
+  display: block;
+  max-width: 46px;
+  max-height: 46px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.vehicle-brand-fallback {
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #fff;
+}
+
+.vehicle-identity-meta {
+  display: flex;
+  gap: 22px;
+  margin: 10px 0 0 72px;
+  color: var(--muted, #9da4b2);
+  font-size: 12px;
+}
+
+.vehicle-identity-meta span {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.vehicle-identity-meta small {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.vehicle-identity-meta strong {
+  color: #fff;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .vehicle-brand-mark {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+    border-radius: 14px;
+  }
+
+  .vehicle-brand-logo {
+    max-width: 38px;
+    max-height: 38px;
+  }
+
+  .vehicle-identity-meta {
+    margin-left: 62px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+}

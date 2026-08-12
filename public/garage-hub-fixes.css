@@ -1,0 +1,74 @@
+.reminder-section.is-card-managed {
+  display: none !important;
+}
+
+.ownership-card-reminder {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.ownership-reminder-button {
+  width: 100%;
+  min-height: 34px;
+  padding: 7px 9px;
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 9px;
+  background: rgba(255,255,255,.035);
+  color: rgba(215,224,240,.75);
+  font: inherit;
+  font-size: 10px;
+  font-weight: 850;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ownership-reminder-button.is-active {
+  border-color: rgba(58,204,142,.28);
+  background: rgba(47,175,120,.10);
+  color: #74e2b1;
+}
+
+.ownership-reminder-button:disabled {
+  cursor: default;
+  opacity: .62;
+}
+
+.ownership-card-reminder small {
+  margin-top: 0 !important;
+  color: rgba(176,188,209,.48) !important;
+  font-size: 9px !important;
+  line-height: 1.35;
+}
+
+.ownership-photo.is-busy,
+.garage-card.is-photo-uploading .ownership-photo {
+  pointer-events: none;
+}
+
+.garage-card.is-photo-uploading .ownership-photo::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  content: "Uploading photo…";
+  background: rgba(5,8,13,.62);
+  backdrop-filter: blur(3px);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .03em;
+}
+
+.garage-card.is-photo-uploading .ownership-photo-action {
+  z-index: 2;
+}
+
+@media (max-width: 560px) {
+  .ownership-reminder-button {
+    min-height: 38px;
+    font-size: 9px;
+  }
+}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#05070b">
+  <meta name="description" content="Check a UK vehicle registration for MOT status, MOT history, road tax, mileage and official vehicle details with Check A Reg.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="application-name" content="Check A Reg">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Check A Reg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="Check A Reg">
+  <meta property="og:title" content="UK Vehicle Check, MOT History & Tax Status | Check A Reg">
+  <meta property="og:description" content="Enter a UK registration to check MOT status, MOT history, road tax, mileage records and official vehicle details.">
+  <meta property="og:url" content="https://biismoreg.com/">
+  <meta property="og:image" content="https://biismoreg.com/icon-512.png">
+  <meta property="og:image:alt" content="BIISMO REG UK vehicle checker logo">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UK Vehicle Check, MOT History & Tax Status | BIISMO REG">
+  <meta name="twitter:description" content="Check a UK registration for MOT, tax, mileage and official vehicle details.">
+  <meta name="twitter:image" content="https://biismoreg.com/icon-512.png">
+  <link rel="canonical" href="https://biismoreg.com/">
+  <title>Check A Reg — Instant UK Vehicle Check</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="classic.css">
+  <link rel="stylesheet" href="pwa-install.css">
+  <link rel="stylesheet" href="ui-overrides.css">
+  <link rel="stylesheet" href="homepage-fix.css">
+  <link rel="stylesheet" href="brand-logos.css">
+  <link rel="stylesheet" href="full-history-preview.css">
+  <link rel="stylesheet" href="checkareg-theme.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="shortcut icon" href="/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Check A Reg",
+    "url": "https://biismoreg.com/",
+    "applicationCategory": "AutomotiveApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "en-GB",
+    "description": "A UK vehicle registration checker for MOT status, MOT history, road tax, mileage records and official DVLA vehicle details.",
+    "image": "https://biismoreg.com/icon-512.png",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "GBP",
+      "description": "Five free successful vehicle checks per account each UK calendar day."
+    },
+    "featureList": [
+      "UK registration check",
+      "MOT status and history",
+      "Road tax status",
+      "Mileage records",
+      "Official DVLA vehicle details",
+      "Saved vehicle garage",
+      "MOT and tax reminders"
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Check A Reg",
+      "url": "https://biismoreg.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://biismoreg.com/icon-512.png"
+      }
+    }
+  }
+  </script>
+</head>
+<body class="home-page">
+  <div id="appSplash" class="app-splash" role="status" aria-label="Loading Check A Reg">
+    <div class="app-splash-logo"><img src="/assets/checkareg.png" alt=""></div>
+    <p>MOT <span>•</span> TAX <span>•</span> HISTORY</p>
+  </div>
+
+  <header class="site-header home-header">
+    <a class="brand" href="/" aria-label="Check A Reg home">
+      <img src="/assets/checkareg.png" alt="Check A Reg UK vehicle checker">
+    </a>
+    <div class="home-header-actions">
+      <button id="accountButton" class="header-action" type="button">Sign in</button>
+    </div>
+  </header>
+
+  <main class="home-main">
+    <section class="hero-shell" aria-labelledby="homeHeading">
+      <div class="hero-copy">
+        <span class="eyebrow">DVLA • DVSA • UK VEHICLE DATA</span>
+        <h1 id="homeHeading">Know the car</h1>
+        <p>Check MOT status, MOT history, road tax, mileage records and official vehicle details from one UK registration.</p>
+      </div>
+
+      <form id="vehicleForm" class="search-panel" novalidate>
+        <div class="search-heading">
+          <span>Vehicle registration lookup</span>
+          <span class="secure-label">SECURE CHECK</span>
+        </div>
+
+        <div id="allowanceBar" class="allowance-bar" aria-live="polite">
+          <span>Daily allowance</span>
+          <strong id="allowanceText">Sign in for 5 free checks each day</strong>
+        </div>
+
+        <label class="sr-only" for="regInput">Enter a UK vehicle registration number</label>
+        <div class="plate">
+          <div class="gb" aria-hidden="true"><small>GB</small></div>
+          <input id="regInput" type="text" name="registrationNumber" placeholder="PA55 MGN" maxlength="8" autocomplete="off" autocapitalize="characters" spellcheck="false" required>
+        </div>
+
+        <button id="searchButton" class="primary-button" type="submit">
+          Check vehicle <span aria-hidden="true">→</span>
+        </button>
+        <a class="text-button" href="https://enquiry.navigate.mib.org.uk/checkyourvehicle" target="_blank" rel="noopener noreferrer">Check insurance on askMID ↗</a>
+        <p id="formError" class="form-error" role="alert"></p>
+
+        <div class="trust-row">
+          <span>DVLA data</span>
+          <span>DVSA history</span>
+          <span>No searches sold</span>
+        </div>
+      </form>
+    </section>
+
+    <section class="data-note homepage-footer-note" aria-labelledby="officialVehicleData">
+      <div>
+        <strong id="officialVehicleData">Government-sourced vehicle records</strong>
+        <p>Official DVLA and DVSA information is combined with clearly labelled calculated insights. Results depend on the records available for the registration entered.</p>
+      </div>
+      <a href="https://instagram.com/realbiismo" target="_blank" rel="noreferrer">Created by RealBiismo</a>
+    </section>
+
+    <div id="result" aria-live="polite"></div>
+  </main>
+
+  <dialog id="authDialog" class="auth-dialog">
+    <div class="dialog-topline">
+      <div><span class="eyebrow">CHECK A REG ACCOUNT</span><h2 id="authTitle">Welcome back</h2></div>
+      <button id="closeAuthButton" class="icon-button" type="button" aria-label="Close">×</button>
+    </div>
+
+    <div class="auth-tabs" role="tablist" aria-label="Account options">
+      <button id="signInTab" class="auth-tab is-active" type="button" role="tab">Sign in</button>
+      <button id="signUpTab" class="auth-tab" type="button" role="tab">Create account</button>
+    </div>
+
+    <button id="googleAuthButton" class="google-button" type="button"><span class="google-mark" aria-hidden="true">G</span>Continue with Google</button>
+    <div class="auth-divider"><span>or use email</span></div>
+
+    <form id="authForm" novalidate>
+      <label id="authEmailLabel" for="authEmail">Email address</label>
+      <input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required>
+      <label for="authPassword">Password</label>
+      <input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters" required>
+      <button id="authSubmitButton" class="primary-button" type="submit">Sign in</button>
+      <button id="forgotPasswordButton" class="text-button" type="button">Forgot password?</button>
+    </form>
+
+    <p id="authMessage" class="auth-message" role="status"></p>
+    <p class="auth-legal">New accounts must confirm their email before they can sign in.</p>
+  </dialog>
+
+  <div id="loadingOverlay" class="loading-overlay" role="status" aria-live="polite" aria-hidden="true">
+    <div class="loader-card"><div class="progress-wheel" aria-hidden="true"></div><strong>Checking the vehicle</strong><span>Contacting official DVLA and DVSA services…</span></div>
+  </div>
+
+  <script src="splash.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.2/dist/umd/supabase.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="pwa.js" defer></script>
+  <script src="brand-logos.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="full-history-preview.js" defer></script>
+  <script src="vehicle-title-fit.js" defer></script>
+</body>
+</html>

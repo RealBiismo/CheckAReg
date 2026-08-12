@@ -1,0 +1,40 @@
+{
+  "id": "/",
+  "name": "Check A Reg — UK Vehicle Check",
+  "short_name": "Check A Reg",
+  "description": "Check UK vehicle registrations for MOT status, MOT history, road tax, mileage records and official DVLA vehicle details.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#05070b",
+  "theme_color": "#05070b",
+  "lang": "en-GB",
+  "dir": "ltr",
+  "categories": ["automotive", "utilities"],
+  "prefer_related_applications": false,
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

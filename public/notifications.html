@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#05070b">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Check A Reg">
+  <title>Notifications — Check A Reg</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="classic.css">
+  <link rel="stylesheet" href="notifications.css">
+  <link rel="stylesheet" href="checkareg-theme.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="shortcut icon" href="/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+</head>
+<body class="notifications-page">
+  <header class="notifications-header">
+    <a class="notifications-back" href="/account.html" aria-label="Back to garage">← Back to garage</a>
+    <a class="notifications-brand" href="/" aria-label="Check A Reg home"><img src="/assets/checkareg.png" alt="Check A Reg"></a>
+  </header>
+
+  <main class="notifications-main">
+    <section class="notifications-hero">
+      <span class="notifications-eyebrow">YOUR UPDATES</span>
+      <h1>Notifications</h1>
+      <p>Read the alert you opened and your recent Check A Reg updates.</p>
+    </section>
+
+    <section id="openedNotificationSection" class="opened-notification" hidden aria-labelledby="openedNotificationHeading">
+      <div class="opened-notification-label">OPENED NOTIFICATION</div>
+      <article class="opened-notification-card">
+        <div class="opened-notification-top"><span id="openedNotificationType">UPDATE</span><span>Just opened</span></div>
+        <h2 id="openedNotificationHeading"></h2>
+        <p id="openedNotificationMessage"></p>
+        <a id="openedNotificationSource" class="opened-notification-link" href="/account.html">Open related page →</a>
+      </article>
+    </section>
+
+    <section class="notifications-inbox" aria-labelledby="notificationInboxTitle">
+      <div class="notifications-section-heading">
+        <div><span class="notifications-eyebrow">INBOX</span><h2 id="notificationInboxTitle">Recent notifications</h2></div>
+        <button id="markAllReadButton" class="notifications-action" type="button">Mark all read</button>
+      </div>
+      <p id="notificationsStatus" class="notifications-status" role="status">Loading notifications…</p>
+      <div id="notificationsList" class="notifications-list"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.2/dist/umd/supabase.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="pwa.js" defer></script>
+  <script src="notifications.js" defer></script>
+</body>
+</html>
