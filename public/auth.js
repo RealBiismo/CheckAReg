@@ -29,7 +29,7 @@
     if (!authDialog || authDialog.querySelector(".biismo-auth-brand")) return;
     const brand = document.createElement("div");
     brand.className = "biismo-auth-brand";
-    brand.innerHTML = '<img src="/assets/checkareg.png" alt=""><div><strong>CHECK A REG</strong><span>Secure account access</span></div>';
+    brand.innerHTML = '<img src="/assets/checkareg-transparent.png" alt=""><div><strong>CHECK A REG</strong><span>Secure account access</span></div>';
     authDialog.prepend(brand);
     const legal = authDialog.querySelector(".auth-legal");
     if (legal) legal.textContent = "Secure sign-in for your Check A Reg account. New email accounts must confirm their email before signing in.";

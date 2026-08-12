@@ -1,4 +1,4 @@
-const CACHE_NAME = "check-a-reg-v1";
+const CACHE_NAME = "check-a-reg-v2";
 const CANONICAL_ORIGIN = self.location.origin;
 const LEGACY_HOSTS = new Set();
 const NETWORK_FIRST_ASSETS = new Set([
@@ -119,7 +119,7 @@ const STATIC_ASSETS = [
   "/icon-192.png",
   "/icon-512.png",
   "/apple-touch-icon.png"
-  ,"/assets/checkareg.png"
+  ,"/assets/checkareg-transparent.png"
 ];
 
 self.addEventListener("install", (event) => {
