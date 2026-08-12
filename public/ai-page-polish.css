@@ -1,0 +1,314 @@
+/* Check A Reg AI page — final visual layer.
+   This deliberately loads last so legacy layout rules cannot restack the header. */
+
+body.ai-page {
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at 50% 5%, rgba(7, 151, 255, 0.11), transparent 31rem),
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    #05070a;
+  background-size: auto, 64px 64px, 64px 64px, auto;
+}
+
+body.ai-page .ai-header {
+  position: sticky !important;
+  top: 0;
+  z-index: 40;
+  width: min(1180px, calc(100% - 44px)) !important;
+  height: 84px !important;
+  min-height: 84px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 20px !important;
+  border-bottom: 1px solid rgba(139, 166, 191, 0.16) !important;
+  background: rgba(5, 7, 10, 0.82) !important;
+  box-sizing: border-box !important;
+  backdrop-filter: blur(18px);
+}
+
+body.ai-page .ai-header .back-link {
+  justify-self: start;
+  width: auto !important;
+  min-height: 42px !important;
+  padding: 0 15px !important;
+  border-radius: 12px !important;
+  font-size: 13px !important;
+  white-space: nowrap;
+}
+
+body.ai-page .ai-header .brand {
+  display: flex !important;
+  justify-self: center;
+  width: 150px !important;
+  height: 59px !important;
+}
+
+body.ai-page .ai-header .brand img {
+  width: 150px !important;
+  height: 59px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+}
+
+body.ai-page .ai-header-actions {
+  justify-self: end !important;
+  width: auto !important;
+  max-width: none !important;
+  overflow: visible !important;
+}
+
+body.ai-page .ai-header-actions .ai-buy-credits {
+  width: auto !important;
+  max-width: none !important;
+  min-height: 42px !important;
+  padding: 0 16px !important;
+  border-color: rgba(7, 151, 255, 0.34) !important;
+  border-radius: 12px !important;
+  background: rgba(7, 151, 255, 0.09) !important;
+  font-size: 13px !important;
+  color: #eaf6ff !important;
+}
+
+body.ai-page .ai-main {
+  width: min(1180px, calc(100% - 44px)) !important;
+  margin: 0 auto !important;
+  padding: 0 0 76px !important;
+}
+
+body.ai-page .ai-hero {
+  min-height: 310px;
+  padding: 64px 0 46px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 270px !important;
+  align-items: center !important;
+  gap: clamp(42px, 7vw, 100px) !important;
+}
+
+body.ai-page .ai-hero h1 {
+  max-width: 800px;
+  margin: 14px 0 16px !important;
+  font-size: clamp(52px, 6vw, 78px) !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.065em !important;
+}
+
+body.ai-page .ai-hero p {
+  max-width: 720px !important;
+  color: #929eac !important;
+  font-size: 16px !important;
+  line-height: 1.65 !important;
+}
+
+body.ai-page .ai-price-card {
+  min-width: 0 !important;
+  width: 270px;
+  padding: 24px !important;
+  border: 1px solid rgba(7, 151, 255, 0.2) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(145deg, rgba(7, 151, 255, 0.12), rgba(10, 14, 19, 0.98)) !important;
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.ai-page .ai-price-card strong {
+  font-size: 32px;
+  letter-spacing: -0.04em;
+}
+
+body.ai-page .ai-price-card small {
+  color: #7f8b99;
+  line-height: 1.45;
+}
+
+body.ai-page .ai-price-buy {
+  border-color: rgba(7, 151, 255, 0.28) !important;
+  background: #0a1118 !important;
+}
+
+body.ai-page .ai-empty {
+  position: relative;
+  max-width: none !important;
+  min-height: 270px;
+  margin: 0 !important;
+  padding: 52px 34px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(139, 166, 191, 0.16) !important;
+  border-radius: 18px !important;
+  background:
+    radial-gradient(circle at 50% 100%, rgba(7, 151, 255, 0.09), transparent 24rem),
+    linear-gradient(145deg, rgba(14, 20, 27, 0.98), rgba(7, 10, 14, 0.98)) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+body.ai-page .ai-empty[hidden] {
+  display: none !important;
+}
+
+body.ai-page .ai-empty h2 {
+  margin: 13px 0 10px;
+  font-size: clamp(28px, 3.4vw, 40px);
+  letter-spacing: -0.045em;
+}
+
+body.ai-page .ai-empty p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: #929eac;
+}
+
+body.ai-page .ai-empty .button-link {
+  min-width: 132px;
+  min-height: 48px;
+  margin-top: 24px;
+  border-radius: 12px;
+}
+
+body.ai-page .ai-workspace {
+  gap: 16px !important;
+}
+
+body.ai-page .ai-sidebar,
+body.ai-page .ai-panel {
+  border-color: rgba(139, 166, 191, 0.16) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(145deg, rgba(14, 20, 27, 0.98), rgba(7, 10, 14, 0.98)) !important;
+}
+
+@media (max-width: 850px) {
+  body.ai-page .ai-header {
+    width: 100% !important;
+    height: 68px !important;
+    min-height: 68px !important;
+    padding: max(env(safe-area-inset-top), 0px) max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left)) !important;
+    grid-template-columns: minmax(82px, 1fr) auto minmax(82px, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  body.ai-page .ai-header .back-link {
+    max-width: none !important;
+    min-height: 38px !important;
+    padding: 0 11px !important;
+    font-size: 0 !important;
+  }
+
+  body.ai-page .ai-header .back-link span {
+    font-size: 18px !important;
+  }
+
+  body.ai-page .ai-header .brand,
+  body.ai-page .ai-header .brand img {
+    display: flex !important;
+    width: 116px !important;
+    height: 46px !important;
+  }
+
+  body.ai-page .ai-header-actions .ai-buy-credits {
+    min-height: 38px !important;
+    padding: 0 11px !important;
+    font-size: 11px !important;
+  }
+
+  body.ai-page .ai-main {
+    width: min(100% - 28px, 720px) !important;
+  }
+
+  body.ai-page .ai-hero {
+    width: 100% !important;
+    min-height: 0;
+    margin: 0 !important;
+    padding: 48px 0 32px !important;
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  body.ai-page .ai-hero h1 {
+    font-size: clamp(43px, 12vw, 62px) !important;
+  }
+
+  body.ai-page .ai-price-card {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  body.ai-page .ai-price-card small {
+    grid-column: 1;
+  }
+
+  body.ai-page .ai-price-buy {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    width: auto;
+    margin: 0 0 0 18px;
+  }
+
+  body.ai-page .ai-empty {
+    min-height: 260px;
+    padding: 42px 20px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  body.ai-page .ai-header {
+    grid-template-columns: 44px 1fr auto !important;
+  }
+
+  body.ai-page .ai-main {
+    width: calc(100% - 20px) !important;
+    padding-bottom: 30px !important;
+  }
+
+  body.ai-page .ai-hero {
+    display: grid !important;
+    padding: 34px 4px 24px !important;
+  }
+
+  body.ai-page .ai-hero .eyebrow {
+    font-size: 9px;
+  }
+
+  body.ai-page .ai-hero h1 {
+    margin-top: 10px !important;
+    font-size: 44px !important;
+  }
+
+  body.ai-page .ai-hero p {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+  }
+
+  body.ai-page .ai-price-card {
+    padding: 17px !important;
+  }
+
+  body.ai-page .ai-price-card strong {
+    font-size: 23px;
+  }
+
+  body.ai-page .ai-price-card span,
+  body.ai-page .ai-price-card small {
+    font-size: 11px;
+  }
+
+  body.ai-page .ai-price-buy {
+    min-height: 40px !important;
+    padding: 0 13px !important;
+    font-size: 11px !important;
+  }
+
+  body.ai-page .ai-empty {
+    min-height: 250px;
+  }
+
+  body.ai-page .ai-empty h2 {
+    font-size: 29px;
+  }
+}

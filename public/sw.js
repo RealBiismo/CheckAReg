@@ -1,4 +1,4 @@
-const CACHE_NAME = "check-a-reg-v2";
+const CACHE_NAME = "check-a-reg-v3";
 const CANONICAL_ORIGIN = self.location.origin;
 const LEGACY_HOSTS = new Set();
 const NETWORK_FIRST_ASSETS = new Set([
@@ -20,6 +20,7 @@ const NETWORK_FIRST_ASSETS = new Set([
   "/ai-mobile-v2.css",
   "/ai-mobile-v2.js",
   "/ai-standalone.css",
+  "/ai-page-polish.css",
   "/ai-standalone.js",
   "/ai-thinking-inline.js",
   "/ai-viewport-lock.js",
@@ -80,6 +81,7 @@ const STATIC_ASSETS = [
   "/ai-mobile-v2.css",
   "/ai-mobile-v2.js",
   "/ai-standalone.css",
+  "/ai-page-polish.css",
   "/ai-standalone.js",
   "/ai-thinking-inline.js",
   "/ai-viewport-lock.js",
