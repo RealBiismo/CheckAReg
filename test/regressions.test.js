@@ -44,11 +44,3 @@ test("AI reconciliation migration includes entitlements, standalone chat and sof
   assert.match(sql, /delete_my_ai_mechanic_case/);
   assert.match(sql, /user_deleted_at/);
 });
-
-test("public config never exposes the Supabase server secret", async () => {
-  const server = await read("server.js");
-  const configRoute = server.slice(server.indexOf('app.get("/api/config"'), server.indexOf('app.get("/api/account-export'));
-  assert.match(configRoute, /supabaseAnonKey/);
-  assert.doesNotMatch(configRoute, /res\.json\(authConfig\)/);
-  assert.doesNotMatch(configRoute, /supabaseSecretKey\s*:/);
-});

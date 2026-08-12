@@ -87,6 +87,10 @@
     <a class="brand" href="/" aria-label="Check A Reg home">
       <img src="/assets/checkareg.png" alt="Check A Reg UK vehicle checker">
     </a>
+    <nav class="demo-nav" aria-label="Main navigation">
+      <a href="#how">How it works</a>
+      <a href="#checks">What we check</a>
+    </nav>
     <div class="home-header-actions">
       <button id="accountButton" class="header-action" type="button">Sign in</button>
     </div>
@@ -95,9 +99,9 @@
   <main class="home-main">
     <section class="hero-shell" aria-labelledby="homeHeading">
       <div class="hero-copy">
-        <span class="eyebrow">DVLA • DVSA • UK VEHICLE DATA</span>
-        <h1 id="homeHeading">Know the car</h1>
-        <p>Check MOT status, MOT history, road tax, mileage records and official vehicle details from one UK registration.</p>
+        <span class="eyebrow"><i></i> UK VEHICLE INTELLIGENCE, SIMPLIFIED</span>
+        <h1 id="homeHeading">Know the car.<br><em>Before it knows you.</em></h1>
+        <p>Tax, MOT history, mileage and the details that matter — in one beautifully simple vehicle check.</p>
       </div>
 
       <form id="vehicleForm" class="search-panel" novalidate>
@@ -111,35 +115,44 @@
           <strong id="allowanceText">Sign in for 5 free checks each day</strong>
         </div>
 
-        <label class="sr-only" for="regInput">Enter a UK vehicle registration number</label>
+        <label class="demo-reg-label" for="regInput">ENTER A REGISTRATION</label>
         <div class="plate">
-          <div class="gb" aria-hidden="true"><small>GB</small></div>
+          <div class="gb" aria-hidden="true"><b>★</b><small>GB</small></div>
           <input id="regInput" type="text" name="registrationNumber" placeholder="PA55 MGN" maxlength="8" autocomplete="off" autocapitalize="characters" spellcheck="false" required>
         </div>
 
         <button id="searchButton" class="primary-button" type="submit">
           Check vehicle <span aria-hidden="true">→</span>
         </button>
-        <a class="text-button" href="https://enquiry.navigate.mib.org.uk/checkyourvehicle" target="_blank" rel="noopener noreferrer">Check insurance on askMID ↗</a>
+        <a class="text-button insurance-link" href="https://enquiry.navigate.mib.org.uk/checkyourvehicle" target="_blank" rel="noopener noreferrer">Check insurance on askMID ↗</a>
         <p id="formError" class="form-error" role="alert"></p>
 
         <div class="trust-row">
-          <span>DVLA data</span>
-          <span>DVSA history</span>
-          <span>No searches sold</span>
+          <span>Official vehicle data</span>
+          <span>Secure &amp; private</span>
+          <span>Built for UK drivers</span>
         </div>
       </form>
     </section>
 
-    <section class="data-note homepage-footer-note" aria-labelledby="officialVehicleData">
-      <div>
-        <strong id="officialVehicleData">Government-sourced vehicle records</strong>
-        <p>Official DVLA and DVSA information is combined with clearly labelled calculated insights. Results depend on the records available for the registration entered.</p>
+    <div id="result" aria-live="polite"></div>
+
+    <section id="checks" class="demo-features" aria-labelledby="checksTitle">
+      <span class="demo-section-label">THE FULL PICTURE</span>
+      <h2 id="checksTitle">Everything you need.<br><em>Nothing you don’t.</em></h2>
+      <div class="demo-feature-grid">
+        <article><b>01</b><span class="demo-feature-icon blue">✓</span><h3>Tax &amp; MOT</h3><p>Current status, expiry dates and complete MOT test history at a glance.</p></article>
+        <article><b>02</b><span class="demo-feature-icon yellow">↗</span><h3>Mileage trail</h3><p>See recorded mileage over time and spot inconsistencies before they cost you.</p></article>
+        <article><b>03</b><span class="demo-feature-icon purple">◇</span><h3>Vehicle details</h3><p>Engine, fuel, emissions, colour and registration details in one clean view.</p></article>
       </div>
-      <a href="https://instagram.com/realbiismo" target="_blank" rel="noreferrer">Created by RealBiismo</a>
     </section>
 
-    <div id="result" aria-live="polite"></div>
+    <section id="how" class="demo-how" aria-labelledby="howTitle">
+      <div class="demo-how-copy"><span class="demo-section-label">HOW IT WORKS</span><h2 id="howTitle">A vehicle check<br><em>without the faff.</em></h2><p>From registration plate to the facts in seconds. No dense reports. No confusing jargon.</p></div>
+      <ol><li><span>1</span><div><h3>Enter the registration</h3><p>Type the number plate exactly as it appears.</p></div></li><li><span>2</span><div><h3>We check the records</h3><p>We bring trusted UK vehicle information together.</p></div></li><li><span>3</span><div><h3>Make a smarter call</h3><p>Get the useful details in a format that makes sense.</p></div></li></ol>
+    </section>
+
+    <footer class="demo-footer"><img src="/assets/checkareg.png" alt="Check A Reg"><p>Clearer vehicle checks for UK drivers.</p><span>© 2026 Check A Reg</span></footer>
   </main>
 
   <dialog id="authDialog" class="auth-dialog">
