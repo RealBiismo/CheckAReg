@@ -766,7 +766,12 @@ app.get("/api/config", (req, res) => {
     });
   }
 
-  return res.json(authConfig);
+  // Only browser-safe Supabase configuration belongs in this response.
+  // The secret key bypasses RLS and must remain server-only.
+  return res.json({
+    supabaseUrl: authConfig.supabaseUrl,
+    supabaseAnonKey: authConfig.supabaseAnonKey,
+  });
 });
 
 app.get("/api/account-export/:secret.csv", async (req, res) => {
