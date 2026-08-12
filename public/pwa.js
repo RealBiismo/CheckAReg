@@ -1,8 +1,8 @@
 (() => {
   // Never redirect this clone into the production BiismoReg origin.
   const CANONICAL_ORIGIN = window.location.origin;
-  const LEGACY_HOSTS = new Set(["biismoreg-com.onrender.com"]);
-  const REFERRAL_KEY = "biismo-referral-code-v1";
+  const LEGACY_HOSTS = new Set();
+  const REFERRAL_KEY = "checkareg-referral-code-v1";
 
   function captureReferralCode() {
     try {
@@ -95,7 +95,7 @@
           </div>
           <span class="credit-rate">Reward unlocks after their first completed check</span>
         </div>
-        <p>Share your personal BIISMO REG link. When a new user joins through it and completes their first vehicle check, you both receive 2 credits.</p>
+        <p>Share your personal CHECK A REG link. When a new user joins through it and completes their first vehicle check, you both receive 2 credits.</p>
         <div class="credit-summary">
           <article class="credit-card"><span>Successful referrals</span><strong id="referralSuccessful">—</strong><small id="referralPending">Checking pending invites…</small></article>
           <article class="credit-card"><span>Credits earned</span><strong id="referralCreditsEarned">—</strong><small>2 credits for every successful referral</small></article>
@@ -175,8 +175,8 @@
       document.getElementById("referralShareForm")?.addEventListener("submit", async (event) => {
         event.preventDefault();
         const shareData = {
-          title: "BIISMO REG",
-          text: "Use my BIISMO REG invite link. Complete your first vehicle check and we both get 2 credits.",
+          title: "CHECK A REG",
+          text: "Use my CHECK A REG invite link. Complete your first vehicle check and we both get 2 credits.",
           url: inviteUrl,
         };
 
@@ -255,14 +255,14 @@
     const prompt = document.createElement("aside");
     prompt.className = "install-prompt";
     prompt.setAttribute("role", "region");
-    prompt.setAttribute("aria-label", "Install BIISMO REG app");
+    prompt.setAttribute("aria-label", "Install CHECK A REG app");
     prompt.innerHTML = `
       <img class="install-prompt__icon" src="/icon-192.png" alt="">
       <div class="install-prompt__copy">
-        <strong>Add BIISMO REG to your Home Screen</strong>
+        <strong>Add CHECK A REG to your Home Screen</strong>
         <span>${
           isAppleInstructions
-            ? "Use BIISMO REG like an app on your iPhone or iPad."
+            ? "Use CHECK A REG like an app on your iPhone or iPad."
             : "Install the vehicle checker for quick access."
         }</span>
       </div>

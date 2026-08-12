@@ -63,7 +63,7 @@
     banner.innerHTML = staffRole === "moderator"
       ? '<strong>Moderator access</strong><span>Read-only support access. You can inspect accounts, searches and credits, add support notes and flag accounts for admin review.</span>'
       : staffRole === "owner"
-        ? '<strong>Owner access</strong><span>Full BIISMO REG control, including team management.</span>'
+        ? '<strong>Owner access</strong><span>Full CHECK A REG control, including team management.</span>'
         : '<strong>Admin access</strong><span>Operational controls for users, credits, bans and notifications.</span>';
     adminView.prepend(banner);
   }
@@ -196,7 +196,7 @@
     panel.className = "admin-panel team-management-panel";
     panel.innerHTML = `
       <div class="admin-panel-heading"><div><span class="eyebrow">TEAM MANAGEMENT</span><h2>Moderators</h2></div></div>
-      <p>Add verified BIISMO REG accounts as moderators. Moderators can inspect account credits and searches, add support notes and flag accounts, but cannot change credits, bans or notifications.</p>
+      <p>Add verified CHECK A REG accounts as moderators. Moderators can inspect account credits and searches, add support notes and flag accounts, but cannot change credits, bans or notifications.</p>
       <form id="moderatorEmailForm" class="team-management-form">
         <input id="moderatorEmailInput" type="email" placeholder="moderator@example.com" autocomplete="off" required>
         <button class="primary-button" type="submit">Add moderator</button>

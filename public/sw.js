@@ -235,8 +235,8 @@ self.addEventListener("notificationclick", (event) => {
 
   const reader = new URL("/notifications.html", self.location.origin);
   const details = new URLSearchParams();
-  details.set("title", event.notification.title || "BIISMO REG notification");
-  details.set("message", event.notification.body || "Open your inbox for the latest BIISMO REG update.");
+  details.set("title", event.notification.title || "CHECK A REG notification");
+  details.set("message", event.notification.body || "Open your inbox for the latest CHECK A REG update.");
   details.set("tag", event.notification.tag || "");
   details.set("source", event.notification.data?.url || "/account.html");
   reader.hash = details.toString();

@@ -43,15 +43,15 @@
 
     <section id="aiSignedOut" class="ai-panel ai-empty" hidden>
       <span class="eyebrow">ACCOUNT REQUIRED</span>
-      <h2>Sign in to use Biismo AI</h2>
-      <p>Your Biismo AI chats stay saved to your account until you remove them.</p>
+      <h2>Sign in to use Check A Reg AI</h2>
+      <p>Your Check A Reg AI chats stay saved to your account until you remove them.</p>
       <a class="primary-button button-link" href="/?login=1">Sign in</a>
     </section>
 
     <section id="aiUnavailable" class="ai-panel ai-empty" hidden>
       <span class="eyebrow">PAID FEATURE</span>
-      <h2>Biismo AI is being activated</h2>
-      <p id="aiUnavailableText">Biismo AI is currently unavailable.</p>
+      <h2>Check A Reg AI is being activated</h2>
+      <p id="aiUnavailableText">Check A Reg AI is currently unavailable.</p>
       <a class="secondary-button button-link" href="/">Return to BiismoReg</a>
     </section>
 
@@ -59,7 +59,7 @@
       <aside class="ai-sidebar">
         <button id="newCaseButton" class="primary-button" type="button">+ New chat</button>
         <div class="ai-sidebar-heading"><span>Previous chats</span><button id="refreshCasesButton" type="button">Refresh</button></div>
-        <div id="caseList" class="ai-case-list"><p class="ai-muted">No Biismo AI chats yet.</p></div>
+        <div id="caseList" class="ai-case-list"><p class="ai-muted">No Check A Reg AI chats yet.</p></div>
       </aside>
 
       <section class="ai-panel ai-diagnosis-panel">
@@ -70,7 +70,7 @@
           </div>
 
           <label for="vehicleSelect">Vehicle</label>
-          <select id="vehicleSelect"><option value="00000000-0000-0000-0000-000000000000">Biismo AI</option></select>
+          <select id="vehicleSelect"><option value="00000000-0000-0000-0000-000000000000">Check A Reg AI</option></select>
 
           <fieldset class="ai-category-fieldset">
             <legend>Issue type</legend>
@@ -87,7 +87,7 @@
           </fieldset>
 
           <label for="issueText">Message</label>
-          <textarea id="issueText" rows="5" maxlength="2000" enterkeyhint="send" placeholder="Ask Biismo AI anything about a vehicle…"></textarea>
+          <textarea id="issueText" rows="5" maxlength="2000" enterkeyhint="send" placeholder="Ask Check A Reg AI anything about a vehicle…"></textarea>
 
           <div class="ai-photo-row">
             <div><strong>Add photos</strong><span>Warning lights, damage, components, tyres, leaks or anything vehicle-related. Up to 3.</span></div>
@@ -95,8 +95,8 @@
           </div>
           <div id="photoPreview" class="ai-photo-preview"></div>
 
-          <p class="ai-disclaimer">Biismo AI provides guidance, not a confirmed mechanical diagnosis. Stop driving and seek professional help if the vehicle may be unsafe.</p>
-          <button id="startDiagnosisButton" class="primary-button ai-start-button" type="button">Ask Biismo AI</button>
+          <p class="ai-disclaimer">Check A Reg AI provides guidance, not a confirmed mechanical diagnosis. Stop driving and seek professional help if the vehicle may be unsafe.</p>
+          <button id="startDiagnosisButton" class="primary-button ai-start-button" type="button">Ask Check A Reg AI</button>
           <div class="ai-access-row"><a href="/credits.html">Buy credits / AI questions</a><span>•</span><a href="/credits.html">View Check A Reg+</a></div>
           <p id="aiStatus" class="ai-status" role="status"></p>
         </div>
@@ -111,7 +111,7 @@
           <div class="ai-chat-compose-wrap">
             <div class="ai-chat-compose">
               <label class="secondary-button ai-photo-button ai-compose-photo" aria-label="Add photos">＋<input id="chatPhotoInput" type="file" accept="image/*" multiple hidden></label>
-              <textarea id="chatInput" rows="1" maxlength="1600" enterkeyhint="send" placeholder="Ask Biismo AI"></textarea>
+              <textarea id="chatInput" rows="1" maxlength="1600" enterkeyhint="send" placeholder="Ask Check A Reg AI"></textarea>
               <button id="sendChatButton" class="primary-button ai-send-button" type="button" aria-label="Send message">↑</button>
             </div>
             <p id="chatStatus" class="ai-status" role="status"></p>

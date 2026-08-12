@@ -58,7 +58,7 @@ async function invoke(body) {
   const request = client.functions.invoke('ai-mechanic', { body });
   const timeout = new Promise((_, reject) => {
     timeoutId = window.setTimeout(() => {
-      reject(new Error('Biismo AI took too long to respond. Your controls have been unlocked — please retry.'));
+      reject(new Error('Check A Reg AI took too long to respond. Your controls have been unlocked — please retry.'));
     }, AI_REQUEST_TIMEOUT_MS);
   });
   let result;
@@ -69,7 +69,7 @@ async function invoke(body) {
   }
   const { data, error } = result;
   if (error) {
-    let message = error.message || 'Biismo AI could not be reached.';
+    let message = error.message || 'Check A Reg AI could not be reached.';
     try {
       const context = await error.context?.json?.();
       if (context?.error) message = context.error;
@@ -216,7 +216,7 @@ function attachmentMarkup(count) {
 function messageHtml(message, assistantIndex) {
   const role = message.role === 'user' ? 'user' : 'assistant';
   const showAssistantLabel = role === 'assistant' && assistantIndex === 0;
-  const label = role === 'user' ? '<small class="ai-message-label">You</small>' : showAssistantLabel ? '<small class="ai-message-label">Biismo AI</small>' : '';
+  const label = role === 'user' ? '<small class="ai-message-label">You</small>' : showAssistantLabel ? '<small class="ai-message-label">Check A Reg AI</small>' : '';
   const timestamp = formatMessageTime(message.createdAt);
   return `<div class="ai-message is-${role}">${label}${attachmentMarkup(message.imageCount)}<div class="ai-message-copy">${escapeHtml(message.content)}</div>${timestamp ? `<time class="ai-message-time" datetime="${escapeHtml(message.createdAt || '')}">${escapeHtml(timestamp)}</time>` : ''}</div>`;
 }
@@ -234,7 +234,7 @@ function renderMessages(messages) {
 function appendMessage(role, content, createdAt = new Date(), showAssistantLabel = false, imageCount = 0) {
   const div = document.createElement('div');
   div.className = `ai-message ${role === 'user' ? 'is-user' : 'is-assistant'}`;
-  const label = role === 'user' ? '<small class="ai-message-label">You</small>' : showAssistantLabel ? '<small class="ai-message-label">Biismo AI</small>' : '';
+  const label = role === 'user' ? '<small class="ai-message-label">You</small>' : showAssistantLabel ? '<small class="ai-message-label">Check A Reg AI</small>' : '';
   div.innerHTML = `${label}${attachmentMarkup(imageCount)}<div class="ai-message-copy">${escapeHtml(content)}</div><time class="ai-message-time">${escapeHtml(formatMessageTime(createdAt))}</time>`;
   chatMessages.append(div);
   chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -244,7 +244,7 @@ function appendMessage(role, content, createdAt = new Date(), showAssistantLabel
 function appendThinking(showLabel = false) {
   const div = document.createElement('div');
   div.className = 'ai-message is-assistant is-thinking';
-  div.innerHTML = `${showLabel ? '<small class="ai-message-label">Biismo AI</small>' : ''}<div class="ai-thinking-copy"><span></span><span></span><span></span><em>Biismo AI is thinking…</em></div>`;
+  div.innerHTML = `${showLabel ? '<small class="ai-message-label">Check A Reg AI</small>' : ''}<div class="ai-thinking-copy"><span></span><span></span><span></span><em>Check A Reg AI is thinking…</em></div>`;
   chatMessages.append(div);
   chatMessages.scrollTop = chatMessages.scrollHeight;
   return div;
@@ -267,7 +267,7 @@ async function openCase(caseId) {
     newCaseView.hidden = true;
     chatView.hidden = false;
     chatVehicle.textContent = `${data.vehicle?.registration || 'VEHICLE'} · ${[data.vehicle?.make,data.vehicle?.model].filter(Boolean).join(' ')}`;
-    chatTitle.textContent = data.case?.title || 'Biismo AI chat';
+    chatTitle.textContent = data.case?.title || 'Check A Reg AI chat';
     renderMessages(data.messages || []);
     chatStatus.textContent = aiQuestions > 0 ? `${aiQuestions} AI questions available.` : 'No AI questions left. Get more from Plans & credits.';
   } catch (error) {
@@ -281,7 +281,7 @@ async function loadCases() {
   try {
     const data = await invoke({ action:'list' });
     const cases = Array.isArray(data.cases) ? data.cases : [];
-    caseList.innerHTML = cases.length ? cases.map(item => `<button class="ai-case" type="button" data-case-id="${escapeHtml(item.id)}"><strong>${escapeHtml(item.registration)}</strong><span>${escapeHtml(item.title || item.category)}</span><small>${formatMessageTime(item.updatedAt || item.createdAt)}</small></button>`).join('') : '<p class="ai-muted">No Biismo AI chats saved yet.</p>';
+    caseList.innerHTML = cases.length ? cases.map(item => `<button class="ai-case" type="button" data-case-id="${escapeHtml(item.id)}"><strong>${escapeHtml(item.registration)}</strong><span>${escapeHtml(item.title || item.category)}</span><small>${formatMessageTime(item.updatedAt || item.createdAt)}</small></button>`).join('') : '<p class="ai-muted">No Check A Reg AI chats saved yet.</p>';
     caseList.querySelectorAll('[data-case-id]').forEach(button => button.addEventListener('click', () => openCase(button.dataset.caseId)));
   } catch (error) {
     caseList.innerHTML = `<p class="ai-muted">${escapeHtml(error.message)}</p>`;
@@ -317,7 +317,7 @@ async function startDiagnosis() {
 
   const photosForRequest = [...newPhotos];
   setBusy(true);
-  aiStatus.textContent = 'Biismo AI is thinking…';
+  aiStatus.textContent = 'Check A Reg AI is thinking…';
   try {
     const data = await invoke({ action:'start', vehicleId, category:selectedCategory, text, images:photosForRequest });
     currentCaseId = data.caseId;
@@ -354,7 +354,7 @@ async function sendChatMessage() {
   const sentAt = new Date();
   const userBubble = appendMessage('user', text, sentAt, false, photosForRequest.length);
   const thinking = appendThinking(false);
-  chatStatus.textContent = 'Biismo AI is thinking…';
+  chatStatus.textContent = 'Check A Reg AI is thinking…';
   setBusy(true);
 
   try {
@@ -420,15 +420,15 @@ function installAttachmentLayout() {
     aiEnabled = Boolean(status.enabled);
     if (!aiEnabled) {
       unavailable.hidden = false;
-      unavailableText.textContent = 'Biismo AI is built and ready. Add the OpenAI API key to activate live diagnoses and photo analysis.';
+      unavailableText.textContent = 'Check A Reg AI is built and ready. Add the OpenAI API key to activate live diagnoses and photo analysis.';
       return;
     }
     workspace.hidden = false;
     await loadAllowance();
     await Promise.all([loadVehicles(), loadCases()]);
-    if (aiQuestions < 1) aiStatus.innerHTML = 'You have no AI questions yet. <a href="/credits.html">Buy credits, unlock questions or get BIISMO REG+.</a>';
+    if (aiQuestions < 1) aiStatus.innerHTML = 'You have no AI questions yet. <a href="/credits.html">Buy credits, unlock questions or get CHECK A REG+.</a>';
   } catch (error) {
     unavailable.hidden = false;
-    unavailableText.textContent = error.message || 'Biismo AI could not be loaded.';
+    unavailableText.textContent = error.message || 'Check A Reg AI could not be loaded.';
   }
 })();

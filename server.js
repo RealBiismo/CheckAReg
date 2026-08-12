@@ -31,6 +31,18 @@ const authConfig = {
   supabaseSecretKey: process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY,
 };
 
+const blockedBiismoHosts = ["biismoreg.com", "biismoreg-com.onrender.com"];
+const blockedBiismoSupabaseRef = "irpzvslnfgwyjwouissi";
+const configuredAppUrl = String(process.env.APP_BASE_URL || process.env.RENDER_EXTERNAL_URL || "").toLowerCase();
+const configuredSupabaseUrl = String(authConfig.supabaseUrl || "").toLowerCase();
+
+if (blockedBiismoHosts.some((host) => configuredAppUrl.includes(host))) {
+  throw new Error("Check A Reg isolation blocked a BiismoReg hosting URL. Use a separate APP_BASE_URL.");
+}
+if (configuredSupabaseUrl.includes(blockedBiismoSupabaseRef)) {
+  throw new Error("Check A Reg isolation blocked the BiismoReg Supabase project. Create a separate Supabase project.");
+}
+
 const stripeConfig = {
   secretKey: process.env.STRIPE_SECRET_KEY,
   webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
@@ -45,7 +57,7 @@ const creditBundles = Object.freeze([
 const creditBundlesById = new Map(creditBundles.map((bundle) => [bundle.id, bundle]));
 const plusPlan = Object.freeze({
   id: "biismo_plus",
-  label: "BIISMO REG+",
+  label: "CHECK A REG+",
   amountPence: 799,
   currency: "gbp",
   interval: "month",
@@ -61,7 +73,7 @@ const stripe = stripeConfig.secretKey
 const pushConfig = {
   publicKey: process.env.VAPID_PUBLIC_KEY,
   privateKey: process.env.VAPID_PRIVATE_KEY,
-  subject: process.env.VAPID_SUBJECT || "https://biismoreg-com.onrender.com",
+  subject: process.env.VAPID_SUBJECT || "mailto:checkareg@example.com",
   cronSecret: process.env.REMINDER_CRON_SECRET,
 };
 const emailExportSecret = process.env.EMAIL_EXPORT_SECRET;
@@ -376,7 +388,7 @@ async function handleStripeWebhook(req, res) {
       const subscriptionId = typeof session.subscription === "string" ? session.subscription : "";
       const customerId = typeof session.customer === "string" ? session.customer : "";
       if (!subscriptionId.startsWith("sub_") || !customerId.startsWith("cus_") || session.amount_total !== plusPlan.amountPence || String(session.currency || "").toLowerCase() !== plusPlan.currency) {
-        return res.status(400).json({ error: "Invalid BIISMO REG+ purchase." });
+        return res.status(400).json({ error: "Invalid CHECK A REG+ purchase." });
       }
       const subscription = await stripe.subscriptions.retrieve(subscriptionId);
       await callSupabaseAdminRpc("activate_biismo_plus", {
@@ -393,7 +405,7 @@ async function handleStripeWebhook(req, res) {
     const bundle = creditBundlesById.get(bundleId);
     const currency = String(session.currency || "").toLowerCase();
     if (!bundle || session.amount_total !== bundle.amountPence || currency !== "gbp") {
-      console.error(`Stripe checkout ${session.id} failed BIISMO REG fulfilment validation.`);
+      console.error(`Stripe checkout ${session.id} failed CHECK A REG fulfilment validation.`);
       return res.status(400).json({ error: "Invalid credit purchase." });
     }
 
@@ -854,7 +866,7 @@ app.post("/api/credits/checkout", checkoutLimiter, async (req, res) => {
             currency: "gbp",
             unit_amount: bundle.amountPence,
             product_data: {
-              name: `${bundle.credits} BIISMO REG credits`,
+              name: `${bundle.credits} CHECK A REG credits`,
               description: `${bundle.credits / 2} additional vehicle checks`,
             },
           },
@@ -897,11 +909,11 @@ app.post("/api/ai/questions/purchase", async (req, res) => {
 
 app.post("/api/plus/checkout", checkoutLimiter, async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
-  if (!stripeIsConfigured()) return res.status(503).json({ error: "BIISMO REG+ checkout is not available yet." });
+  if (!stripeIsConfigured()) return res.status(503).json({ error: "CHECK A REG+ checkout is not available yet." });
   try {
     const { token, user } = await authenticateRequest(req);
     const current = await callSupabaseRpc(token, "get_my_biismo_plus_customer");
-    if (current?.plusActive) return res.status(409).json({ error: "BIISMO REG+ is already active on this account." });
+    if (current?.plusActive) return res.status(409).json({ error: "CHECK A REG+ is already active on this account." });
     const appUrl = publicAppUrl(req);
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -928,8 +940,8 @@ app.post("/api/plus/checkout", checkoutLimiter, async (req, res) => {
     return res.json({ url: session.url });
   } catch (error) {
     const statusCode = error.statusCode || 502;
-    if (statusCode >= 500) console.error(`BIISMO REG+ checkout failed: ${error.message}`);
-    return res.status(statusCode).json({ error: statusCode >= 500 ? "BIISMO REG+ checkout could not be opened." : error.message });
+    if (statusCode >= 500) console.error(`CHECK A REG+ checkout failed: ${error.message}`);
+    return res.status(statusCode).json({ error: statusCode >= 500 ? "CHECK A REG+ checkout could not be opened." : error.message });
   }
 });
 
@@ -1358,7 +1370,7 @@ const isDirectRun =
 
 if (isDirectRun) {
   app.listen(PORT, () => {
-    console.log(`BIISMO REG listening on port ${PORT}.`);
+    console.log(`CHECK A REG listening on port ${PORT}.`);
   });
 }
 

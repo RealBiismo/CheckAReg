@@ -43,7 +43,7 @@
     if (raw.includes("user already registered")) return "A Check A Reg account already exists with that email.";
     if (raw.includes("password") && (raw.includes("weak") || raw.includes("characters"))) return "Choose a stronger password with at least 8 characters.";
     if (raw.includes("rate limit") || raw.includes("too many")) return "Too many attempts. Wait a moment and try again.";
-    if (raw.includes("network") || raw.includes("fetch") || raw.includes("timeout")) return "BIISMO REG couldn't reach the account service. Check your connection and try again.";
+    if (raw.includes("network") || raw.includes("fetch") || raw.includes("timeout")) return "CHECK A REG couldn't reach the account service. Check your connection and try again.";
     if (raw.includes("provider") || raw.includes("oauth")) return "Google sign-in couldn't be completed. Please try again.";
     return fallback;
   }
@@ -68,9 +68,9 @@
     const isRecovery = mode === "recovery";
     authDialog?.classList.toggle("is-recovery", isRecovery);
     authTitle.textContent = isRecovery
-      ? "Reset your BIISMO REG password"
+      ? "Reset your CHECK A REG password"
       : isSignUp
-        ? "Create your BIISMO REG account"
+        ? "Create your CHECK A REG account"
         : "Welcome back";
     authSubmitButton.textContent = isRecovery
       ? "Save new password"
@@ -107,12 +107,12 @@
     installBiismoAuthBrand();
     try {
       if (!window.supabase?.createClient) {
-        throw new Error("BIISMO REG secure account services could not be loaded.");
+        throw new Error("CHECK A REG secure account services could not be loaded.");
       }
 
       const response = await fetch("/api/config", { cache: "no-store" });
       const config = await response.json();
-      if (!response.ok) throw new Error(config.error || "BIISMO REG account services are unavailable.");
+      if (!response.ok) throw new Error(config.error || "CHECK A REG account services are unavailable.");
 
       client = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey, {
         auth: {
@@ -145,14 +145,14 @@
 
       return true;
     } catch (error) {
-      configurationError = friendlyAuthError(error, "BIISMO REG account services are unavailable right now.");
+      configurationError = friendlyAuthError(error, "CHECK A REG account services are unavailable right now.");
       updateAccountButton();
       return false;
     }
   }
 
   function requireClient() {
-    if (!client) throw new Error(configurationError || "BIISMO REG account services are unavailable.");
+    if (!client) throw new Error(configurationError || "CHECK A REG account services are unavailable.");
     return client;
   }
 
@@ -296,7 +296,7 @@
     }
 
     authSubmitButton.disabled = true;
-    setAuthMessage(authMode === "signup" ? "Creating your BIISMO REG account…" : authMode === "recovery" ? "Saving your new password…" : "Signing you in…");
+    setAuthMessage(authMode === "signup" ? "Creating your CHECK A REG account…" : authMode === "recovery" ? "Saving your new password…" : "Signing you in…");
 
     try {
       if (authMode === "recovery") {
@@ -309,7 +309,7 @@
         if (data.session) {
           window.location.href = `${BIISMO_ORIGIN}/account.html`;
         } else {
-          setAuthMessage("We've sent a BIISMO REG confirmation email. Open it to activate your account.", "success");
+          setAuthMessage("We've sent a CHECK A REG confirmation email. Open it to activate your account.", "success");
           authForm.reset();
         }
       } else {
@@ -331,13 +331,13 @@
     }
 
     forgotPasswordButton.disabled = true;
-    setAuthMessage("Sending your BIISMO REG reset link…");
+    setAuthMessage("Sending your CHECK A REG reset link…");
     try {
       const { error } = await requireClient().auth.resetPasswordForEmail(email, {
         redirectTo: `${BIISMO_ORIGIN}/?recovery=1`,
       });
       if (error) throw error;
-      setAuthMessage("Reset link sent. Check your inbox and follow the BIISMO REG password reset link.", "success");
+      setAuthMessage("Reset link sent. Check your inbox and follow the CHECK A REG password reset link.", "success");
     } catch (error) {
       setAuthMessage(friendlyAuthError(error, "The reset email couldn't be sent. Please try again."), "error");
     } finally {

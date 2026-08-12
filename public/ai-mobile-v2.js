@@ -6,7 +6,7 @@
   function installComposerPolish() {
     const input = document.getElementById('chatInput');
     if (input) {
-      input.placeholder = 'Ask Biismo AI';
+      input.placeholder = 'Ask Check A Reg AI';
       input.rows = 2;
     }
 
@@ -66,7 +66,7 @@
       chatView.hidden = false;
       chatMessages.innerHTML = '';
       chatTitle.textContent = 'New chat';
-      chatVehicle.textContent = 'BIISMO AI';
+      chatVehicle.textContent = 'CHECK A REG AI';
       chatStatus.textContent = aiQuestions > 0 ? `${aiQuestions} AI ${aiQuestions === 1 ? 'question' : 'questions'} available.` : 'No AI questions left.';
       syncVehicles();
       chatInput.value = '';
@@ -83,7 +83,7 @@
       vehicleSelect.value = mobileVehicle.value;
       issueText.value = text;
       newPhotos = [...chatPhotos];
-      chatStatus.textContent = 'Biismo AI is thinking…';
+      chatStatus.textContent = 'Check A Reg AI is thinking…';
       await startDiagnosis();
       if (currentCaseId) {
         exitDraft();

@@ -334,7 +334,7 @@
             <div data-maintenance-list class="maintenance-list"></div>
           </section>
           <section class="ownership-module">
-            <div class="ownership-module-title"><span>03</span><div><h4>Previous checks</h4><p>Your successful BIISMO REG searches for this registration.</p></div></div>
+            <div class="ownership-module-title"><span>03</span><div><h4>Previous checks</h4><p>Your successful CHECK A REG searches for this registration.</p></div></div>
             <div data-check-history class="check-history-list"></div>
           </section>
           <section class="ownership-module ownership-reminder-module">

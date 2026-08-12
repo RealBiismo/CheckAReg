@@ -427,7 +427,7 @@ async function initializeReminders() {
     return;
   }
   if (iosDevice && !installed) {
-    setReminderStatus("On iPhone, add BIISMO REG to your Home Screen before enabling reminders.");
+    setReminderStatus("On iPhone, add CHECK A REG to your Home Screen before enabling reminders.");
     return;
   }
   if (Notification.permission === "denied") {

@@ -1,4 +1,4 @@
-/* Mobile-first conversation shell for Biismo AI. Loaded after the original AI styles. */
+/* Mobile-first conversation shell for Check A Reg AI. Loaded after the original AI styles. */
 .ai-mobile-chats-button,.ai-mobile-drawer-close,.ai-mobile-drawer-backdrop,.ai-mobile-draft-vehicle{display:none}
 
 @media(max-width:850px){

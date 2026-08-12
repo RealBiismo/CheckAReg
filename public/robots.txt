@@ -4,4 +4,4 @@ Disallow: /account.html
 Disallow: /credits.html
 Disallow: /api/
 
-Sitemap: https://biismoreg.com/sitemap.xml
+Sitemap: https://checkareg.onrender.com/sitemap.xml

@@ -1,12 +1,12 @@
 # Check A Reg
 
-Check A Reg is an independently branded clone of the BiismoReg application. It preserves the vehicle-check, account, Garage, credits, payments, notifications, administration and AI feature architecture while applying the Check A Reg visual system.
+Check A Reg is an independent UK vehicle application. It preserves the vehicle-check, account, Garage, credits, payments, notifications, administration and AI feature architecture while applying the Check A Reg visual system.
 
 ## Isolation rule
 
-This repository must use its own hosting service, domain and environment variables. Do not copy BiismoReg's production Supabase, Stripe, DVLA, MOT, push or OpenAI secrets into this deployment. Create separate development resources first, then promote them only after testing.
+This repository must use its own hosting service, domain and environment variables. Do not copy BiismoReg's production Supabase, Stripe, DVLA, MOT, push or AI secrets into this deployment. The server actively refuses the BiismoReg production domain and Supabase project.
 
-BIISMO REG is a UK vehicle checker built with Node.js, Express and browser-native JavaScript. It combines official DVLA vehicle-enquiry data with DVSA MOT history and presents tax, MOT, mileage, emissions and vehicle details in a mobile-friendly report.
+Check A Reg is a UK vehicle checker built with Node.js, Express and browser-native JavaScript. It combines official DVLA vehicle-enquiry data with DVSA MOT history and presents tax, MOT, mileage, emissions and vehicle details in a mobile-friendly report.
 
 ## Features
 

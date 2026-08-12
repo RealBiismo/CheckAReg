@@ -25,7 +25,7 @@
     panel.innerHTML = `
       <div class="admin-ai-logs-heading">
         <div>
-          <span class="eyebrow">BIISMO AI AUDIT</span>
+          <span class="eyebrow">CHECK A REG AI AUDIT</span>
           <h3>AI Logs</h3>
           <small>Includes chats removed from the user's own history.</small>
         </div>
@@ -119,7 +119,7 @@
           <summary>
             <span class="admin-ai-log-main">
               <strong>${escapeHtml(log.registration || 'Vehicle')}</strong>
-              <span>${escapeHtml(log.title || log.category || 'Biismo AI chat')}</span>
+              <span>${escapeHtml(log.title || log.category || 'Check A Reg AI chat')}</span>
             </span>
             <span class="admin-ai-log-meta">
               ${log.deletedByUser ? '<b>User deleted</b>' : '<b>Visible</b>'}
@@ -131,14 +131,14 @@
             <div class="admin-ai-message-list">
               ${messages.length ? messages.map((message) => `
                 <article class="admin-ai-message ${message.role === 'user' ? 'is-user' : 'is-ai'}">
-                  <header><strong>${message.role === 'user' ? 'User' : 'Biismo AI'}</strong><time>${escapeHtml(formatDate(message.createdAt))}</time></header>
+                  <header><strong>${message.role === 'user' ? 'User' : 'Check A Reg AI'}</strong><time>${escapeHtml(formatDate(message.createdAt))}</time></header>
                   <p>${escapeHtml(message.content)}</p>
                   ${Number(message.imageCount) > 0 ? `<small>${Number(message.imageCount)} image attachment${Number(message.imageCount) === 1 ? '' : 's'}</small>` : ''}
                 </article>`).join('') : '<p class="notification-empty">No stored messages.</p>'}
             </div>
           </div>
         </details>`;
-    }).join('') : '<p class="notification-empty">No Biismo AI chats for this account yet.</p>';
+    }).join('') : '<p class="notification-empty">No Check A Reg AI chats for this account yet.</p>';
   }
 
   async function loadLogs(email) {
@@ -148,7 +148,7 @@
     lastEmail = email;
     const status = byId('adminAiLogsStatus');
     const list = byId('adminAiLogsList');
-    if (status) status.textContent = 'Loading Biismo AI logs…';
+    if (status) status.textContent = 'Loading Check A Reg AI logs…';
     if (list) list.innerHTML = '<p class="notification-empty">Loading AI logs…</p>';
     try {
       await window.biismoAuth.ready;

@@ -43,7 +43,7 @@ function renderOpenedNotification() {
   if (!tappedTitle && !tappedMessage) return;
 
   openedSection.hidden = false;
-  openedTitle.textContent = tappedTitle || "BIISMO REG notification";
+  openedTitle.textContent = tappedTitle || "CHECK A REG notification";
   openedMessage.textContent = tappedMessage || "Open your inbox below for the full update.";
   openedType.textContent = notificationTypeFromTag(tappedTag);
 

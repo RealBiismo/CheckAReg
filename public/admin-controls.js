@@ -57,7 +57,7 @@
   }
 
   function ownerCrown() {
-    return '<span class="owner-crown" role="img" aria-label="Owner account" title="BIISMO REG owner">♛</span>';
+    return '<span class="owner-crown" role="img" aria-label="Owner account" title="CHECK A REG owner">♛</span>';
   }
 
   function emailMarkup(email, isOwner = false) {
