@@ -107,84 +107,89 @@
     </section>
 
     <section id="profileView" class="account-view account-hub" aria-labelledby="profileMenuButton" hidden>
-      <section class="account-hub-hero">
-        <div class="profile-identity">
-          <div id="profileAvatar" class="profile-avatar" aria-label="Profile photo"><span id="profileInitials">CR</span></div>
-          <div><span class="eyebrow">MY CHECK A REG</span><h1 id="profileGreeting">Your account.</h1><p id="profileEmail">Loading your details…</p></div>
-        </div>
-        <div class="profile-meta"><span>Member since</span><strong id="profileJoinedAt">—</strong><small id="profileProvider">Secure sign-in</small></div>
-      </section>
+      <nav class="account-hub-tabs" aria-label="My Account pages">
+        <button class="is-active" type="button" data-hub-screen="overview" aria-current="page">Overview</button>
+        <button type="button" data-hub-screen="settings" aria-current="false">Profile &amp; security</button>
+        <button type="button" data-hub-screen="support" aria-current="false">Support <span id="supportTabCount">0</span></button>
+      </nav>
 
-      <section class="account-snapshot" aria-label="Account overview">
-        <article class="is-highlight"><span>Credits</span><strong id="profileCreditBalance">—</strong><small>Ready to use</small></article>
-        <article><span>Free checks left</span><strong id="profileFreeChecks">—</strong><small>Today</small></article>
-        <article><span>Saved vehicles</span><strong id="profileSavedVehicles">—</strong><small>In your garage</small></article>
-        <article><span>Total checks</span><strong id="profileTotalSearches">—</strong><small>Completed</small></article>
-        <article><span>AI questions</span><strong id="profileAiQuestions">—</strong><small>Available</small></article>
-        <article><span>Open tickets</span><strong id="profileOpenTickets">—</strong><small>With support</small></article>
-      </section>
-
-      <div class="account-hub-grid">
-        <section class="account-hub-card profile-card" aria-labelledby="personalDetailsTitle">
-          <div class="hub-card-heading"><div><span class="eyebrow">PROFILE</span><h2 id="personalDetailsTitle">Personal details</h2></div><span class="hub-card-number">01</span></div>
-          <div class="avatar-controls">
-            <label class="secondary-button avatar-upload" for="profileAvatarInput">Choose photo</label>
-            <input id="profileAvatarInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
-            <button id="removeProfileAvatarButton" class="text-button" type="button">Remove</button>
-            <small>JPG, PNG or WebP. We resize it securely.</small>
+      <section id="accountOverviewScreen" class="hub-screen" data-hub-screen-panel="overview">
+        <section class="account-hub-hero">
+          <div class="profile-identity">
+            <div id="profileAvatar" class="profile-avatar" aria-label="Profile photo"><span id="profileInitials">CR</span></div>
+            <div><span class="eyebrow">MY CHECK A REG</span><h1 id="profileGreeting">Your account.</h1><p id="profileEmail">Loading your details…</p></div>
           </div>
-          <form id="profileDetailsForm" class="hub-form">
-            <label for="profileDisplayName">Display name</label>
-            <input id="profileDisplayName" type="text" minlength="1" maxlength="50" autocomplete="name" placeholder="What should we call you?">
-            <button class="primary-button" type="submit">Save profile</button>
-            <p id="profileDetailsStatus" class="hub-status" role="status"></p>
-          </form>
+          <div class="profile-meta"><span>Member since</span><strong id="profileJoinedAt">—</strong><small id="profileProvider">Secure sign-in</small></div>
         </section>
 
-        <section class="account-hub-card" aria-labelledby="securityTitle">
-          <div class="hub-card-heading"><div><span class="eyebrow">SECURITY</span><h2 id="securityTitle">Sign-in &amp; security</h2></div><span class="hub-card-number">02</span></div>
-          <form id="changeEmailForm" class="hub-form">
-            <label for="profileNewEmail">Change email</label>
-            <div class="inline-form"><input id="profileNewEmail" type="email" autocomplete="email" placeholder="new@email.com"><button class="secondary-button" type="submit">Update</button></div>
-            <small>We’ll send confirmation links when required.</small>
-          </form>
-          <form id="changePasswordForm" class="hub-form separated-form">
-            <label for="profileNewPassword">New password</label>
-            <div class="inline-form"><input id="profileNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"><button class="secondary-button" type="submit">Change</button></div>
-          </form>
-          <p id="profileSecurityStatus" class="hub-status" role="status"></p>
+        <section class="account-snapshot" aria-label="Account overview">
+          <article class="is-highlight"><span>Credits</span><strong id="profileCreditBalance">—</strong><small>Ready to use</small></article>
+          <article><span>Free checks left</span><strong id="profileFreeChecks">—</strong><small>Today</small></article>
+          <article><span>Saved vehicles</span><strong id="profileSavedVehicles">—</strong><small>In your garage</small></article>
+          <article><span>Total checks</span><strong id="profileTotalSearches">—</strong><small>Completed</small></article>
+          <span class="sr-only" id="profileAiQuestions">—</span><span class="sr-only" id="profileOpenTickets">—</span>
         </section>
 
-        <section class="account-hub-card" aria-labelledby="preferencesTitle">
-          <div class="hub-card-heading"><div><span class="eyebrow">PREFERENCES</span><h2 id="preferencesTitle">Useful updates only</h2></div><span class="hub-card-number">03</span></div>
-          <form id="profilePreferencesForm" class="preference-list">
-            <label><span><strong>Vehicle reminders</strong><small>MOT and tax expiry nudges for selected vehicles.</small></span><input id="profileReminderPreference" type="checkbox"></label>
-            <label><span><strong>Product updates</strong><small>Occasional news about meaningful Check A Reg improvements.</small></span><input id="profileProductPreference" type="checkbox"></label>
-            <button class="secondary-button" type="submit">Save preferences</button>
-            <p id="profilePreferencesStatus" class="hub-status" role="status"></p>
-          </form>
-        </section>
+        <div class="account-action-list">
+          <button type="button" data-open-hub-screen="settings"><span><b>Profile &amp; security</b><small>Photo, display name, password and preferences</small></span><strong aria-hidden="true">→</strong></button>
+          <button type="button" data-open-hub-screen="support"><span><b>Support conversations</b><small>Report a problem or continue an existing ticket</small></span><strong aria-hidden="true">→</strong></button>
+          <a href="/credits.html"><span><b>Plans &amp; credits</b><small>View your balance, packs and purchases</small></span><strong aria-hidden="true">↗</strong></a>
+        </div>
+      </section>
 
-        <section class="account-hub-card privacy-card" aria-labelledby="privacyTitle">
-          <div class="hub-card-heading"><div><span class="eyebrow">PRIVACY</span><h2 id="privacyTitle">You control your data</h2></div><span class="hub-card-number">04</span></div>
-          <p>Download a copy of your profile, saved vehicles and support history at any time.</p>
-          <div class="privacy-actions"><button id="exportAccountDataButton" class="secondary-button" type="button">Download my data</button><button id="requestDeletionButton" class="text-button is-danger" type="button">Request account deletion</button></div>
-          <p id="profilePrivacyStatus" class="hub-status" role="status"></p>
-        </section>
-      </div>
+      <section id="accountSettingsScreen" class="hub-screen" data-hub-screen-panel="settings" hidden>
+        <header class="hub-screen-heading"><span class="eyebrow">ACCOUNT SETTINGS</span><h2>One place for your details.</h2><p>Make a change, save it, and carry on.</p></header>
+        <div class="account-settings-surface">
+          <section class="settings-row profile-card" aria-labelledby="personalDetailsTitle">
+            <div class="settings-row-heading"><span>01</span><div><h3 id="personalDetailsTitle">Personal details</h3><p>Your name and optional profile photo.</p></div></div>
+            <div class="settings-row-content">
+              <div class="avatar-controls"><label class="secondary-button avatar-upload" for="profileAvatarInput">Choose photo</label><input id="profileAvatarInput" type="file" accept="image/jpeg,image/png,image/webp" hidden><button id="removeProfileAvatarButton" class="text-button" type="button">Remove</button><small>JPG, PNG or WebP. We resize it securely.</small></div>
+              <form id="profileDetailsForm" class="hub-form"><label for="profileDisplayName">Display name</label><input id="profileDisplayName" type="text" minlength="1" maxlength="50" autocomplete="name" placeholder="What should we call you?"><button class="primary-button" type="submit">Save profile</button><p id="profileDetailsStatus" class="hub-status" role="status"></p></form>
+            </div>
+          </section>
 
-      <section class="account-hub-card support-card" aria-labelledby="supportTitle">
-        <div class="support-heading"><div><span class="eyebrow">SUPPORT</span><h2 id="supportTitle">Tell us what went wrong.</h2><p>Send the detail once. We’ll keep the ticket and reply here.</p></div><span class="support-promise">Usually reviewed within 2 working days</span></div>
-        <div class="support-layout">
-          <form id="supportTicketForm" class="support-form">
-            <div class="form-pair"><label>Issue type<select id="supportCategory" required><option value="bug">Bug or broken feature</option><option value="vehicle_data">Vehicle data looks wrong</option><option value="billing">Credits or billing</option><option value="account">Account access</option><option value="suggestion">Suggestion</option><option value="other">Something else</option></select></label><label>Registration (optional)<input id="supportRegistration" type="text" maxlength="8" autocomplete="off" placeholder="AB12 CDE"></label></div>
-            <label for="supportSubject">Subject</label><input id="supportSubject" type="text" minlength="5" maxlength="100" required placeholder="A short summary">
-            <label for="supportDescription">What happened?</label><textarea id="supportDescription" minlength="10" maxlength="2000" rows="6" required placeholder="What did you expect, and what happened instead?"></textarea>
-            <label class="screenshot-field" for="supportScreenshot"><span>Screenshot <small>(optional, max 5MB)</small></span><input id="supportScreenshot" type="file" accept="image/jpeg,image/png,image/webp"></label>
-            <button id="submitSupportTicketButton" class="primary-button" type="submit">Send to support</button>
-            <p id="supportFormStatus" class="hub-status" role="status"></p>
-          </form>
-          <div class="ticket-history"><div class="ticket-history-heading"><h3>Your tickets</h3><button id="refreshMyTicketsButton" class="text-button" type="button">Refresh</button></div><div id="mySupportTickets"><p class="notification-empty">Loading your tickets…</p></div></div>
+          <section class="settings-row" aria-labelledby="securityTitle">
+            <div class="settings-row-heading"><span>02</span><div><h3 id="securityTitle">Sign-in &amp; security</h3><p>Update the details used to access your account.</p></div></div>
+            <div class="settings-row-content">
+              <form id="changeEmailForm" class="hub-form"><label for="profileNewEmail">Change email</label><div class="inline-form"><input id="profileNewEmail" type="email" autocomplete="email" placeholder="new@email.com"><button class="secondary-button" type="submit">Update</button></div><small>We’ll send confirmation links when required.</small></form>
+              <form id="changePasswordForm" class="hub-form separated-form"><label for="profileNewPassword">New password</label><div class="inline-form"><input id="profileNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"><button class="secondary-button" type="submit">Change</button></div></form>
+              <p id="profileSecurityStatus" class="hub-status" role="status"></p>
+            </div>
+          </section>
+
+          <section class="settings-row" aria-labelledby="preferencesTitle">
+            <div class="settings-row-heading"><span>03</span><div><h3 id="preferencesTitle">Preferences</h3><p>Useful account updates only.</p></div></div>
+            <div class="settings-row-content"><form id="profilePreferencesForm" class="preference-list"><label><span><strong>Vehicle reminders</strong><small>MOT and tax expiry nudges.</small></span><input id="profileReminderPreference" type="checkbox"></label><label><span><strong>Product updates</strong><small>Occasional meaningful Check A Reg news.</small></span><input id="profileProductPreference" type="checkbox"></label><button class="secondary-button" type="submit">Save preferences</button><p id="profilePreferencesStatus" class="hub-status" role="status"></p></form></div>
+          </section>
+
+          <section class="settings-row privacy-card" aria-labelledby="privacyTitle">
+            <div class="settings-row-heading"><span>04</span><div><h3 id="privacyTitle">Privacy</h3><p>Download your data or request deletion.</p></div></div>
+            <div class="settings-row-content"><div class="privacy-actions"><button id="exportAccountDataButton" class="secondary-button" type="button">Download my data</button><button id="requestDeletionButton" class="text-button is-danger" type="button">Request account deletion</button></div><p id="profilePrivacyStatus" class="hub-status" role="status"></p></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="accountSupportScreen" class="hub-screen" data-hub-screen-panel="support" hidden>
+        <header class="hub-screen-heading support-screen-heading"><div><span class="eyebrow">SUPPORT</span><h2 id="supportTitle">Your conversations.</h2><p>Report something once, then speak to us here like a direct message.</p></div><button id="newSupportTicketButton" class="primary-button" type="button">New ticket</button></header>
+        <div class="support-inbox-shell">
+          <aside class="ticket-history"><div class="ticket-history-heading"><h3>Inbox</h3><button id="refreshMyTicketsButton" class="text-button" type="button">Refresh</button></div><div id="mySupportTickets"><p class="notification-empty">Loading your tickets…</p></div></aside>
+          <section class="support-thread-panel">
+            <form id="supportTicketForm" class="support-form support-new-ticket" hidden>
+              <div class="conversation-heading"><div><span class="eyebrow">NEW TICKET</span><h3>What can we help with?</h3></div><button id="cancelNewTicketButton" class="text-button" type="button">Cancel</button></div>
+              <div class="form-pair"><label>Issue type<select id="supportCategory" required><option value="bug">Bug or broken feature</option><option value="vehicle_data">Vehicle data looks wrong</option><option value="billing">Credits or billing</option><option value="account">Account access</option><option value="suggestion">Suggestion</option><option value="other">Something else</option></select></label><label>Registration (optional)<input id="supportRegistration" type="text" maxlength="8" autocomplete="off" placeholder="AB12 CDE"></label></div>
+              <label for="supportSubject">Subject</label><input id="supportSubject" type="text" minlength="5" maxlength="100" required placeholder="A short summary">
+              <label for="supportDescription">First message</label><textarea id="supportDescription" minlength="10" maxlength="2000" rows="6" required placeholder="What did you expect, and what happened instead?"></textarea>
+              <label class="screenshot-field" for="supportScreenshot"><span>Screenshot <small>(optional, max 5MB)</small></span><input id="supportScreenshot" type="file" accept="image/jpeg,image/png,image/webp"></label>
+              <button id="submitSupportTicketButton" class="primary-button" type="submit">Start conversation</button><p id="supportFormStatus" class="hub-status" role="status"></p>
+            </form>
+            <div id="supportConversationEmpty" class="conversation-empty"><span aria-hidden="true">✦</span><h3>Select a conversation</h3><p>Choose a ticket from your inbox or start a new one.</p></div>
+            <section id="supportConversation" class="support-conversation" hidden>
+              <header class="conversation-heading"><button id="backToTicketListButton" class="text-button conversation-back" type="button">← Inbox</button><div><span id="supportConversationMeta" class="eyebrow">SUPPORT</span><h3 id="supportConversationTitle">Conversation</h3></div><span id="supportConversationStatus" class="ticket-status">Open</span></header>
+              <div id="userSupportMessages" class="support-messages" aria-live="polite"></div>
+              <form id="userSupportReplyForm" class="support-reply-form"><label class="sr-only" for="userSupportReply">Reply to support</label><textarea id="userSupportReply" maxlength="2000" rows="2" placeholder="Write a reply…" required></textarea><button id="sendUserSupportReplyButton" class="primary-button" type="submit">Send</button></form>
+              <p id="userSupportReplyStatus" class="hub-status" role="status"></p>
+            </section>
+          </section>
         </div>
       </section>
     </section>
@@ -207,7 +212,7 @@
         <section id="adminSupportInbox" class="admin-panel admin-support-inbox" hidden>
           <div class="support-heading"><div><span class="eyebrow">CUSTOMER SUPPORT</span><h2>Support inbox</h2><p>Review reports, reply to customers and close the loop.</p></div><div class="support-inbox-actions"><label for="adminSupportStatusFilter">Status</label><select id="adminSupportStatusFilter"><option value="">All tickets</option><option value="open">Open</option><option value="in_progress">In progress</option><option value="waiting_on_user">Waiting on user</option><option value="resolved">Resolved</option><option value="closed">Closed</option></select><button id="refreshAdminSupportButton" class="secondary-button compact-button" type="button">Refresh</button></div></div>
           <p id="adminSupportStatus" class="admin-status" role="status"></p>
-          <div class="admin-support-layout"><div id="adminSupportTicketList" class="admin-support-list"><p class="notification-empty">Open Support to load tickets.</p></div><section id="adminSupportTicketDetail" class="admin-support-detail" hidden><div id="adminSupportTicketContent"></div><form id="adminSupportReplyForm"><label for="adminSupportReply">Reply</label><textarea id="adminSupportReply" maxlength="2000" rows="6" placeholder="Write a clear response for the customer…"></textarea><label for="adminSupportTicketStatus">Ticket status</label><select id="adminSupportTicketStatus"><option value="open">Open</option><option value="in_progress">In progress</option><option value="waiting_on_user">Waiting on user</option><option value="resolved">Resolved</option><option value="closed">Closed</option></select><button id="saveAdminSupportTicketButton" class="primary-button" type="submit">Save response</button></form></section></div>
+          <div class="admin-support-layout"><div id="adminSupportTicketList" class="admin-support-list"><p class="notification-empty">Open Support to load tickets.</p></div><section id="adminSupportTicketDetail" class="admin-support-detail" hidden><div id="adminSupportTicketContent"></div><div id="adminSupportMessages" class="support-messages"></div><form id="adminSupportReplyForm"><label for="adminSupportReply">Send a message</label><textarea id="adminSupportReply" maxlength="2000" rows="3" placeholder="Write a reply…"></textarea><label for="adminSupportTicketStatus">Ticket status</label><select id="adminSupportTicketStatus"><option value="open">Open</option><option value="in_progress">In progress</option><option value="waiting_on_user">Waiting on user</option><option value="resolved">Resolved</option><option value="closed">Closed</option></select><button id="saveAdminSupportTicketButton" class="primary-button" type="submit">Send &amp; update</button></form></section></div>
         </section>
 
         <div class="admin-dashboard-grid">
