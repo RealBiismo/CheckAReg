@@ -59,6 +59,7 @@ const NETWORK_FIRST_ASSETS = new Set([
   "/full-history-preview.js",
   "/full-history-preview.css",
   "/checkareg-theme.css",
+  "/mobile-accessibility.css",
   "/pwa-install.css",
   "/manifest.json"
 ]);
@@ -73,6 +74,7 @@ const STATIC_ASSETS = [
   "/brand-logos.css",
   "/full-history-preview.css",
   "/checkareg-theme.css",
+  "/mobile-accessibility.css",
   "/garage-hub.css",
   "/garage-hub-fixes.css",
   "/ai-mechanic.html",

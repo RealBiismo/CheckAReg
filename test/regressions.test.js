@@ -24,6 +24,39 @@ test("service worker updates app shells from network without atomic precache fai
   assert.match(worker, /Promise\.allSettled/);
   assert.doesNotMatch(worker, /cache\.addAll/);
   assert.match(worker, /event\.request\.mode === "navigate"/);
+  assert.match(worker, /"\/mobile-accessibility\.css"/);
+});
+
+test("every interactive app page loads the shared mobile accessibility layer", async () => {
+  const pages = ["index.html", "account.html", "credits.html", "ai-mechanic.html", "notifications.html"];
+  for (const page of pages) {
+    const html = await read(`public/${page}`);
+    assert.match(html, /<link rel="stylesheet" href="mobile-accessibility\.css">/, `${page} is missing mobile controls CSS`);
+  }
+
+  const [css, aiEntry] = await Promise.all([
+    read("public/mobile-accessibility.css"),
+    read("public/ai-entry.js"),
+  ]);
+  assert.match(css, /min-height: 44px !important/);
+  assert.match(css, /safe-area-inset-top/);
+  assert.match(css, /\.home-header-actions \.ai-mechanic-entry/);
+  assert.match(css, /grid-template-columns: 48px minmax\(78px, auto\)/);
+  assert.match(css, /grid-template-columns: 44px 44px minmax\(72px, 1fr\)/);
+  assert.match(css, /\.notification-bell[\s\S]*min-height: 44px !important/);
+  assert.match(aiEntry, /aria-label", "Open Check A Reg AI Mechanic"/);
+});
+
+test("homepage mobile controls and footer remain centred and accessible", async () => {
+  const [home, css] = await Promise.all([
+    read("public/index.html"),
+    read("public/mobile-accessibility.css"),
+  ]);
+
+  assert.match(home, /© 2026 Check A Reg\. All rights reserved\./);
+  assert.match(css, /body\.home-page \.trust-row[\s\S]*place-items: center !important/);
+  assert.match(css, /body\.home-page \.search-panel > \.primary-button[\s\S]*height: 52px !important/);
+  assert.match(css, /min-height: calc\(88px \+ env\(safe-area-inset-top, 0px\)\)/);
 });
 
 test("account page uses real unique elements instead of a global getElementById patch", async () => {
