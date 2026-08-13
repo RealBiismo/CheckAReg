@@ -27,13 +27,50 @@ test("service worker updates app shells from network without atomic precache fai
 });
 
 test("account page uses real unique elements instead of a global getElementById patch", async () => {
-  const [html, splash] = await Promise.all([read("public/account.html"), read("public/splash.js")]);
+  const [html, splash, admin] = await Promise.all([
+    read("public/account.html"),
+    read("public/splash.js"),
+    read("public/admin-controls.js"),
+  ]);
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
   assert.equal(new Set(ids).size, ids.length, "account.html contains duplicate IDs");
   assert.doesNotMatch(splash, /Document\.prototype\.getElementById\s*=/);
   for (const id of ["garageStatus", "adminUserSearchButton", "adminAccountStatusBadge"]) {
     assert.ok(ids.includes(id), `missing #${id}`);
   }
+  for (const id of ["adminTotalUsers", "adminActiveUsers", "adminBannedUsers", "adminSearchesToday", "adminCreditsTotal"]) {
+    assert.ok(ids.includes(id), `missing dashboard metric #${id}`);
+    assert.match(admin, new RegExp(`${id}:`), `admin dashboard does not render #${id}`);
+  }
+  assert.doesNotMatch(admin, /adminMetric(?:TotalUsers|VerifiedUsers|BannedUsers|SearchesToday|PushSubscribers)/);
+});
+
+test("admin dashboard migration defines every staff RPC used by the portal", async () => {
+  const [migration, directory, logs] = await Promise.all([
+    read("supabase/migrations/20260813030000_repair_admin_dashboard.sql"),
+    read("public/staff-user-directory.js"),
+    read("public/admin-ai-logs.js"),
+  ]);
+
+  assert.match(directory, /rpc\("staff_list_accounts"\)/);
+  assert.match(logs, /\.rpc\('admin_get_ai_logs'/);
+  assert.match(migration, /function public\.staff_list_accounts\(\)/);
+  assert.match(migration, /function public\.admin_get_ai_logs\(p_target_email text, p_limit integer/);
+  assert.match(migration, /'creditsInCirculation'/);
+});
+
+test("database hardening migration covers advisor findings from the sweep", async () => {
+  const sql = await read("supabase/migrations/20260813030500_harden_database_indexes.sql");
+  for (const index of [
+    "ai_question_reservations_case_id_idx",
+    "app_moderators_added_by_idx",
+    "staff_support_notes_staff_user_id_idx",
+    "ai_mechanic_cases_vehicle_id_idx",
+    "ai_mechanic_messages_user_id_idx",
+  ]) {
+    assert.match(sql, new RegExp(index));
+  }
+  assert.match(sql, /user_id = \(select auth\.uid\(\)\)/);
 });
 
 test("AI reconciliation migration includes entitlements, standalone chat and soft delete", async () => {
