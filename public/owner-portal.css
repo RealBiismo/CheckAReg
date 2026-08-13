@@ -1,0 +1,637 @@
+/* Authenticated Check A Reg owner portal — isolated from the public homepage. */
+:root {
+  --portal-bg: #05080c;
+  --portal-panel: rgba(11, 16, 23, 0.94);
+  --portal-panel-soft: rgba(255, 255, 255, 0.026);
+  --portal-line: rgba(161, 183, 208, 0.12);
+  --portal-line-strong: rgba(80, 174, 255, 0.32);
+  --portal-blue: #0797ff;
+  --portal-blue-soft: #82c8ff;
+  --portal-green: #55d6a0;
+  --portal-yellow: #ffd84b;
+  --portal-muted: #8995a5;
+}
+
+body.owner-portal-page {
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at 84% 2%, rgba(0, 132, 255, 0.11), transparent 30rem),
+    radial-gradient(circle at 3% 48%, rgba(32, 93, 148, 0.055), transparent 32rem),
+    var(--portal-bg);
+}
+
+.owner-portal-page .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  min-height: 74px;
+  border-bottom: 1px solid var(--portal-line);
+  background: rgba(5, 8, 12, 0.82);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+}
+
+.owner-portal-page .account-main {
+  width: min(1220px, calc(100% - 40px));
+  padding-bottom: 84px;
+}
+
+.owner-portal-page .account-menu {
+  position: sticky;
+  top: 86px;
+  z-index: 25;
+  width: max-content;
+  margin: 18px auto 0;
+  padding: 4px;
+  border-color: var(--portal-line) !important;
+  border-radius: 13px;
+  background: rgba(8, 13, 19, 0.9) !important;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(16px);
+}
+
+.owner-portal-page .account-menu-button {
+  min-height: 39px;
+  padding: 0 17px;
+  gap: 8px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9px;
+  font-size: 12px;
+}
+
+.owner-portal-page .account-menu-button span {
+  color: #647387;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.owner-portal-page .account-menu-button.is-active {
+  background: #eef7ff !important;
+  color: #07111c !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+}
+
+.owner-portal-page .account-menu-button.is-active span { color: #147cc2; }
+
+/* Garage */
+.owner-portal-page .account-hero {
+  position: relative;
+  margin-top: 24px;
+  padding: clamp(34px, 5vw, 64px);
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1.18fr) minmax(340px, 0.72fr);
+  align-items: center;
+  gap: clamp(34px, 6vw, 80px);
+  border: 1px solid var(--portal-line);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 88% 18%, rgba(0, 138, 255, 0.17), transparent 23rem),
+    linear-gradient(145deg, rgba(14, 21, 30, 0.98), rgba(7, 11, 16, 0.98));
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.owner-portal-page .account-hero::after {
+  position: absolute;
+  right: -50px;
+  bottom: -86px;
+  width: 290px;
+  height: 180px;
+  border: 30px solid rgba(255, 255, 255, 0.018);
+  border-radius: 50%;
+  transform: rotate(-12deg);
+  content: "";
+  pointer-events: none;
+}
+
+.owner-portal-page .account-hero h1 {
+  max-width: 780px;
+  margin-top: 10px;
+  font-size: clamp(44px, 6vw, 76px);
+  line-height: 0.96;
+  letter-spacing: -0.066em;
+}
+
+.owner-portal-page .account-hero h1 em,
+.owner-portal-page .store-v2-hero h1 em {
+  color: var(--portal-blue);
+  font-style: normal;
+}
+
+.owner-portal-page #accountEmail {
+  margin-top: 22px;
+  color: #a8b4c4;
+  font-size: 13px;
+}
+
+.owner-portal-page .garage-search {
+  position: relative;
+  z-index: 1;
+  padding: 18px;
+  border: 1px solid rgba(143, 169, 197, 0.16);
+  border-radius: 18px;
+  background: rgba(4, 8, 13, 0.65);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.owner-portal-page .garage-search-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--portal-blue-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+}
+
+.owner-portal-page .garage-search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.owner-portal-page .garage-search input {
+  width: 100%;
+  min-width: 0;
+  height: 52px;
+  padding: 0 15px;
+  border: 1px solid rgba(145, 173, 204, 0.18);
+  border-radius: 11px;
+  background: #090e14;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  outline: 0;
+}
+
+.owner-portal-page .garage-search input:focus {
+  border-color: var(--portal-blue);
+  box-shadow: 0 0 0 4px rgba(7, 151, 255, 0.11);
+}
+
+.owner-portal-page .garage-search .primary-button {
+  width: auto;
+  min-height: 52px;
+  margin: 0;
+  padding: 0 18px;
+  border-radius: 11px;
+  white-space: nowrap;
+}
+
+.owner-portal-page .garage-search > small {
+  display: block;
+  margin-top: 10px;
+  color: #657184;
+  font-size: 10px;
+}
+
+.garage-overview,
+.owner-portal-page .saved-section,
+.owner-portal-page .reminder-section {
+  margin-top: 18px;
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid var(--portal-line);
+  border-radius: 22px;
+  background: var(--portal-panel);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.17);
+}
+
+.garage-overview-heading,
+.owner-portal-page .saved-section > .section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.garage-overview h2,
+.owner-portal-page .saved-section h2,
+.owner-portal-page .reminder-section h2 {
+  margin-top: 7px;
+  font-size: clamp(27px, 3vw, 38px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.portal-text-link {
+  flex: 0 0 auto;
+  color: #d8e8f7;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.portal-text-link:hover { color: var(--portal-blue-soft); }
+
+.garage-stat-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 0.72fr 0.72fr 1.56fr;
+  gap: 10px;
+}
+
+.garage-stat,
+.garage-quick-action {
+  min-width: 0;
+  min-height: 122px;
+  padding: 18px;
+  border: 1px solid var(--portal-line);
+  border-radius: 15px;
+  background: var(--portal-panel-soft);
+}
+
+.garage-stat { display: flex; flex-direction: column; justify-content: space-between; }
+.garage-stat.is-blue { border-color: rgba(7, 151, 255, 0.25); background: linear-gradient(145deg, rgba(7, 151, 255, 0.12), rgba(255, 255, 255, 0.02)); }
+.garage-stat span,
+.garage-stat small { color: var(--portal-muted); font-size: 10px; }
+.garage-stat span { font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.garage-stat strong { display: block; margin: 5px 0; font-size: 34px; line-height: 1; }
+
+.garage-quick-action {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.garage-quick-action:hover {
+  border-color: rgba(7, 151, 255, 0.34);
+  background: rgba(7, 151, 255, 0.075);
+  transform: translateY(-2px);
+}
+
+.quick-action-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: rgba(7, 151, 255, 0.11);
+  color: var(--portal-blue-soft);
+  font-size: 19px;
+}
+
+.garage-quick-action div > span,
+.garage-quick-action strong,
+.garage-quick-action small { display: block; }
+.garage-quick-action div > span { color: var(--portal-blue-soft); font-size: 9px; font-weight: 900; letter-spacing: 0.14em; }
+.garage-quick-action strong { margin-top: 5px; font-size: 16px; }
+.garage-quick-action small { margin-top: 4px; color: var(--portal-muted); font-size: 10px; }
+.garage-quick-action > b { color: #657486; font-size: 18px; }
+
+.owner-portal-page .saved-section { padding-bottom: clamp(24px, 3.5vw, 38px); }
+.owner-portal-page .section-subcopy { max-width: 570px; margin-top: 8px; color: var(--portal-muted); font-size: 12px; line-height: 1.55; }
+.owner-portal-page .garage-heading-meta { align-items: flex-end; flex-direction: column; gap: 6px; }
+.owner-portal-page .garage-limit,
+.owner-portal-page .saved-count {
+  padding: 6px 9px;
+  border: 1px solid var(--portal-line) !important;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025) !important;
+  color: #778597;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+}
+
+.owner-portal-page .saved-grid { margin-top: 20px; gap: 12px; }
+.owner-portal-page .garage-card,
+.owner-portal-page .empty-garage {
+  border-color: var(--portal-line) !important;
+  border-radius: 17px !important;
+  background: linear-gradient(150deg, rgba(15, 21, 29, 0.98), rgba(7, 11, 16, 0.98)) !important;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+}
+
+.owner-portal-page .garage-card { transition: transform 170ms ease, border-color 170ms ease; }
+.owner-portal-page .garage-card:hover { border-color: rgba(7, 151, 255, 0.27) !important; transform: translateY(-2px); }
+.owner-portal-page .garage-card h3 { letter-spacing: -0.035em; }
+.owner-portal-page .garage-card .card-action { color: var(--portal-blue-soft); }
+
+.owner-portal-page .reminder-section {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(85, 214, 160, 0.17) !important;
+  background:
+    radial-gradient(circle at 94% 12%, rgba(66, 200, 143, 0.09), transparent 20rem),
+    var(--portal-panel) !important;
+}
+
+.owner-portal-page .reminder-section::before {
+  position: absolute;
+  top: 0;
+  left: 30px;
+  width: 72px;
+  height: 2px;
+  background: var(--portal-green);
+  content: "";
+}
+
+.owner-portal-page .reminder-copy > p:not(.reminder-status) { max-width: 680px; line-height: 1.55; }
+.owner-portal-page .reminder-status { color: #8fb9a7; }
+.owner-portal-page .reminder-vehicle-list { border-top-color: var(--portal-line); }
+.owner-portal-page .reminder-vehicle-option { border-color: var(--portal-line); background: rgba(255, 255, 255, 0.022); }
+
+/* Store */
+.owner-portal-page.credit-store-page .account-main { width: min(1180px, calc(100% - 40px)); }
+.owner-portal-page .store-v2-hero {
+  position: relative;
+  margin: 24px 0 18px;
+  padding: clamp(32px, 5vw, 58px);
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.62fr);
+  align-items: center;
+  border: 1px solid var(--portal-line);
+  border-radius: 25px;
+  background:
+    radial-gradient(circle at 90% 15%, rgba(7, 151, 255, 0.16), transparent 24rem),
+    linear-gradient(145deg, rgba(14, 21, 30, 0.98), rgba(7, 11, 16, 0.98));
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.26);
+}
+
+.owner-portal-page .store-v2-hero h1 { margin: 10px 0 14px; font-size: clamp(43px, 6vw, 72px); line-height: 0.94; }
+.owner-portal-page .store-v2-hero p { max-width: 610px; }
+.owner-portal-page .store-balance-strip { position: relative; min-width: 0; gap: 7px; }
+.owner-portal-page .store-balance-strip article {
+  min-width: 0;
+  min-height: 94px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-color: var(--portal-line);
+  border-radius: 13px;
+  background: rgba(4, 8, 13, 0.56);
+}
+.owner-portal-page .store-balance-strip article:first-child { border-color: rgba(7, 151, 255, 0.27); background: rgba(7, 151, 255, 0.08); }
+.owner-portal-page .store-balance-strip strong { font-size: 25px; }
+.owner-portal-page .purchase-status { margin: 14px 0; }
+
+.owner-portal-page .store-service-grid { gap: 12px; grid-template-columns: minmax(0, 1.28fr) minmax(310px, 0.72fr); }
+.owner-portal-page .service-card {
+  position: relative;
+  padding: clamp(23px, 3vw, 34px);
+  border-color: var(--portal-line) !important;
+  border-radius: 21px !important;
+  background: var(--portal-panel) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2);
+}
+
+.owner-portal-page .service-card.plus-card {
+  overflow: hidden;
+  border-color: rgba(7, 151, 255, 0.36) !important;
+  background:
+    radial-gradient(circle at 100% 0, rgba(7, 151, 255, 0.18), transparent 23rem),
+    linear-gradient(145deg, rgba(10, 31, 48, 0.97), rgba(7, 12, 18, 0.98)) !important;
+  box-shadow: 0 0 0 1px rgba(7, 151, 255, 0.08), 0 28px 80px rgba(0, 0, 0, 0.34) !important;
+}
+
+.owner-portal-page .service-card.plus-card::before {
+  position: absolute;
+  top: 0;
+  left: 30px;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--portal-blue), var(--portal-blue-soft));
+  content: "";
+}
+
+.owner-portal-page .service-card h2 { font-size: clamp(28px, 3vw, 38px); }
+.owner-portal-page .plus-price strong { color: #fff; font-size: clamp(31px, 3.4vw, 43px); }
+.owner-portal-page .plus-price small { margin-top: 3px; }
+.owner-portal-page .service-lead { max-width: 650px; }
+.owner-portal-page .plus-benefits { margin: 22px 0; gap: 7px; }
+.owner-portal-page .plus-benefits span {
+  position: relative;
+  padding: 11px 12px 11px 34px;
+  border-color: rgba(145, 173, 204, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+}
+.owner-portal-page .plus-benefits span::before { position: absolute; top: 11px; left: 12px; color: var(--portal-green); font-weight: 900; content: "✓"; }
+.owner-portal-page .plus-benefits strong { font-size: inherit; }
+.owner-portal-page .plus-cta { min-height: 51px; background: linear-gradient(135deg, #0797ff, #0576d3); }
+.owner-portal-page .ai-service-card { display: flex; flex-direction: column; }
+.owner-portal-page .ai-service-card .ai-pack-button { margin-top: auto; }
+
+.owner-portal-page .compact-credit-section {
+  margin-top: 12px;
+  padding: clamp(23px, 3vw, 32px);
+  border: 1px solid var(--portal-line);
+  border-radius: 21px !important;
+  background: var(--portal-panel) !important;
+}
+.owner-portal-page .compact-store-heading { align-items: flex-end; }
+.owner-portal-page .compact-store-heading h2 { margin-top: 6px; font-size: clamp(27px, 3vw, 38px); letter-spacing: -0.045em; }
+.owner-portal-page .compact-store-heading p { margin-top: 7px; color: var(--portal-muted); font-size: 12px; }
+.owner-portal-page .compact-credit-grid { margin-top: 20px; gap: 9px; }
+.owner-portal-page .compact-credit-grid .credit-pack {
+  min-height: 220px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-color: var(--portal-line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.owner-portal-page .compact-credit-grid .credit-pack.is-featured {
+  border-color: rgba(7, 151, 255, 0.38);
+  background: linear-gradient(145deg, rgba(7, 151, 255, 0.1), rgba(255, 255, 255, 0.02));
+}
+.owner-portal-page .compact-credit-grid .credit-pack > strong { margin-top: 14px; font-size: 36px; }
+.owner-portal-page .compact-credit-grid .credit-pack p { margin: 4px 0; }
+.owner-portal-page .credit-pack-unit { display: block; margin-top: 8px; color: #78889a; font-size: 10px; }
+.owner-portal-page .compact-credit-grid .credit-pack-price { margin-top: auto; padding-top: 18px; font-size: 24px; }
+.owner-portal-page .compact-credit-grid .primary-button { border-radius: 10px; }
+.owner-portal-page .compact-purchase-history {
+  margin-top: 12px;
+  padding: 23px 28px;
+  border: 1px solid var(--portal-line);
+  border-radius: 18px;
+  background: rgba(9, 14, 20, 0.84);
+}
+.owner-portal-page .compact-purchase-history .section-heading h2 { font-size: 24px; }
+
+/* Admin command centre */
+.owner-portal-page:has(#adminView:not([hidden])) {
+  background:
+    radial-gradient(circle at 82% 3%, rgba(7, 151, 255, 0.115), transparent 32rem),
+    radial-gradient(circle at 8% 42%, rgba(49, 211, 148, 0.04), transparent 30rem),
+    var(--portal-bg);
+}
+
+.owner-portal-page:has(#adminView:not([hidden])) .site-header,
+.owner-portal-page:has(#adminView:not([hidden])) .account-main { width: min(1420px, calc(100% - 46px)); }
+.owner-portal-page .admin-control-centre { padding-bottom: 40px; }
+.owner-portal-page .dashboard-hero {
+  position: relative;
+  margin-top: 24px;
+  min-height: 190px;
+  padding: clamp(30px, 4vw, 48px);
+  overflow: hidden;
+  border-color: var(--portal-line);
+  border-radius: 24px;
+  background:
+    linear-gradient(100deg, rgba(7, 151, 255, 0.1), transparent 48%),
+    linear-gradient(145deg, rgba(14, 21, 30, 0.98), rgba(7, 11, 16, 0.98));
+}
+.owner-portal-page .dashboard-hero::after {
+  position: absolute;
+  top: 0;
+  right: 7%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(transparent, rgba(130, 200, 255, 0.25), transparent);
+  transform: rotate(25deg);
+  content: "";
+}
+.owner-portal-page .dashboard-hero h1 { font-size: clamp(44px, 5vw, 70px); }
+.owner-portal-page .admin-hero-actions { position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; }
+.owner-portal-page .admin-live {
+  min-height: 38px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(85, 214, 160, 0.22);
+  border-radius: 10px;
+  background: rgba(85, 214, 160, 0.06);
+  color: #93e7bf;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+.owner-portal-page .admin-live i { width: 6px; height: 6px; border-radius: 50%; background: var(--portal-green); box-shadow: 0 0 14px rgba(85, 214, 160, 0.8); }
+
+.owner-portal-page .admin-overview { margin-top: 12px; gap: 9px; }
+.owner-portal-page .admin-overview article {
+  position: relative;
+  min-height: 126px;
+  padding: 18px;
+  overflow: hidden;
+  border-color: var(--portal-line);
+  border-radius: 15px;
+  background: rgba(10, 15, 22, 0.92);
+}
+.owner-portal-page .admin-overview article::after {
+  position: absolute;
+  right: 13px;
+  bottom: 11px;
+  color: rgba(130, 200, 255, 0.12);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  content: "01";
+}
+.owner-portal-page .admin-overview article:nth-child(2)::after { content: "02"; }
+.owner-portal-page .admin-overview article:nth-child(3)::after { content: "03"; }
+.owner-portal-page .admin-overview article:nth-child(4)::after { content: "04"; }
+.owner-portal-page .admin-overview article:nth-child(5)::after { content: "05"; }
+.owner-portal-page .admin-overview span { color: #91a0b2; font-size: 9px; font-weight: 900; letter-spacing: 0.11em; text-transform: uppercase; }
+.owner-portal-page .admin-overview strong { margin: 12px 0 8px; font-size: clamp(31px, 3vw, 42px); }
+.owner-portal-page .admin-overview small { color: #5f6d7d; font-size: 9px; }
+.owner-portal-page .admin-overview article:nth-child(2) strong { color: var(--portal-green); }
+.owner-portal-page .admin-overview article:nth-child(3) strong { color: #ff8793; }
+.owner-portal-page .admin-overview article:nth-child(4) strong { color: var(--portal-blue-soft); }
+
+.owner-portal-page .admin-dashboard-grid { margin-top: 12px; grid-template-columns: minmax(0, 1.38fr) minmax(340px, 0.62fr); gap: 12px; }
+.owner-portal-page .admin-panel {
+  border-color: var(--portal-line);
+  border-radius: 18px;
+  background: rgba(10, 15, 22, 0.92);
+  box-shadow: 0 22px 65px rgba(0, 0, 0, 0.18);
+}
+.owner-portal-page .admin-panel-heading p { max-width: 520px; margin-top: 7px; color: var(--portal-muted); font-size: 11px; line-height: 1.5; }
+.owner-portal-page .admin-panel h2 { font-size: clamp(25px, 2.5vw, 34px); }
+.owner-portal-page .broadcast-dot { width: 9px; height: 9px; margin-top: 7px; border-radius: 50%; background: var(--portal-blue); box-shadow: 0 0 18px rgba(7, 151, 255, 0.72); }
+.owner-portal-page #adminView input,
+.owner-portal-page #adminView textarea { border-color: var(--portal-line); border-radius: 10px; background: #080d13; }
+.owner-portal-page #adminView input:focus,
+.owner-portal-page #adminView textarea:focus { border-color: var(--portal-blue); box-shadow: 0 0 0 4px rgba(7, 151, 255, 0.1); }
+.owner-portal-page #adminView .primary-button { background: linear-gradient(135deg, #0797ff, #066fca); }
+.owner-portal-page .admin-user-result { border-color: var(--portal-line-strong); border-radius: 14px; background: rgba(5, 9, 14, 0.72); }
+.owner-portal-page .admin-user-stats { margin-top: 15px; gap: 7px; }
+.owner-portal-page .admin-user-stats article,
+.owner-portal-page .admin-broadcast-stats article { border-radius: 10px; }
+.owner-portal-page .admin-quick-tools { margin-top: 12px; gap: 12px; }
+.owner-portal-page .admin-quick-tools > .admin-panel { min-height: 330px; }
+.owner-portal-page .admin-activity-row { border-color: var(--portal-line); border-radius: 10px; background: rgba(255, 255, 255, 0.018); }
+.owner-portal-page .admin-activity-row:hover { border-color: rgba(7, 151, 255, 0.28); background: rgba(7, 151, 255, 0.055); }
+
+@media (max-width: 980px) {
+  .owner-portal-page .account-hero { grid-template-columns: 1fr; }
+  .garage-stat-grid { grid-template-columns: 1fr 1fr; }
+  .garage-quick-action { grid-column: 1 / -1; }
+  .owner-portal-page .store-v2-hero { grid-template-columns: 1fr; }
+  .owner-portal-page .store-service-grid,
+  .owner-portal-page .admin-dashboard-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .owner-portal-page .site-header { min-height: 62px; }
+  .owner-portal-page .account-main,
+  .owner-portal-page.credit-store-page .account-main,
+  .owner-portal-page:has(#adminView:not([hidden])) .account-main,
+  .owner-portal-page:has(#adminView:not([hidden])) .site-header { width: min(100% - 20px, 720px) !important; }
+  .owner-portal-page .account-menu { top: 72px; margin-top: 10px; }
+  .owner-portal-page .account-menu-button { min-height: 36px; padding: 0 13px; }
+  .owner-portal-page .account-hero,
+  .owner-portal-page .store-v2-hero,
+  .owner-portal-page .dashboard-hero { margin-top: 12px; padding: 25px; border-radius: 20px; }
+  .owner-portal-page .account-hero h1,
+  .owner-portal-page .store-v2-hero h1 { font-size: clamp(39px, 11.5vw, 56px); }
+  .owner-portal-page .garage-search-row { grid-template-columns: 1fr; }
+  .owner-portal-page .garage-search .primary-button { width: 100%; }
+  .garage-overview,
+  .owner-portal-page .saved-section,
+  .owner-portal-page .reminder-section,
+  .owner-portal-page .compact-credit-section { padding: 20px; border-radius: 18px; }
+  .garage-overview-heading,
+  .owner-portal-page .saved-section > .section-heading,
+  .owner-portal-page .compact-store-heading { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .owner-portal-page .garage-heading-meta { align-items: flex-start; flex-direction: row; }
+  .owner-portal-page .reminder-topline { align-items: flex-start; flex-direction: column; }
+  .owner-portal-page .reminder-topline .secondary-button { width: 100%; }
+  .owner-portal-page .store-service-grid { grid-template-columns: 1fr; }
+  .owner-portal-page .dashboard-hero { align-items: flex-start; }
+  .owner-portal-page .admin-hero-actions { width: 100%; }
+  .owner-portal-page .admin-hero-actions .compact-button { flex: 1; }
+}
+
+@media (max-width: 560px) {
+  .owner-portal-page .account-main { width: calc(100% - 16px) !important; }
+  .owner-portal-page .account-hero,
+  .owner-portal-page .store-v2-hero,
+  .owner-portal-page .dashboard-hero { padding: 20px; }
+  .owner-portal-page .account-hero h1,
+  .owner-portal-page .store-v2-hero h1 { font-size: clamp(36px, 11.8vw, 49px); }
+  .garage-stat-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
+  .garage-stat { min-height: 108px; padding: 14px; }
+  .garage-stat strong { font-size: 30px; }
+  .garage-quick-action { min-height: 108px; padding: 14px; }
+  .owner-portal-page .saved-section > .section-heading { gap: 10px; }
+  .owner-portal-page .garage-heading-meta { flex-wrap: wrap; }
+  .owner-portal-page .store-balance-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .owner-portal-page .store-balance-strip article { min-height: 78px; padding: 10px; }
+  .owner-portal-page .store-balance-strip span { font-size: 7px; }
+  .owner-portal-page .store-balance-strip strong { font-size: 18px; }
+  .owner-portal-page .service-card { padding: 20px; }
+  .owner-portal-page .service-card-top { align-items: flex-start; }
+  .owner-portal-page .plus-benefits { grid-template-columns: 1fr; }
+  .owner-portal-page .compact-credit-grid { grid-template-columns: 1fr; }
+  .owner-portal-page .compact-credit-grid .credit-pack:last-child { grid-column: auto; }
+  .owner-portal-page .compact-credit-grid .credit-pack { min-height: 190px; }
+  .owner-portal-page .compact-purchase-history { padding: 20px; }
+  .owner-portal-page .admin-overview { gap: 7px; }
+  .owner-portal-page .admin-overview article { min-height: 112px; padding: 14px; }
+  .owner-portal-page .admin-panel { padding: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .owner-portal-page .garage-card,
+  .owner-portal-page .garage-quick-action { transition: none; }
+}

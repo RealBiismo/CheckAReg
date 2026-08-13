@@ -222,9 +222,9 @@ test("serves health status and rejects unsafe input", async (context) => {
   assert.deepEqual(
     creditStore.bundles.map(({ id, credits, amountPence, searches }) => ({ id, credits, amountPence, searches })),
     [
-      { id: "starter", credits: 10, amountPence: 199, searches: 5 },
-      { id: "popular", credits: 30, amountPence: 499, searches: 15 },
-      { id: "best_value", credits: 70, amountPence: 999, searches: 35 },
+      { id: "starter", credits: 10, amountPence: 149, searches: 5 },
+      { id: "popular", credits: 30, amountPence: 379, searches: 15 },
+      { id: "best_value", credits: 80, amountPence: 849, searches: 40 },
     ]
   );
 

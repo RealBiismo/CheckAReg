@@ -50,19 +50,19 @@ const stripeConfig = {
 };
 
 const creditBundles = Object.freeze([
-  Object.freeze({ id: "starter", credits: 10, amountPence: 199, label: "Starter" }),
-  Object.freeze({ id: "popular", credits: 30, amountPence: 499, label: "Popular" }),
-  Object.freeze({ id: "best_value", credits: 70, amountPence: 999, label: "Best value" }),
+  Object.freeze({ id: "starter", credits: 10, amountPence: 149, label: "Quick check" }),
+  Object.freeze({ id: "popular", credits: 30, amountPence: 379, label: "Driver" }),
+  Object.freeze({ id: "best_value", credits: 80, amountPence: 849, label: "Garage" }),
 ]);
 const creditBundlesById = new Map(creditBundles.map((bundle) => [bundle.id, bundle]));
 const plusPlan = Object.freeze({
   id: "biismo_plus",
   label: "CHECK A REG+",
-  amountPence: 799,
+  amountPence: 599,
   currency: "gbp",
   interval: "month",
   creditsMonthly: 60,
-  aiQuestionsMonthly: 200,
+  aiQuestionsMonthly: 150,
   garageLimit: 6,
 });
 const aiQuestionPack = Object.freeze({ creditsCost: 4, questions: 10 });

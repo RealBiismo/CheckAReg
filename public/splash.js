@@ -34,12 +34,6 @@
   window.setTimeout(dismiss, 3500);
 })();
 
-const referralStyles = document.createElement("link");
-referralStyles.rel = "stylesheet";
-referralStyles.href = "/referral.css";
-document.head.append(referralStyles);
-import("/referral.js").catch((error) => console.error("Referral module failed to load", error));
-
 const aiEntryStyles = document.createElement("link");
 aiEntryStyles.rel = "stylesheet";
 aiEntryStyles.href = "/ai-mechanic.css";
@@ -63,6 +57,11 @@ if (window.location.pathname === "/account.html") {
   garageFixStyles.rel = "stylesheet";
   garageFixStyles.href = "/garage-hub-fixes.css";
   document.head.append(garageFixStyles);
+
+  const ownerPortalStyles = document.querySelector('link[href="owner-portal.css"], link[href="/owner-portal.css"]') || document.createElement("link");
+  ownerPortalStyles.rel = "stylesheet";
+  if (!ownerPortalStyles.href) ownerPortalStyles.href = "/owner-portal.css";
+  document.head.append(ownerPortalStyles);
 
   // Load staff modules independently so one optional module can never block the rest.
   import("/moderator-controls.js").catch((error) => console.error("Moderator controls failed to load", error));

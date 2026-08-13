@@ -69,7 +69,7 @@ function renderEntitlements(data) {
     plusPlanCard.classList.remove("is-active");
     plusPlanButton.textContent = "Start Check A Reg+";
     plusPlanButton.dataset.mode = "subscribe";
-    plusPlanNote.textContent = "Cancel anytime through secure Stripe billing.";
+    plusPlanNote.textContent = "No contract. Cancel anytime through secure Stripe billing.";
   }
 }
 
@@ -155,8 +155,9 @@ async function loadStore() {
       <span class="credit-pack-label">${escapeHtml(bundle.label)}</span>
       <strong>${Number(bundle.credits) || 0}<small> credits</small></strong>
       <p>${Number(bundle.searches) || 0} extra checks</p>
+      <small class="credit-pack-unit">${Math.round(Number(bundle.amountPence || 0) / Math.max(1, Number(bundle.searches) || 1))}p per check</small>
       <div class="credit-pack-price">${escapeHtml(formatMoney(bundle.amountPence, data.currency))}</div>
-      <button class="primary-button" type="button" data-bundle-id="${escapeHtml(bundle.id)}" ${data.enabled ? "" : "disabled"}>${data.enabled ? "Buy" : "Coming soon"}</button>
+      <button class="primary-button" type="button" data-bundle-id="${escapeHtml(bundle.id)}" ${data.enabled ? "" : "disabled"}>${data.enabled ? `Choose ${escapeHtml(bundle.label)}` : "Coming soon"}</button>
     </article>`).join("");
   if (!data.enabled) setPurchaseStatus("Secure Stripe checkout is currently unavailable.");
 }

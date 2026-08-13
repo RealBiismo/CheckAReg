@@ -17,12 +17,13 @@
   <link rel="stylesheet" href="ui-overrides.css">
   <link rel="stylesheet" href="credit-store-v2.css">
   <link rel="stylesheet" href="checkareg-theme.css">
+  <link rel="stylesheet" href="owner-portal.css">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
   <link rel="shortcut icon" href="/icon-192.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 </head>
-<body class="account-page credit-store-page">
+<body class="account-page credit-store-page owner-portal-page">
   <div id="appSplash" class="app-splash" role="status" aria-label="Loading Check A Reg">
     <div class="app-splash-logo"><img src="/assets/checkareg-transparent.png" alt=""></div>
     <p>MOT <span>•</span> TAX <span>•</span> HISTORY</p>
@@ -36,10 +37,10 @@
 
   <main class="account-main credit-store-main store-v2">
     <section class="store-v2-hero">
-      <div>
-        <span class="eyebrow">CHECK A REG SERVICES</span>
-        <h1>Plans & credits.</h1>
-        <p>Top up vehicle checks, unlock AI Mechanic questions, or get the full Check A Reg+ membership.</p>
+      <div class="store-hero-copy">
+        <span class="eyebrow">CHOOSE YOUR ACCESS</span>
+        <h1>More checks.<br><em>Less guesswork.</em></h1>
+        <p>Keep it flexible with a one-off top-up, or make Check A Reg your everyday vehicle companion.</p>
       </div>
       <div class="store-balance-strip" aria-live="polite">
         <article><span>Credits</span><strong id="storeCreditBalance">—</strong></article>
@@ -53,27 +54,27 @@
     <section class="store-service-grid" aria-label="Check A Reg services">
       <article id="plusPlanCard" class="service-card plus-card">
         <div class="service-card-top">
-          <div><span class="service-kicker">BEST EXPERIENCE</span><h2>CHECK A REG<span>+</span></h2></div>
-          <div class="plus-price"><strong>£7.99</strong><small>/ month</small></div>
+          <div><span class="service-kicker">BEST FOR REGULAR DRIVERS</span><h2>CHECK A REG<span>+</span></h2></div>
+          <div class="plus-price"><strong>£5.99</strong><small>/ month</small></div>
         </div>
-        <p class="service-lead">For drivers who use Check A Reg as their ongoing vehicle hub.</p>
+        <p class="service-lead">The complete vehicle companion for owners, families and small fleets.</p>
         <div class="plus-benefits">
-          <span><strong>60</strong> credits every month</span>
-          <span><strong>200</strong> AI Mechanic questions / month</span>
-          <span><strong>6</strong> vehicles in My Garage</span>
-          <span>All Garage reminders & ownership tools</span>
-          <span>Credits roll over while unused</span>
+          <span><strong>30</strong> extra vehicle checks / month</span>
+          <span><strong>150</strong> AI Mechanic questions / month</span>
+          <span><strong>6</strong> vehicles in your Garage</span>
+          <span>MOT &amp; tax reminders for every saved car</span>
+          <span>Unused credits stay on your account</span>
         </div>
         <button id="plusPlanButton" class="primary-button plus-cta" type="button">Start Check A Reg+</button>
-        <small id="plusPlanNote" class="service-note">Cancel anytime through secure Stripe billing.</small>
+        <small id="plusPlanNote" class="service-note">No contract. Cancel anytime through secure Stripe billing.</small>
       </article>
 
       <article class="service-card ai-service-card">
         <div class="service-card-top">
-          <div><span class="service-kicker">PAY AS YOU GO</span><h2>✦ AI Mechanic</h2></div>
+          <div><span class="service-kicker">INSTANT HELP</span><h2>✦ AI Mechanic</h2></div>
           <div class="ai-service-price"><strong>4</strong><small>credits</small></div>
         </div>
-        <p class="service-lead">Unlock a block of questions and use them across any saved vehicle.</p>
+        <p class="service-lead">Unlock a question pack whenever you need a second opinion.</p>
         <div class="ai-pack-number"><strong>10</strong><span>AI questions</span></div>
         <ul class="service-mini-list">
           <li>Photos supported</li>
@@ -87,11 +88,11 @@
 
     <section class="compact-credit-section" aria-labelledby="creditPacksTitle">
       <div class="section-heading compact-store-heading">
-        <div><span class="eyebrow">ONE-OFF TOP UP</span><h2 id="creditPacksTitle">Vehicle check credits</h2></div>
+        <div><span class="eyebrow">NO SUBSCRIPTION</span><h2 id="creditPacksTitle">One-off check packs</h2><p>Buy once. Use whenever. Your credits never expire.</p></div>
         <span class="secure-checkout-label">Secure checkout by Stripe</span>
       </div>
       <div id="creditPackGrid" class="credit-pack-grid compact-credit-grid" aria-live="polite"><p class="credit-store-loading">Loading credit packs…</p></div>
-      <p class="credit-store-note">2 credits = 1 extra vehicle check. Purchased credits do not expire.</p>
+      <p class="credit-store-note">Every check uses 2 credits. Your five free daily checks are always used first.</p>
     </section>
 
     <section class="purchase-history compact-purchase-history" aria-labelledby="purchaseHistoryTitle">

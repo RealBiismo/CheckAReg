@@ -106,9 +106,9 @@ create table if not exists private.credit_products (
 
 insert into private.credit_products (bundle_id, label, credits, amount_pence, currency)
 values
-  ('starter', 'Starter', 10, 199, 'gbp'),
-  ('popular', 'Popular', 30, 499, 'gbp'),
-  ('best_value', 'Best value', 70, 999, 'gbp')
+  ('starter', 'Quick check', 10, 149, 'gbp'),
+  ('popular', 'Driver', 30, 379, 'gbp'),
+  ('best_value', 'Garage', 80, 849, 'gbp')
 on conflict (bundle_id) do update
 set label = excluded.label,
     credits = excluded.credits,
