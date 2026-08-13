@@ -1,0 +1,71 @@
+/* Final simplification layer for signed-in screens. */
+.owner-portal-page .account-main { width:min(1120px,calc(100% - 32px)); }
+.owner-portal-page .account-menu { margin-top:12px; box-shadow:none; }
+
+/* Garage: one hero, one status strip, then the useful content. */
+.owner-portal-page .account-hero { margin-top:16px; padding:clamp(28px,4vw,48px); border-radius:20px; box-shadow:none; }
+.owner-portal-page .account-hero h1 { font-size:clamp(40px,5vw,64px); }
+.garage-overview,.owner-portal-page .saved-section,.owner-portal-page .reminder-section { margin-top:12px; padding:clamp(20px,3vw,28px); border-radius:16px; box-shadow:none; }
+.garage-stat-grid { gap:0; overflow:hidden; border-top:1px solid var(--portal-line); border-bottom:1px solid var(--portal-line); }
+.garage-stat,.garage-quick-action { min-height:105px; border:0; border-right:1px solid var(--portal-line); border-radius:0; background:transparent; }
+.garage-stat.is-blue { border-color:var(--portal-line); background:rgba(7,151,255,.055); }
+.garage-quick-action { border-right:0; }
+
+/* Account: continuous rows rather than cards within cards. */
+.account-hub-hero { border-radius:18px; box-shadow:none; }
+.account-snapshot { gap:0; overflow:hidden; border:1px solid var(--portal-line); border-radius:13px; }
+.account-snapshot article,.account-snapshot article.is-highlight { min-height:92px; border:0; border-right:1px solid var(--portal-line); border-radius:0; background:transparent; }
+.account-snapshot article:last-of-type { border-right:0; }
+.account-settings-surface { border-radius:14px; }
+.settings-row { padding:clamp(22px,3vw,30px); }
+.support-inbox-shell { border-radius:14px; }
+
+/* Credits: present services as a single comparison surface. */
+.owner-portal-page .store-v2-hero { margin-top:16px; padding:clamp(26px,4vw,44px); border-radius:18px; box-shadow:none; }
+.owner-portal-page .store-v2-hero h1 { font-size:clamp(39px,5vw,60px); }
+.owner-portal-page .store-service-grid { gap:0; overflow:hidden; border:1px solid var(--portal-line); border-radius:16px; background:var(--portal-panel); }
+.owner-portal-page .service-card,.owner-portal-page .service-card.plus-card { border:0; border-right:1px solid var(--portal-line); border-radius:0; background:transparent; box-shadow:none; }
+.owner-portal-page .service-card:last-child { border-right:0; }
+.owner-portal-page .service-card.plus-card::before { display:none; }
+.owner-portal-page .compact-credit-section,.owner-portal-page .compact-purchase-history { margin-top:12px; border-radius:16px; box-shadow:none; }
+.owner-portal-page .compact-credit-grid .credit-pack { border-radius:12px; box-shadow:none; }
+
+/* Admin: flatter command surfaces and less visual weight. */
+.owner-portal-page .dashboard-hero { padding:clamp(26px,4vw,42px); border-radius:18px; box-shadow:none; }
+.owner-portal-page .dashboard-hero h1 { font-size:clamp(38px,5vw,58px); }
+.owner-portal-page .admin-panel { border-radius:14px; box-shadow:none; }
+.has-simple-staff-dashboard .simple-staff-nav { box-shadow:none; }
+
+/* AI: the workspace is the product; supporting chrome stays quiet. */
+body.ai-page .ai-main { width:min(1120px,calc(100% - 32px)); }
+body.ai-page .ai-hero { min-height:0; padding:28px 0 20px; display:block; border:0; background:transparent; box-shadow:none; }
+body.ai-page .ai-hero h1 { font-size:clamp(38px,5vw,58px); }
+body.ai-page .ai-hero p { max-width:720px; }
+body.ai-page .ai-workspace { gap:10px; }
+body.ai-page .ai-sidebar,body.ai-page .ai-panel { border-radius:14px; box-shadow:none; }
+
+/* Notifications: one inbox surface, not stacked cards. */
+.notifications-main { width:min(920px,calc(100% - 32px)); }
+.notifications-hero { padding-bottom:24px; }
+.notifications-inbox { border-radius:14px; box-shadow:none; }
+.notifications-list > * { border-radius:0; border-left:0; border-right:0; }
+
+@media (max-width:760px) {
+  .owner-portal-page .account-main,body.ai-page .ai-main,.notifications-main { width:min(100% - 20px,1120px); }
+  .garage-overview-heading,.owner-portal-page .saved-section>.section-heading { align-items:flex-start; }
+  .garage-stat-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .garage-quick-action { grid-column:1/-1; border-top:1px solid var(--portal-line); }
+  .garage-stat:nth-child(2) { border-right:0; }
+  .account-snapshot article:nth-of-type(2) { border-right:0; }
+  .account-snapshot article:nth-of-type(n+3) { border-top:1px solid var(--portal-line); }
+  .owner-portal-page .store-service-grid { grid-template-columns:1fr; }
+  .owner-portal-page .service-card,.owner-portal-page .service-card.plus-card { border-right:0; border-bottom:1px solid var(--portal-line); }
+  .owner-portal-page .service-card:last-child { border-bottom:0; }
+}
+
+@media (max-width:480px) {
+  .owner-portal-page .account-hero,body.ai-page .ai-hero { padding-top:22px; }
+  .garage-overview,.owner-portal-page .saved-section,.owner-portal-page .reminder-section { padding:18px 15px; }
+  .garage-overview-heading,.owner-portal-page .saved-section>.section-heading { gap:12px; }
+  .account-snapshot article { min-height:82px; }
+}

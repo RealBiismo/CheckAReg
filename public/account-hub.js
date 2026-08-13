@@ -12,7 +12,6 @@
   let adminTickets = [];
   let selectedUserTicketId = null;
   let selectedAdminTicketId = null;
-  let activeHubScreen = "overview";
   let conversationPoll = null;
   let loaded = false;
 
@@ -47,19 +46,6 @@
     suggestion: "Suggestion",
     other: "Other",
   })[value] || "Support";
-
-  function switchHubScreen(screen) {
-    activeHubScreen = ["overview", "settings", "support"].includes(screen) ? screen : "overview";
-    document.querySelectorAll("[data-hub-screen-panel]").forEach((panel) => {
-      panel.hidden = panel.dataset.hubScreenPanel !== activeHubScreen;
-    });
-    document.querySelectorAll("[data-hub-screen]").forEach((button) => {
-      const active = button.dataset.hubScreen === activeHubScreen;
-      button.classList.toggle("is-active", active);
-      button.setAttribute("aria-current", active ? "page" : "false");
-    });
-    if (activeHubScreen === "support") loadMyTickets().catch((error) => setStatus("supportFormStatus", error.message, "error"));
-  }
 
   function setStatus(id, message, type = "") {
     const node = byId(id);
@@ -124,7 +110,6 @@
       profileOpenTickets: Number(overview?.openTickets) || 0,
     };
     Object.entries(values).forEach(([id, value]) => { if (byId(id)) byId(id).textContent = String(value); });
-    if (byId("supportTabCount")) byId("supportTabCount").textContent = String(values.profileOpenTickets);
   }
 
   async function ensureProfile() {
@@ -393,9 +378,6 @@
 
   function installListeners() {
     byId("profileMenuButton")?.addEventListener("click", loadAccountHub);
-    document.querySelectorAll("[data-hub-screen], [data-open-hub-screen]").forEach((control) => {
-      control.addEventListener("click", () => switchHubScreen(control.dataset.hubScreen || control.dataset.openHubScreen));
-    });
     byId("profileAvatarInput")?.addEventListener("change", (event) => {
       const file = event.target.files?.[0];
       if (file) uploadAvatar(file);
@@ -534,7 +516,7 @@
     window.checkARegSupport = { loadAdminTickets };
     await loadAccountHub();
     conversationPoll = window.setInterval(async () => {
-      if (document.hidden || activeHubScreen !== "support" || !selectedUserTicketId) return;
+      if (document.hidden || byId("profileView")?.hidden || !selectedUserTicketId) return;
       await loadMyTickets().catch(() => {});
       if (myTickets.some((ticket) => ticket.id === selectedUserTicketId)) await openUserConversation(selectedUserTicketId, { quiet: true });
     }, 20000);

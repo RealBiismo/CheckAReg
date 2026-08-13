@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="owner-portal.css">
   <link rel="stylesheet" href="account-hub.css">
   <link rel="stylesheet" href="mobile-accessibility.css">
+  <link rel="stylesheet" href="simple-app.css">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
@@ -107,13 +108,7 @@
     </section>
 
     <section id="profileView" class="account-view account-hub" aria-labelledby="profileMenuButton" hidden>
-      <nav class="account-hub-tabs" aria-label="My Account pages">
-        <button class="is-active" type="button" data-hub-screen="overview" aria-current="page">Overview</button>
-        <button type="button" data-hub-screen="settings" aria-current="false">Profile &amp; security</button>
-        <button type="button" data-hub-screen="support" aria-current="false">Support <span id="supportTabCount">0</span></button>
-      </nav>
-
-      <section id="accountOverviewScreen" class="hub-screen" data-hub-screen-panel="overview">
+      <section id="accountOverviewScreen" class="account-overview">
         <section class="account-hub-hero">
           <div class="profile-identity">
             <div id="profileAvatar" class="profile-avatar" aria-label="Profile photo"><span id="profileInitials">CR</span></div>
@@ -129,19 +124,13 @@
           <article><span>Total checks</span><strong id="profileTotalSearches">—</strong><small>Completed</small></article>
           <span class="sr-only" id="profileAiQuestions">—</span><span class="sr-only" id="profileOpenTickets">—</span>
         </section>
-
-        <div class="account-action-list">
-          <button type="button" data-open-hub-screen="settings"><span><b>Profile &amp; security</b><small>Photo, display name, password and preferences</small></span><strong aria-hidden="true">→</strong></button>
-          <button type="button" data-open-hub-screen="support"><span><b>Support conversations</b><small>Report a problem or continue an existing ticket</small></span><strong aria-hidden="true">→</strong></button>
-          <a href="/credits.html"><span><b>Plans &amp; credits</b><small>View your balance, packs and purchases</small></span><strong aria-hidden="true">↗</strong></a>
-        </div>
       </section>
 
-      <section id="accountSettingsScreen" class="hub-screen" data-hub-screen-panel="settings" hidden>
-        <header class="hub-screen-heading"><span class="eyebrow">ACCOUNT SETTINGS</span><h2>One place for your details.</h2><p>Make a change, save it, and carry on.</p></header>
+      <section id="accountSettingsScreen" class="account-section">
+        <header class="hub-screen-heading"><span class="eyebrow">YOUR DETAILS</span><h2>Account settings</h2></header>
         <div class="account-settings-surface">
           <section class="settings-row profile-card" aria-labelledby="personalDetailsTitle">
-            <div class="settings-row-heading"><span>01</span><div><h3 id="personalDetailsTitle">Personal details</h3><p>Your name and optional profile photo.</p></div></div>
+            <div class="settings-row-heading"><div><h3 id="personalDetailsTitle">Profile</h3><p>Your name and optional photo.</p></div></div>
             <div class="settings-row-content">
               <div class="avatar-controls"><label class="secondary-button avatar-upload" for="profileAvatarInput">Choose photo</label><input id="profileAvatarInput" type="file" accept="image/jpeg,image/png,image/webp" hidden><button id="removeProfileAvatarButton" class="text-button" type="button">Remove</button><small>JPG, PNG or WebP. We resize it securely.</small></div>
               <form id="profileDetailsForm" class="hub-form"><label for="profileDisplayName">Display name</label><input id="profileDisplayName" type="text" minlength="1" maxlength="50" autocomplete="name" placeholder="What should we call you?"><button class="primary-button" type="submit">Save profile</button><p id="profileDetailsStatus" class="hub-status" role="status"></p></form>
@@ -149,28 +138,28 @@
           </section>
 
           <section class="settings-row" aria-labelledby="securityTitle">
-            <div class="settings-row-heading"><span>02</span><div><h3 id="securityTitle">Sign-in &amp; security</h3><p>Update the details used to access your account.</p></div></div>
-            <div class="settings-row-content">
-              <form id="changeEmailForm" class="hub-form"><label for="profileNewEmail">Change email</label><div class="inline-form"><input id="profileNewEmail" type="email" autocomplete="email" placeholder="new@email.com"><button class="secondary-button" type="submit">Update</button></div><small>We’ll send confirmation links when required.</small></form>
-              <form id="changePasswordForm" class="hub-form separated-form"><label for="profileNewPassword">New password</label><div class="inline-form"><input id="profileNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"><button class="secondary-button" type="submit">Change</button></div></form>
+            <div class="settings-row-heading"><div><h3 id="securityTitle">Sign-in</h3><p>Change your email or password.</p></div></div>
+            <div class="settings-row-content security-compact-grid">
+              <form id="changeEmailForm" class="compact-setting-form"><label for="profileNewEmail">Email</label><input id="profileNewEmail" type="email" autocomplete="email" placeholder="new@email.com"><button class="secondary-button" type="submit">Update email</button></form>
+              <form id="changePasswordForm" class="compact-setting-form"><label for="profileNewPassword">Password</label><input id="profileNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"><button class="secondary-button" type="submit">Update password</button></form>
               <p id="profileSecurityStatus" class="hub-status" role="status"></p>
             </div>
           </section>
 
           <section class="settings-row" aria-labelledby="preferencesTitle">
-            <div class="settings-row-heading"><span>03</span><div><h3 id="preferencesTitle">Preferences</h3><p>Useful account updates only.</p></div></div>
+            <div class="settings-row-heading"><div><h3 id="preferencesTitle">Preferences</h3><p>Choose the updates you want.</p></div></div>
             <div class="settings-row-content"><form id="profilePreferencesForm" class="preference-list"><label><span><strong>Vehicle reminders</strong><small>MOT and tax expiry nudges.</small></span><input id="profileReminderPreference" type="checkbox"></label><label><span><strong>Product updates</strong><small>Occasional meaningful Check A Reg news.</small></span><input id="profileProductPreference" type="checkbox"></label><button class="secondary-button" type="submit">Save preferences</button><p id="profilePreferencesStatus" class="hub-status" role="status"></p></form></div>
           </section>
 
           <section class="settings-row privacy-card" aria-labelledby="privacyTitle">
-            <div class="settings-row-heading"><span>04</span><div><h3 id="privacyTitle">Privacy</h3><p>Download your data or request deletion.</p></div></div>
-            <div class="settings-row-content"><div class="privacy-actions"><button id="exportAccountDataButton" class="secondary-button" type="button">Download my data</button><button id="requestDeletionButton" class="text-button is-danger" type="button">Request account deletion</button></div><p id="profilePrivacyStatus" class="hub-status" role="status"></p></div>
+            <div class="settings-row-heading"><div><h3 id="privacyTitle">Your data</h3><p>Download a copy of your account data.</p></div></div>
+            <div class="settings-row-content"><div class="privacy-actions"><button id="exportAccountDataButton" class="secondary-button" type="button">Download my data</button><button id="requestDeletionButton" class="text-button is-danger" type="button">Delete account</button></div><p id="profilePrivacyStatus" class="hub-status" role="status"></p></div>
           </section>
         </div>
       </section>
 
-      <section id="accountSupportScreen" class="hub-screen" data-hub-screen-panel="support" hidden>
-        <header class="hub-screen-heading support-screen-heading"><div><span class="eyebrow">SUPPORT</span><h2 id="supportTitle">Your conversations.</h2><p>Report something once, then speak to us here like a direct message.</p></div><button id="newSupportTicketButton" class="primary-button" type="button">New ticket</button></header>
+      <section id="accountSupportScreen" class="account-section">
+        <header class="hub-screen-heading support-screen-heading"><div><span class="eyebrow">SUPPORT</span><h2 id="supportTitle">Conversations</h2><p>Report a problem or continue an existing ticket.</p></div><button id="newSupportTicketButton" class="primary-button" type="button">New ticket</button></header>
         <div class="support-inbox-shell">
           <aside class="ticket-history"><div class="ticket-history-heading"><h3>Inbox</h3><button id="refreshMyTicketsButton" class="text-button" type="button">Refresh</button></div><div id="mySupportTickets"><p class="notification-empty">Loading your tickets…</p></div></aside>
           <section class="support-thread-panel">
