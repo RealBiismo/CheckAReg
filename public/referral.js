@@ -60,7 +60,7 @@
 
     const eyebrow = document.createElement("span");
     eyebrow.className = "eyebrow";
-    eyebrow.textContent = "BIISMO INVITE";
+    eyebrow.textContent = "CHECK A REG INVITE";
 
     const title = document.createElement("strong");
     title.textContent = `You’ve been referred by ${label}`;
@@ -151,7 +151,7 @@
 
     if (client && code && (window.location.pathname === "/" || window.location.pathname === "/index.html")) {
       const invite = await getInviteInfo(client, code);
-      if (invite?.valid) createInviteBanner(invite.referrerLabel || "a BIISMO user", Number(invite.rewardCredits) || 2);
+      if (invite?.valid) createInviteBanner(invite.referrerLabel || "a CheckA Reg user", Number(invite.rewardCredits) || 2);
       else if (queryCode) forgetCode();
     }
 

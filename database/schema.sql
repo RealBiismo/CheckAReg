@@ -663,7 +663,7 @@ begin
   if v_admin_id is null or not exists (
     select 1 from private.app_admins where user_id = v_admin_id
   ) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can grant credits.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can grant credits.';
   end if;
 
   if p_amount is null or p_amount < 1 or p_amount > 100000 then
@@ -678,7 +678,7 @@ begin
   limit 1;
 
   if v_target_id is null then
-    raise no_data_found using message = 'No verified BIISMO REG account was found for that email.';
+    raise no_data_found using message = 'No verified CHECK A REG account was found for that email.';
   end if;
 
   insert into private.user_accounts (user_id)
@@ -720,7 +720,7 @@ begin
   if v_admin_id is null or not exists (
     select 1 from private.app_admins where user_id = v_admin_id
   ) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can view user credits.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can view user credits.';
   end if;
 
   select id, lower(email)
@@ -731,7 +731,7 @@ begin
   limit 1;
 
   if v_target_id is null then
-    raise no_data_found using message = 'No verified BIISMO REG account was found for that email.';
+    raise no_data_found using message = 'No verified CHECK A REG account was found for that email.';
   end if;
 
   insert into private.user_accounts (user_id)
@@ -780,7 +780,7 @@ begin
   if v_admin_id is null or not exists (
     select 1 from private.app_admins where user_id = v_admin_id
   ) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can set user credits.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can set user credits.';
   end if;
 
   if p_amount is null or p_amount < 0 or p_amount > 100000 then
@@ -795,7 +795,7 @@ begin
   limit 1;
 
   if v_target_id is null then
-    raise no_data_found using message = 'No verified BIISMO REG account was found for that email.';
+    raise no_data_found using message = 'No verified CHECK A REG account was found for that email.';
   end if;
 
   insert into private.user_accounts (user_id)
@@ -850,7 +850,7 @@ begin
   if v_admin_id is null or not exists (
     select 1 from private.app_admins where user_id = v_admin_id
   ) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can send push notifications.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can send push notifications.';
   end if;
 
   if length(v_title) not between 1 and 80 then
@@ -869,7 +869,7 @@ begin
   limit 1;
 
   if v_target_id is null then
-    raise no_data_found using message = 'No verified BIISMO REG account was found for that email.';
+    raise no_data_found using message = 'No verified CHECK A REG account was found for that email.';
   end if;
 
   select coalesce(
@@ -930,7 +930,7 @@ begin
   if v_admin_id is null or not exists (
     select 1 from private.app_admins where user_id = v_admin_id
   ) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can view the push audience.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can view the push audience.';
   end if;
 
   select count(distinct user_id)::integer, count(*)::integer
@@ -971,7 +971,7 @@ begin
   if v_admin_id is null or not exists (
     select 1 from private.app_admins where user_id = v_admin_id
   ) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can send broadcast push notifications.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can send broadcast push notifications.';
   end if;
 
   if length(v_title) not between 1 and 80 then
@@ -1065,7 +1065,7 @@ begin
   if v_admin_id is null or not exists (
     select 1 from private.app_admins where user_id = v_admin_id
   ) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can complete push notifications.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can complete push notifications.';
   end if;
 
   select device_count into v_device_count
@@ -1497,7 +1497,7 @@ returns jsonb language plpgsql security definer set search_path = '' as $$
 declare v_admin_id uuid := auth.uid(); v_items jsonb;
 begin
   if v_admin_id is null or not exists (select 1 from private.app_admins where user_id = v_admin_id) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can view broadcast history.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can view broadcast history.';
   end if;
   select coalesce(jsonb_agg(to_jsonb(item) order by item.created_at desc), '[]'::jsonb)
   into v_items from (
@@ -1552,7 +1552,7 @@ begin
   limit 1;
 
   if v_dispatch_url is null or v_cron_secret is null then
-    raise exception 'BIISMO reminder Vault secrets are not configured.';
+    raise exception 'CHECK A REG reminder Vault secrets are not configured.';
   end if;
 
   select net.http_post(

@@ -1,4 +1,4 @@
--- Upgrade an existing BIISMO REG database with verified Stripe credit purchases.
+-- Upgrade an existing CHECK A REG database with verified Stripe credit purchases.
 
 create table if not exists private.credit_products (
   bundle_id text primary key check (bundle_id ~ '^[a-z][a-z0-9_]{1,39}$'),

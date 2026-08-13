@@ -31,16 +31,16 @@ const authConfig = {
   supabaseSecretKey: process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY,
 };
 
-const blockedBiismoHosts = ["biismoreg.com", "biismoreg-com.onrender.com"];
-const blockedBiismoSupabaseRef = "irpzvslnfgwyjwouissi";
+const blockedLegacyHosts = ["biismoreg.com", "biismoreg-com.onrender.com"];
+const blockedLegacySupabaseRef = "irpzvslnfgwyjwouissi";
 const configuredAppUrl = String(process.env.APP_BASE_URL || process.env.RENDER_EXTERNAL_URL || "").toLowerCase();
 const configuredSupabaseUrl = String(authConfig.supabaseUrl || "").toLowerCase();
 
-if (blockedBiismoHosts.some((host) => configuredAppUrl.includes(host))) {
-  throw new Error("Check A Reg isolation blocked a BiismoReg hosting URL. Use a separate APP_BASE_URL.");
+if (blockedLegacyHosts.some((host) => configuredAppUrl.includes(host))) {
+  throw new Error("Check A Reg isolation blocked a legacy hosting URL. Use a separate APP_BASE_URL.");
 }
-if (configuredSupabaseUrl.includes(blockedBiismoSupabaseRef)) {
-  throw new Error("Check A Reg isolation blocked the BiismoReg Supabase project. Create a separate Supabase project.");
+if (configuredSupabaseUrl.includes(blockedLegacySupabaseRef)) {
+  throw new Error("Check A Reg isolation blocked the legacy Supabase project. Create a separate Supabase project.");
 }
 
 const stripeConfig = {
@@ -169,6 +169,15 @@ async function readJsonResponse(response, serviceName) {
   return data;
 }
 
+function brandUserMessage(value) {
+  return String(value || "")
+    .replace(/BiismoReg/gi, "CheckA Reg")
+    .replace(/BIISMO REG\+/gi, "CheckA Reg+")
+    .replace(/BIISMO REG/gi, "CheckA Reg")
+    .replace(/Biismo AI/gi, "CheckA Reg AI")
+    .replace(/BIISMO/gi, "CheckA Reg");
+}
+
 function getBearerToken(req) {
   const authorization = req.get("authorization") || "";
   const match = authorization.match(/^Bearer\s+(.+)$/i);
@@ -245,10 +254,12 @@ async function callSupabaseRpc(token, functionName, parameters = {}) {
 
   const data = await readJsonResponse(response, "Supabase Data API");
   if (!response.ok) {
-    const message = data?.message || "The account operation could not be completed.";
+    const message = brandUserMessage(
+      data?.message || "The account operation could not be completed."
+    );
     const error = new Error(message);
     error.statusCode = response.status === 401 || response.status === 403 ? response.status : 502;
-    if (message.includes("No verified BIISMO REG account")) error.statusCode = 404;
+    if (message.includes("No verified CheckA Reg account")) error.statusCode = 404;
     if (message.includes("credit amount")) error.statusCode = 400;
     if (message.includes("credit balance")) error.statusCode = 400;
     if (message.includes("notification title")) error.statusCode = 400;
@@ -296,7 +307,9 @@ async function callSupabaseAdminRpc(functionName, parameters = {}) {
 
   const data = await readJsonResponse(response, "Supabase Data API");
   if (!response.ok) {
-    const error = new Error(data?.message || "The credit purchase could not be recorded.");
+    const error = new Error(
+      brandUserMessage(data?.message || "The credit purchase could not be recorded.")
+    );
     error.statusCode = response.status === 401 || response.status === 403 ? response.status : 502;
     throw error;
   }
@@ -475,7 +488,7 @@ function reminderPayload(reminder) {
   return JSON.stringify({
     title: `${type} reminder · ${reminder.registration}`,
     body: `${vehicle || "Your vehicle"} ${type} ${dueText}.`,
-    tag: `biismo-${reminder.reminderType}-${reminder.vehicleId}-${reminder.dueDate}`,
+    tag: `checkareg-${reminder.reminderType}-${reminder.vehicleId}-${reminder.dueDate}`,
     url: `/account.html?vehicle=${encodeURIComponent(reminder.registration)}`,
   });
 }
@@ -549,7 +562,7 @@ async function sendAdminPushNotification(token, email, title, message) {
         JSON.stringify({
           title: prepared.title,
           body: prepared.message,
-          tag: `biismo-admin-${prepared.notificationId}`,
+          tag: `checkareg-admin-${prepared.notificationId}`,
           url: "/account.html",
         }),
         { TTL: 60 * 60 * 24 }
@@ -594,7 +607,7 @@ async function sendAdminBroadcastNotification(token, title, message) {
         JSON.stringify({
           title: prepared.title,
           body: prepared.message,
-          tag: `biismo-broadcast-${prepared.notificationId}`,
+          tag: `checkareg-broadcast-${prepared.notificationId}`,
           url: "/account.html",
         }),
         { TTL: 60 * 60 * 24 }
