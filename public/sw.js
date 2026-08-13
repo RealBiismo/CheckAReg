@@ -1,4 +1,4 @@
-const CACHE_NAME = "check-a-reg-v5";
+const CACHE_NAME = "check-a-reg-v6";
 const CANONICAL_ORIGIN = self.location.origin;
 const LEGACY_HOSTS = new Set();
 const NETWORK_FIRST_ASSETS = new Set([
