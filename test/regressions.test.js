@@ -65,6 +65,7 @@ test("signed-in screens use one simplified visual system without duplicate accou
   assert.match(account, /security-compact-grid/);
   assert.doesNotMatch(ai, /ai-price-card|ai-access-row/);
   assert.match(css, /Garage: one hero, one status strip/);
+  assert.match(css, /\.service-card\.plus-card[^{]*\{[^}]*box-shadow:none!important/);
 });
 
 test("homepage mobile controls and footer remain centred and accessible", async () => {
@@ -93,7 +94,7 @@ test("selected plate mark is used for favicon, PWA and account access branding",
     read("public/manifest.json"),
   ]);
   assert.match(auth, /<img src="\/icon\.svg" alt="Check A Reg">/);
-  assert.match(worker, /check-a-reg-v9/);
+  assert.match(worker, /check-a-reg-v10/);
   assert.match(worker, /"\/favicon-32\.png"/);
   assert.match(worker, /"\/favicon\.ico"/);
   assert.match(manifest, /"src": "\/icon-192\.png"/);

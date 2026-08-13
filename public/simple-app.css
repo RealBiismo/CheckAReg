@@ -24,7 +24,7 @@
 .owner-portal-page .store-v2-hero { margin-top:16px; padding:clamp(26px,4vw,44px); border-radius:18px; box-shadow:none; }
 .owner-portal-page .store-v2-hero h1 { font-size:clamp(39px,5vw,60px); }
 .owner-portal-page .store-service-grid { gap:0; overflow:hidden; border:1px solid var(--portal-line); border-radius:16px; background:var(--portal-panel); }
-.owner-portal-page .service-card,.owner-portal-page .service-card.plus-card { border:0; border-right:1px solid var(--portal-line); border-radius:0; background:transparent; box-shadow:none; }
+.owner-portal-page .service-card,.owner-portal-page .service-card.plus-card { border:0!important; border-right:1px solid var(--portal-line)!important; border-radius:0!important; background:transparent!important; box-shadow:none!important; }
 .owner-portal-page .service-card:last-child { border-right:0; }
 .owner-portal-page .service-card.plus-card::before { display:none; }
 .owner-portal-page .compact-credit-section,.owner-portal-page .compact-purchase-history { margin-top:12px; border-radius:16px; box-shadow:none; }
@@ -59,7 +59,7 @@ body.ai-page .ai-sidebar,body.ai-page .ai-panel { border-radius:14px; box-shadow
   .account-snapshot article:nth-of-type(2) { border-right:0; }
   .account-snapshot article:nth-of-type(n+3) { border-top:1px solid var(--portal-line); }
   .owner-portal-page .store-service-grid { grid-template-columns:1fr; }
-  .owner-portal-page .service-card,.owner-portal-page .service-card.plus-card { border-right:0; border-bottom:1px solid var(--portal-line); }
+  .owner-portal-page .service-card,.owner-portal-page .service-card.plus-card { border-right:0!important; border-bottom:1px solid var(--portal-line)!important; }
   .owner-portal-page .service-card:last-child { border-bottom:0; }
 }
 
