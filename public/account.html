@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Check A Reg">
-  <title>My Garage — Check A Reg</title>
+  <title>My Account — Check A Reg</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="classic.css">
   <link rel="stylesheet" href="pwa-install.css">
@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="account-header-polish.css">
   <link rel="stylesheet" href="checkareg-theme.css">
   <link rel="stylesheet" href="owner-portal.css">
+  <link rel="stylesheet" href="account-hub.css">
   <link rel="stylesheet" href="mobile-accessibility.css">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -46,9 +47,10 @@
   </header>
 
   <main class="account-main">
-    <nav id="accountMenu" class="account-menu" aria-label="Account sections" hidden>
+    <nav id="accountMenu" class="account-menu" aria-label="Account sections">
       <button id="garageMenuButton" class="account-menu-button is-active" type="button" aria-controls="garageView" aria-selected="true"><span>01</span> Garage</button>
-      <button id="adminMenuButton" class="account-menu-button" type="button" aria-controls="adminView" aria-selected="false"><span>02</span> Admin</button>
+      <button id="profileMenuButton" class="account-menu-button" type="button" aria-controls="profileView" aria-selected="false"><span>02</span> Account</button>
+      <button id="adminMenuButton" class="account-menu-button" type="button" aria-controls="adminView" aria-selected="false" hidden><span>03</span> Admin</button>
     </nav>
 
     <section id="garageView" class="account-view" aria-labelledby="garageMenuButton">
@@ -104,6 +106,89 @@
       </section>
     </section>
 
+    <section id="profileView" class="account-view account-hub" aria-labelledby="profileMenuButton" hidden>
+      <section class="account-hub-hero">
+        <div class="profile-identity">
+          <div id="profileAvatar" class="profile-avatar" aria-label="Profile photo"><span id="profileInitials">CR</span></div>
+          <div><span class="eyebrow">MY CHECK A REG</span><h1 id="profileGreeting">Your account.</h1><p id="profileEmail">Loading your details…</p></div>
+        </div>
+        <div class="profile-meta"><span>Member since</span><strong id="profileJoinedAt">—</strong><small id="profileProvider">Secure sign-in</small></div>
+      </section>
+
+      <section class="account-snapshot" aria-label="Account overview">
+        <article class="is-highlight"><span>Credits</span><strong id="profileCreditBalance">—</strong><small>Ready to use</small></article>
+        <article><span>Free checks left</span><strong id="profileFreeChecks">—</strong><small>Today</small></article>
+        <article><span>Saved vehicles</span><strong id="profileSavedVehicles">—</strong><small>In your garage</small></article>
+        <article><span>Total checks</span><strong id="profileTotalSearches">—</strong><small>Completed</small></article>
+        <article><span>AI questions</span><strong id="profileAiQuestions">—</strong><small>Available</small></article>
+        <article><span>Open tickets</span><strong id="profileOpenTickets">—</strong><small>With support</small></article>
+      </section>
+
+      <div class="account-hub-grid">
+        <section class="account-hub-card profile-card" aria-labelledby="personalDetailsTitle">
+          <div class="hub-card-heading"><div><span class="eyebrow">PROFILE</span><h2 id="personalDetailsTitle">Personal details</h2></div><span class="hub-card-number">01</span></div>
+          <div class="avatar-controls">
+            <label class="secondary-button avatar-upload" for="profileAvatarInput">Choose photo</label>
+            <input id="profileAvatarInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+            <button id="removeProfileAvatarButton" class="text-button" type="button">Remove</button>
+            <small>JPG, PNG or WebP. We resize it securely.</small>
+          </div>
+          <form id="profileDetailsForm" class="hub-form">
+            <label for="profileDisplayName">Display name</label>
+            <input id="profileDisplayName" type="text" minlength="1" maxlength="50" autocomplete="name" placeholder="What should we call you?">
+            <button class="primary-button" type="submit">Save profile</button>
+            <p id="profileDetailsStatus" class="hub-status" role="status"></p>
+          </form>
+        </section>
+
+        <section class="account-hub-card" aria-labelledby="securityTitle">
+          <div class="hub-card-heading"><div><span class="eyebrow">SECURITY</span><h2 id="securityTitle">Sign-in &amp; security</h2></div><span class="hub-card-number">02</span></div>
+          <form id="changeEmailForm" class="hub-form">
+            <label for="profileNewEmail">Change email</label>
+            <div class="inline-form"><input id="profileNewEmail" type="email" autocomplete="email" placeholder="new@email.com"><button class="secondary-button" type="submit">Update</button></div>
+            <small>We’ll send confirmation links when required.</small>
+          </form>
+          <form id="changePasswordForm" class="hub-form separated-form">
+            <label for="profileNewPassword">New password</label>
+            <div class="inline-form"><input id="profileNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"><button class="secondary-button" type="submit">Change</button></div>
+          </form>
+          <p id="profileSecurityStatus" class="hub-status" role="status"></p>
+        </section>
+
+        <section class="account-hub-card" aria-labelledby="preferencesTitle">
+          <div class="hub-card-heading"><div><span class="eyebrow">PREFERENCES</span><h2 id="preferencesTitle">Useful updates only</h2></div><span class="hub-card-number">03</span></div>
+          <form id="profilePreferencesForm" class="preference-list">
+            <label><span><strong>Vehicle reminders</strong><small>MOT and tax expiry nudges for selected vehicles.</small></span><input id="profileReminderPreference" type="checkbox"></label>
+            <label><span><strong>Product updates</strong><small>Occasional news about meaningful Check A Reg improvements.</small></span><input id="profileProductPreference" type="checkbox"></label>
+            <button class="secondary-button" type="submit">Save preferences</button>
+            <p id="profilePreferencesStatus" class="hub-status" role="status"></p>
+          </form>
+        </section>
+
+        <section class="account-hub-card privacy-card" aria-labelledby="privacyTitle">
+          <div class="hub-card-heading"><div><span class="eyebrow">PRIVACY</span><h2 id="privacyTitle">You control your data</h2></div><span class="hub-card-number">04</span></div>
+          <p>Download a copy of your profile, saved vehicles and support history at any time.</p>
+          <div class="privacy-actions"><button id="exportAccountDataButton" class="secondary-button" type="button">Download my data</button><button id="requestDeletionButton" class="text-button is-danger" type="button">Request account deletion</button></div>
+          <p id="profilePrivacyStatus" class="hub-status" role="status"></p>
+        </section>
+      </div>
+
+      <section class="account-hub-card support-card" aria-labelledby="supportTitle">
+        <div class="support-heading"><div><span class="eyebrow">SUPPORT</span><h2 id="supportTitle">Tell us what went wrong.</h2><p>Send the detail once. We’ll keep the ticket and reply here.</p></div><span class="support-promise">Usually reviewed within 2 working days</span></div>
+        <div class="support-layout">
+          <form id="supportTicketForm" class="support-form">
+            <div class="form-pair"><label>Issue type<select id="supportCategory" required><option value="bug">Bug or broken feature</option><option value="vehicle_data">Vehicle data looks wrong</option><option value="billing">Credits or billing</option><option value="account">Account access</option><option value="suggestion">Suggestion</option><option value="other">Something else</option></select></label><label>Registration (optional)<input id="supportRegistration" type="text" maxlength="8" autocomplete="off" placeholder="AB12 CDE"></label></div>
+            <label for="supportSubject">Subject</label><input id="supportSubject" type="text" minlength="5" maxlength="100" required placeholder="A short summary">
+            <label for="supportDescription">What happened?</label><textarea id="supportDescription" minlength="10" maxlength="2000" rows="6" required placeholder="What did you expect, and what happened instead?"></textarea>
+            <label class="screenshot-field" for="supportScreenshot"><span>Screenshot <small>(optional, max 5MB)</small></span><input id="supportScreenshot" type="file" accept="image/jpeg,image/png,image/webp"></label>
+            <button id="submitSupportTicketButton" class="primary-button" type="submit">Send to support</button>
+            <p id="supportFormStatus" class="hub-status" role="status"></p>
+          </form>
+          <div class="ticket-history"><div class="ticket-history-heading"><h3>Your tickets</h3><button id="refreshMyTicketsButton" class="text-button" type="button">Refresh</button></div><div id="mySupportTickets"><p class="notification-empty">Loading your tickets…</p></div></div>
+        </div>
+      </section>
+    </section>
+
     <section id="adminView" class="account-view" aria-labelledby="adminMenuButton" hidden>
       <section class="admin-control-centre">
         <section class="dashboard-hero">
@@ -117,6 +202,12 @@
           <article><span>Suspended</span><strong id="adminBannedUsers">—</strong><small>Access restricted</small></article>
           <article><span>Checks today</span><strong id="adminSearchesToday">—</strong><small>Since midnight UK</small></article>
           <article><span>Credits</span><strong id="adminCreditsTotal">—</strong><small>In circulation</small></article>
+        </section>
+
+        <section id="adminSupportInbox" class="admin-panel admin-support-inbox" hidden>
+          <div class="support-heading"><div><span class="eyebrow">CUSTOMER SUPPORT</span><h2>Support inbox</h2><p>Review reports, reply to customers and close the loop.</p></div><div class="support-inbox-actions"><label for="adminSupportStatusFilter">Status</label><select id="adminSupportStatusFilter"><option value="">All tickets</option><option value="open">Open</option><option value="in_progress">In progress</option><option value="waiting_on_user">Waiting on user</option><option value="resolved">Resolved</option><option value="closed">Closed</option></select><button id="refreshAdminSupportButton" class="secondary-button compact-button" type="button">Refresh</button></div></div>
+          <p id="adminSupportStatus" class="admin-status" role="status"></p>
+          <div class="admin-support-layout"><div id="adminSupportTicketList" class="admin-support-list"><p class="notification-empty">Open Support to load tickets.</p></div><section id="adminSupportTicketDetail" class="admin-support-detail" hidden><div id="adminSupportTicketContent"></div><form id="adminSupportReplyForm"><label for="adminSupportReply">Reply</label><textarea id="adminSupportReply" maxlength="2000" rows="6" placeholder="Write a clear response for the customer…"></textarea><label for="adminSupportTicketStatus">Ticket status</label><select id="adminSupportTicketStatus"><option value="open">Open</option><option value="in_progress">In progress</option><option value="waiting_on_user">Waiting on user</option><option value="resolved">Resolved</option><option value="closed">Closed</option></select><button id="saveAdminSupportTicketButton" class="primary-button" type="submit">Save response</button></form></section></div>
         </section>
 
         <div class="admin-dashboard-grid">
@@ -159,6 +250,7 @@
   <script src="auth.js" defer></script>
   <script src="pwa.js" defer></script>
   <script src="account.js" defer></script>
+  <script src="account-hub.js" defer></script>
   <script src="admin-controls.js" defer></script>
   <script src="admin-user-detail-fix.js" defer></script>
 </body>

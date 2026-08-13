@@ -73,7 +73,7 @@ test("selected plate mark is used for favicon, PWA and account access branding",
     read("public/manifest.json"),
   ]);
   assert.match(auth, /<img src="\/icon\.svg" alt="Check A Reg">/);
-  assert.match(worker, /check-a-reg-v6/);
+  assert.match(worker, /check-a-reg-v7/);
   assert.match(worker, /"\/favicon-32\.png"/);
   assert.match(worker, /"\/favicon\.ico"/);
   assert.match(manifest, /"src": "\/icon-192\.png"/);
@@ -102,6 +102,43 @@ test("account page uses real unique elements instead of a global getElementById 
     assert.match(admin, new RegExp(`${id}:`), `admin dashboard does not render #${id}`);
   }
   assert.doesNotMatch(admin, /adminMetric(?:TotalUsers|VerifiedUsers|BannedUsers|SearchesToday|PushSubscribers)/);
+});
+
+test("My Account hub includes secure profiles, privacy export and support workflows", async () => {
+  const [html, script, css, migration, worker, staff] = await Promise.all([
+    read("public/account.html"),
+    read("public/account-hub.js"),
+    read("public/account-hub.css"),
+    read("supabase/migrations/20260813040000_add_account_support_hub.sql"),
+    read("public/sw.js"),
+    read("public/staff-dashboard-organizer.js"),
+  ]);
+
+  for (const id of [
+    "profileView", "profileDisplayName", "profileAvatarInput", "changeEmailForm",
+    "changePasswordForm", "supportTicketForm", "mySupportTickets", "adminSupportInbox",
+  ]) assert.match(html, new RegExp(`id="${id}"`));
+
+  assert.match(script, /from\("user_profiles"\)/);
+  assert.match(script, /from\("support_tickets"\)/);
+  assert.match(script, /staff_list_support_tickets/);
+  assert.match(script, /staff_update_support_ticket/);
+  assert.match(script, /createSignedUrl/);
+  assert.match(script, /auth\.updateUser\(\{ email \}\)/);
+  assert.match(script, /auth\.updateUser\(\{ password \}\)/);
+  assert.match(css, /@media \(max-width: 560px\)/);
+  assert.match(staff, /\["support", "Support"\]/);
+  assert.match(worker, /"\/account-hub\.js"/);
+  assert.match(worker, /"\/account-hub\.css"/);
+
+  const server = await read("server.js");
+  assert.match(server, /img-src 'self' data: blob: https:\/\/\*\.supabase\.co/);
+
+  assert.match(migration, /alter table public\.user_profiles enable row level security/);
+  assert.match(migration, /alter table public\.support_tickets enable row level security/);
+  assert.match(migration, /user_id = \(select auth\.uid\(\)\)/);
+  assert.match(migration, /storage\.foldername\(name\)/);
+  assert.match(migration, /revoke all on public\.support_tickets from public, anon, authenticated/);
 });
 
 test("admin dashboard migration defines every staff RPC used by the portal", async () => {

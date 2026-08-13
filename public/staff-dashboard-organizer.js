@@ -139,7 +139,7 @@
     nav.className = "simple-staff-nav";
     nav.setAttribute("aria-label", "Staff menu");
 
-    const items = [["home", "Home"], ["users", "Users"]];
+    const items = [["home", "Home"], ["users", "Users"], ["support", "Support"]];
     if (staffRole !== "moderator") items.push(["tools", "Tools"]);
 
     nav.innerHTML = items.map(([key, label], index) => `
@@ -159,6 +159,7 @@
     const activity = adminView.querySelector(".admin-quick-tools");
     const dashboardGrid = adminView.querySelector(".admin-dashboard-grid");
     const broadcast = adminView.querySelector(".admin-broadcast-panel");
+    const support = byId("adminSupportInbox");
     const history = byId("adminBroadcastHistoryPanel");
 
     if (page === "tools" && staffRole === "moderator") page = "home";
@@ -168,10 +169,12 @@
     hide(overview, page !== "home");
     hide(activity, page !== "home");
     hide(dashboardGrid, page !== "users");
+    hide(support, page !== "support");
     hide(broadcast, page !== "tools");
     hide(history, page !== "tools");
 
     if (page === "home") updateActivityPanels();
+    if (page === "support") window.checkARegSupport?.loadAdminTickets?.();
 
     document.querySelectorAll("[data-simple-staff-page]").forEach((button) => {
       const active = button.dataset.simpleStaffPage === page;
@@ -191,6 +194,7 @@
     const dashboardGrid = adminView.querySelector(".admin-dashboard-grid");
     const userPanel = adminView.querySelector(".admin-user-panel");
     const broadcast = adminView.querySelector(".admin-broadcast-panel");
+    const support = byId("adminSupportInbox");
     const history = byId("adminBroadcastHistoryPanel");
     const activity = adminView.querySelector(".admin-quick-tools");
     const teamPanel = byId("teamManagementPanel");
@@ -206,11 +210,13 @@
     hide(activity, false);
     hide(userPanel, false);
     hide(dashboardGrid, true);
+    hide(support, true);
 
     if (dashboardGrid) dashboardGrid.classList.add("is-simple-users-page");
     if (overview && activity && overview.nextElementSibling !== activity) overview.after(activity);
     if (activity && dashboardGrid && activity.nextElementSibling !== dashboardGrid) activity.after(dashboardGrid);
-    if (dashboardGrid && broadcast && dashboardGrid.nextElementSibling !== broadcast) dashboardGrid.after(broadcast);
+    if (dashboardGrid && support && dashboardGrid.nextElementSibling !== support) dashboardGrid.after(support);
+    if (support && broadcast && support.nextElementSibling !== broadcast) support.after(broadcast);
     if (broadcast && history && broadcast.nextElementSibling !== history) broadcast.after(history);
 
     const menu = byId("adminMenuButton");
