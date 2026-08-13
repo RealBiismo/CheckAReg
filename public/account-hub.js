@@ -10,7 +10,10 @@
   let overview = null;
   let myTickets = [];
   let adminTickets = [];
+  let selectedUserTicketId = null;
   let selectedAdminTicketId = null;
+  let activeHubScreen = "overview";
+  let conversationPoll = null;
   let loaded = false;
 
   const escapeHtml = (value) => String(value ?? "")
@@ -44,6 +47,19 @@
     suggestion: "Suggestion",
     other: "Other",
   })[value] || "Support";
+
+  function switchHubScreen(screen) {
+    activeHubScreen = ["overview", "settings", "support"].includes(screen) ? screen : "overview";
+    document.querySelectorAll("[data-hub-screen-panel]").forEach((panel) => {
+      panel.hidden = panel.dataset.hubScreenPanel !== activeHubScreen;
+    });
+    document.querySelectorAll("[data-hub-screen]").forEach((button) => {
+      const active = button.dataset.hubScreen === activeHubScreen;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-current", active ? "page" : "false");
+    });
+    if (activeHubScreen === "support") loadMyTickets().catch((error) => setStatus("supportFormStatus", error.message, "error"));
+  }
 
   function setStatus(id, message, type = "") {
     const node = byId(id);
@@ -108,6 +124,7 @@
       profileOpenTickets: Number(overview?.openTickets) || 0,
     };
     Object.entries(values).forEach(([id, value]) => { if (byId(id)) byId(id).textContent = String(value); });
+    if (byId("supportTabCount")) byId("supportTabCount").textContent = String(values.profileOpenTickets);
   }
 
   async function ensureProfile() {
@@ -131,6 +148,24 @@
     renderOverview(allowance);
   }
 
+  function renderMessages(items, targetId) {
+    const target = byId(targetId);
+    if (!target) return;
+    if (!items.length) {
+      target.innerHTML = '<p class="notification-empty">No messages in this conversation yet.</p>';
+      return;
+    }
+    target.innerHTML = items.map((item) => {
+      const senderType = item.senderType || item.sender_type;
+      const createdAt = item.createdAt || item.created_at;
+      return `<article class="support-message is-${senderType === "staff" ? "staff" : "user"}">
+        <div><strong>${senderType === "staff" ? "Check A Reg" : "You"}</strong><time>${escapeHtml(formatDate(createdAt, true))}</time></div>
+        <p>${escapeHtml(item.message)}</p>
+      </article>`;
+    }).join("");
+    target.scrollTop = target.scrollHeight;
+  }
+
   function renderMyTickets() {
     const list = byId("mySupportTickets");
     if (!list) return;
@@ -139,22 +174,65 @@
       return;
     }
     list.innerHTML = myTickets.map((ticket) => `
-      <article class="ticket-item">
-        <div class="ticket-item-top"><span>${escapeHtml(categoryLabel(ticket.category))} · ${escapeHtml(statusLabel(ticket.status))}</span><time>${escapeHtml(formatDate(ticket.created_at))}</time></div>
-        <h4>${escapeHtml(ticket.subject)}</h4>
-        <p>${escapeHtml(ticket.description)}</p>
-        ${ticket.staff_response ? `<div class="ticket-response"><strong>Check A Reg replied</strong><p>${escapeHtml(ticket.staff_response)}</p></div>` : ""}
-      </article>`).join("");
+      <button class="ticket-row ${ticket.id === selectedUserTicketId ? "is-active" : ""}" type="button" data-user-ticket-id="${escapeHtml(ticket.id)}">
+        <span><b>${escapeHtml(categoryLabel(ticket.category))}</b><small>${escapeHtml(statusLabel(ticket.status))}</small></span>
+        <strong>${escapeHtml(ticket.subject)}</strong>
+        <time>${escapeHtml(formatDate(ticket.updated_at || ticket.created_at, true))}</time>
+      </button>`).join("");
   }
 
   async function loadMyTickets() {
     const { data, error } = await client.from("support_tickets")
-      .select("id,category,subject,description,registration,status,staff_response,created_at,responded_at")
-      .order("created_at", { ascending: false })
+      .select("id,category,subject,description,registration,status,created_at,updated_at")
+      .order("updated_at", { ascending: false })
       .limit(30);
     if (error) throw error;
     myTickets = data || [];
     renderMyTickets();
+  }
+
+  function showConversationPanel(mode) {
+    const shell = document.querySelector(".support-inbox-shell");
+    byId("supportTicketForm").hidden = mode !== "new";
+    byId("supportConversation").hidden = mode !== "thread";
+    byId("supportConversationEmpty").hidden = mode !== "empty";
+    shell?.classList.toggle("is-viewing-thread", mode !== "empty");
+  }
+
+  async function openUserConversation(id, { quiet = false } = {}) {
+    const ticket = myTickets.find((item) => item.id === id);
+    if (!ticket) return;
+    selectedUserTicketId = id;
+    renderMyTickets();
+    showConversationPanel("thread");
+    if (!quiet) setStatus("userSupportReplyStatus", "Loading conversation…");
+    const { data, error } = await client.from("support_ticket_messages")
+      .select("id,sender_type,message,created_at")
+      .eq("ticket_id", id)
+      .order("created_at", { ascending: true })
+      .order("id", { ascending: true });
+    if (error) {
+      setStatus("userSupportReplyStatus", error.message || "This conversation could not be loaded.", "error");
+      return;
+    }
+    byId("supportConversationMeta").textContent = `${categoryLabel(ticket.category)} · ${formatDate(ticket.created_at)}`;
+    byId("supportConversationTitle").textContent = ticket.subject;
+    byId("supportConversationStatus").textContent = statusLabel(ticket.status);
+    renderMessages(data || [], "userSupportMessages");
+    const closed = ticket.status === "closed";
+    byId("userSupportReply").disabled = closed;
+    byId("sendUserSupportReplyButton").disabled = closed;
+    byId("userSupportReply").placeholder = closed ? "This conversation is closed." : "Write a reply…";
+    if (!quiet) setStatus("userSupportReplyStatus", closed ? "This conversation is closed." : "");
+  }
+
+  function openNewTicket() {
+    selectedUserTicketId = null;
+    renderMyTickets();
+    byId("supportTicketForm").reset();
+    setStatus("supportFormStatus", "");
+    showConversationPanel("new");
+    byId("supportSubject").focus();
   }
 
   async function loadAccountHub() {
@@ -274,26 +352,33 @@
     list.innerHTML = adminTickets.map((ticket) => `
       <button class="admin-ticket-row ${ticket.id === selectedAdminTicketId ? "is-active" : ""}" type="button" data-support-ticket-id="${escapeHtml(ticket.id)}">
         <div><span>${escapeHtml(categoryLabel(ticket.category))}</span><small>${escapeHtml(statusLabel(ticket.status))}</small></div>
-        <strong>${escapeHtml(ticket.subject)}</strong><small>${escapeHtml(ticket.email)} · ${escapeHtml(formatDate(ticket.created_at, true))}</small>
+        <strong>${escapeHtml(ticket.subject)}</strong><small>${escapeHtml(ticket.email)} · ${Number(ticket.messageCount) || 0} messages · ${escapeHtml(formatDate(ticket.updated_at || ticket.created_at, true))}</small>
       </button>`).join("");
   }
 
   async function showAdminTicket(id) {
-    const ticket = adminTickets.find((item) => item.id === id);
-    if (!ticket) return;
     selectedAdminTicketId = id;
     renderAdminTickets();
+    setStatus("adminSupportStatus", "Loading conversation…");
+    const { data, error } = await client.rpc("staff_get_support_thread", { p_ticket_id: id });
+    if (error) {
+      setStatus("adminSupportStatus", error.message || "This conversation could not be loaded.", "error");
+      return;
+    }
+    const ticket = data?.ticket;
+    if (!ticket) return;
     const detail = byId("adminSupportTicketDetail");
     byId("adminSupportTicketContent").innerHTML = `
       <span class="eyebrow">${escapeHtml(categoryLabel(ticket.category))} · ${escapeHtml(statusLabel(ticket.status))}</span>
       <h3>${escapeHtml(ticket.subject)}</h3>
-      <p class="admin-ticket-meta">${escapeHtml(ticket.email)} · ${escapeHtml(formatDate(ticket.created_at, true))}</p>
-      <div class="admin-ticket-description">${escapeHtml(ticket.description)}</div>
+      <p class="admin-ticket-meta">${escapeHtml(ticket.email)} · ${escapeHtml(formatDate(ticket.createdAt, true))}</p>
       <div class="admin-ticket-context">${ticket.registration ? `<span>Registration: ${escapeHtml(ticket.registration)}</span>` : ""}${ticket.pageUrl ? `<span>Page: ${escapeHtml(ticket.pageUrl)}</span>` : ""}${ticket.userAgent ? `<span>Device: ${escapeHtml(ticket.userAgent)}</span>` : ""}</div>
       ${ticket.screenshotPath ? '<a id="adminTicketScreenshotLink" class="admin-ticket-screenshot" target="_blank" rel="noopener">Open attached screenshot ↗</a>' : ""}`;
-    byId("adminSupportReply").value = ticket.staffResponse || "";
+    renderMessages(Array.isArray(data.messages) ? data.messages : [], "adminSupportMessages");
+    byId("adminSupportReply").value = "";
     byId("adminSupportTicketStatus").value = ticket.status;
     detail.hidden = false;
+    setStatus("adminSupportStatus", "Conversation loaded.", "success");
     if (ticket.screenshotPath) {
       try {
         const url = await signedMediaUrl(ticket.screenshotPath, 900);
@@ -308,6 +393,9 @@
 
   function installListeners() {
     byId("profileMenuButton")?.addEventListener("click", loadAccountHub);
+    document.querySelectorAll("[data-hub-screen], [data-open-hub-screen]").forEach((control) => {
+      control.addEventListener("click", () => switchHubScreen(control.dataset.hubScreen || control.dataset.openHubScreen));
+    });
     byId("profileAvatarInput")?.addEventListener("change", (event) => {
       const file = event.target.files?.[0];
       if (file) uploadAvatar(file);
@@ -356,20 +444,48 @@
     });
     byId("supportTicketForm")?.addEventListener("submit", async (event) => {
       event.preventDefault();
+      const form = event.currentTarget;
       const submit = byId("submitSupportTicketButton");
       const registration = byId("supportRegistration").value.toUpperCase().replace(/[\s-]/g, "");
       if (registration && !/^[A-Z0-9]{2,8}$/.test(registration)) return setStatus("supportFormStatus", "Check the registration or leave it blank.", "error");
       submit.disabled = true;
       setStatus("supportFormStatus", "Sending your ticket securely…");
       try {
-        await createTicket({ category: byId("supportCategory").value, subject: byId("supportSubject").value, description: byId("supportDescription").value, registration, screenshot: byId("supportScreenshot").files?.[0] || null });
-        event.currentTarget.reset();
+        const ticket = await createTicket({ category: byId("supportCategory").value, subject: byId("supportSubject").value, description: byId("supportDescription").value, registration, screenshot: byId("supportScreenshot").files?.[0] || null });
+        form.reset();
         await Promise.all([loadMyTickets(), loadOverview()]);
-        setStatus("supportFormStatus", "Ticket sent. We’ll reply here.", "success");
+        await openUserConversation(ticket.id);
+        setStatus("userSupportReplyStatus", "Conversation started. We’ll reply here.", "success");
       } catch (error) { setStatus("supportFormStatus", error.message || "Your ticket could not be sent.", "error"); }
       finally { submit.disabled = false; }
     });
     byId("refreshMyTicketsButton")?.addEventListener("click", () => loadMyTickets().catch((error) => setStatus("supportFormStatus", error.message, "error")));
+    byId("newSupportTicketButton")?.addEventListener("click", openNewTicket);
+    byId("cancelNewTicketButton")?.addEventListener("click", () => showConversationPanel(selectedUserTicketId ? "thread" : "empty"));
+    byId("backToTicketListButton")?.addEventListener("click", () => document.querySelector(".support-inbox-shell")?.classList.remove("is-viewing-thread"));
+    byId("mySupportTickets")?.addEventListener("click", (event) => {
+      const row = event.target.closest("[data-user-ticket-id]");
+      if (row) openUserConversation(row.dataset.userTicketId);
+    });
+    byId("userSupportReplyForm")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!selectedUserTicketId) return;
+      const textarea = byId("userSupportReply");
+      const message = textarea.value.trim();
+      if (!message) return;
+      const button = byId("sendUserSupportReplyButton");
+      button.disabled = true;
+      setStatus("userSupportReplyStatus", "Sending…");
+      try {
+        const { error } = await client.from("support_ticket_messages").insert({ ticket_id: selectedUserTicketId, sender_id: user.id, sender_type: "user", message });
+        if (error) throw error;
+        textarea.value = "";
+        await Promise.all([loadMyTickets(), loadOverview()]);
+        await openUserConversation(selectedUserTicketId, { quiet: true });
+        setStatus("userSupportReplyStatus", "Sent.", "success");
+      } catch (error) { setStatus("userSupportReplyStatus", error.message || "Your reply could not be sent.", "error"); }
+      finally { button.disabled = false; }
+    });
     byId("exportAccountDataButton")?.addEventListener("click", async () => {
       setStatus("profilePrivacyStatus", "Preparing your download…");
       try {
@@ -396,13 +512,14 @@
       event.preventDefault();
       if (!selectedAdminTicketId) return;
       const button = byId("saveAdminSupportTicketButton");
+      const response = byId("adminSupportReply").value.trim();
       button.disabled = true;
       try {
-        const { error } = await client.rpc("staff_update_support_ticket", { p_ticket_id: selectedAdminTicketId, p_status: byId("adminSupportTicketStatus").value, p_response: byId("adminSupportReply").value.trim() || null });
+        const { error } = await client.rpc("staff_update_support_ticket", { p_ticket_id: selectedAdminTicketId, p_status: byId("adminSupportTicketStatus").value, p_response: response || null });
         if (error) throw error;
         await loadAdminTickets();
         await showAdminTicket(selectedAdminTicketId);
-        setStatus("adminSupportStatus", "Ticket updated.", "success");
+        setStatus("adminSupportStatus", response ? "Reply sent." : "Ticket status updated.", "success");
       } catch (error) { setStatus("adminSupportStatus", error.message || "The ticket could not be updated.", "error"); }
       finally { button.disabled = false; }
     });
@@ -416,6 +533,12 @@
     installListeners();
     window.checkARegSupport = { loadAdminTickets };
     await loadAccountHub();
+    conversationPoll = window.setInterval(async () => {
+      if (document.hidden || activeHubScreen !== "support" || !selectedUserTicketId) return;
+      await loadMyTickets().catch(() => {});
+      if (myTickets.some((ticket) => ticket.id === selectedUserTicketId)) await openUserConversation(selectedUserTicketId, { quiet: true });
+    }, 20000);
+    window.addEventListener("pagehide", () => window.clearInterval(conversationPoll), { once: true });
   }
 
   void init();

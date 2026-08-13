@@ -73,7 +73,7 @@ test("selected plate mark is used for favicon, PWA and account access branding",
     read("public/manifest.json"),
   ]);
   assert.match(auth, /<img src="\/icon\.svg" alt="Check A Reg">/);
-  assert.match(worker, /check-a-reg-v7/);
+  assert.match(worker, /check-a-reg-v8/);
   assert.match(worker, /"\/favicon-32\.png"/);
   assert.match(worker, /"\/favicon\.ico"/);
   assert.match(manifest, /"src": "\/icon-192\.png"/);
@@ -104,12 +104,13 @@ test("account page uses real unique elements instead of a global getElementById 
   assert.doesNotMatch(admin, /adminMetric(?:TotalUsers|VerifiedUsers|BannedUsers|SearchesToday|PushSubscribers)/);
 });
 
-test("My Account hub includes secure profiles, privacy export and support workflows", async () => {
-  const [html, script, css, migration, worker, staff] = await Promise.all([
+test("My Account hub includes secure profiles, privacy export and threaded support", async () => {
+  const [html, script, css, migration, conversationMigration, worker, staff] = await Promise.all([
     read("public/account.html"),
     read("public/account-hub.js"),
     read("public/account-hub.css"),
     read("supabase/migrations/20260813040000_add_account_support_hub.sql"),
+    read("supabase/migrations/20260813190000_add_support_ticket_conversations.sql"),
     read("public/sw.js"),
     read("public/staff-dashboard-organizer.js"),
   ]);
@@ -117,16 +118,23 @@ test("My Account hub includes secure profiles, privacy export and support workfl
   for (const id of [
     "profileView", "profileDisplayName", "profileAvatarInput", "changeEmailForm",
     "changePasswordForm", "supportTicketForm", "mySupportTickets", "adminSupportInbox",
+    "accountOverviewScreen", "accountSettingsScreen", "accountSupportScreen",
+    "userSupportMessages", "userSupportReplyForm", "adminSupportMessages",
   ]) assert.match(html, new RegExp(`id="${id}"`));
 
   assert.match(script, /from\("user_profiles"\)/);
   assert.match(script, /from\("support_tickets"\)/);
   assert.match(script, /staff_list_support_tickets/);
   assert.match(script, /staff_update_support_ticket/);
+  assert.match(script, /staff_get_support_thread/);
+  assert.match(script, /from\("support_ticket_messages"\)/);
+  assert.doesNotMatch(script, /event\.currentTarget\.reset\(\)/);
+  assert.match(script, /const form = event\.currentTarget/);
   assert.match(script, /createSignedUrl/);
   assert.match(script, /auth\.updateUser\(\{ email \}\)/);
   assert.match(script, /auth\.updateUser\(\{ password \}\)/);
-  assert.match(css, /@media \(max-width: 560px\)/);
+  assert.match(css, /@media \(max-width:700px\)/);
+  assert.match(css, /\.support-inbox-shell\.is-viewing-thread/);
   assert.match(staff, /\["support", "Support"\]/);
   assert.match(worker, /"\/account-hub\.js"/);
   assert.match(worker, /"\/account-hub\.css"/);
@@ -139,6 +147,11 @@ test("My Account hub includes secure profiles, privacy export and support workfl
   assert.match(migration, /user_id = \(select auth\.uid\(\)\)/);
   assert.match(migration, /storage\.foldername\(name\)/);
   assert.match(migration, /revoke all on public\.support_tickets from public, anon, authenticated/);
+  assert.match(conversationMigration, /create table if not exists public\.support_ticket_messages/);
+  assert.match(conversationMigration, /alter table public\.support_ticket_messages enable row level security/);
+  assert.match(conversationMigration, /ticket\.user_id = \(select auth\.uid\(\)\)/);
+  assert.match(conversationMigration, /function public\.staff_get_support_thread\(p_ticket_id uuid\)/);
+  assert.match(conversationMigration, /support_ticket_seeds_conversation/);
 });
 
 test("admin dashboard migration defines every staff RPC used by the portal", async () => {
