@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="checkareg-theme.css">
   <link rel="stylesheet" href="ai-page-polish.css">
   <link rel="stylesheet" href="mobile-accessibility.css">
+  <link rel="stylesheet" href="simple-app.css">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
@@ -23,7 +24,7 @@
 </head>
 <body class="ai-page">
   <header class="site-header ai-header">
-    <a class="back-link" href="/" aria-label="Return to Check A Reg"><span aria-hidden="true">←</span> Return to Check A Reg</a>
+    <a class="back-link" href="/account.html" aria-label="Back to my garage"><span aria-hidden="true">←</span> Garage</a>
     <a class="brand compact-brand transparent-brand" href="/" aria-label="Check A Reg home"><img src="/assets/checkareg-transparent.png" alt="Check A Reg"></a>
     <div class="ai-header-actions">
       <a class="header-action ai-buy-credits" href="/credits.html">Buy credits</a>
@@ -34,14 +35,8 @@
     <section class="ai-hero">
       <div>
         <span class="eyebrow">CHECK A REG AI</span>
-        <h1>Vehicle AI mechanic.</h1>
-        <p>Ask about faults, warning lights, repairs, servicing, parts, vehicle specs or attach photos for Check A Reg AI to analyse.</p>
-      </div>
-      <div class="ai-price-card">
-        <strong>10 questions</strong>
-        <span>for 4 credits</span>
-        <small>Or 200 / month with Check A Reg+</small>
-        <a class="secondary-button button-link ai-price-buy" href="/credits.html">Buy credits</a>
+        <h1>Ask about your car.</h1>
+        <p>Describe the problem or add photos. Your conversations stay saved here.</p>
       </div>
     </section>
 
@@ -101,7 +96,6 @@
 
           <p class="ai-disclaimer">Check A Reg AI provides guidance, not a confirmed mechanical diagnosis. Stop driving and seek professional help if the vehicle may be unsafe.</p>
           <button id="startDiagnosisButton" class="primary-button ai-start-button" type="button">Ask Check A Reg AI</button>
-          <div class="ai-access-row"><a href="/credits.html">Buy credits / AI questions</a><span>•</span><a href="/credits.html">View Check A Reg+</a></div>
           <p id="aiStatus" class="ai-status" role="status"></p>
         </div>
 

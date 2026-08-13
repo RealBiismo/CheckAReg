@@ -25,6 +25,7 @@ test("service worker updates app shells from network without atomic precache fai
   assert.doesNotMatch(worker, /cache\.addAll/);
   assert.match(worker, /event\.request\.mode === "navigate"/);
   assert.match(worker, /"\/mobile-accessibility\.css"/);
+  assert.match(worker, /"\/simple-app\.css"/);
 });
 
 test("every interactive app page loads the shared mobile accessibility layer", async () => {
@@ -45,6 +46,25 @@ test("every interactive app page loads the shared mobile accessibility layer", a
   assert.match(css, /grid-template-columns: 44px 44px minmax\(72px, 1fr\)/);
   assert.match(css, /\.notification-bell[\s\S]*min-height: 44px !important/);
   assert.match(aiEntry, /aria-label", "Open Check A Reg AI Mechanic"/);
+});
+
+test("signed-in screens use one simplified visual system without duplicate account navigation", async () => {
+  const pages = ["account.html", "credits.html", "ai-mechanic.html", "notifications.html"];
+  for (const page of pages) {
+    const html = await read(`public/${page}`);
+    assert.match(html, /<link rel="stylesheet" href="simple-app\.css">/, `${page} is missing simplified UI CSS`);
+  }
+
+  const [account, ai, css] = await Promise.all([
+    read("public/account.html"),
+    read("public/ai-mechanic.html"),
+    read("public/simple-app.css"),
+  ]);
+  assert.doesNotMatch(account, /account-hub-tabs|data-hub-screen/);
+  assert.match(account, /id="requestDeletionButton"[^>]*>Delete account<\/button>/);
+  assert.match(account, /security-compact-grid/);
+  assert.doesNotMatch(ai, /ai-price-card|ai-access-row/);
+  assert.match(css, /Garage: one hero, one status strip/);
 });
 
 test("homepage mobile controls and footer remain centred and accessible", async () => {
@@ -73,7 +93,7 @@ test("selected plate mark is used for favicon, PWA and account access branding",
     read("public/manifest.json"),
   ]);
   assert.match(auth, /<img src="\/icon\.svg" alt="Check A Reg">/);
-  assert.match(worker, /check-a-reg-v8/);
+  assert.match(worker, /check-a-reg-v9/);
   assert.match(worker, /"\/favicon-32\.png"/);
   assert.match(worker, /"\/favicon\.ico"/);
   assert.match(manifest, /"src": "\/icon-192\.png"/);
