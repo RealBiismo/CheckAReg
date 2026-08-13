@@ -72,12 +72,17 @@ test("selected plate mark is used for favicon, PWA and account access branding",
     read("public/sw.js"),
     read("public/manifest.json"),
   ]);
-  assert.match(auth, /<img src="\/icon-192\.png" alt="Check A Reg">/);
-  assert.match(worker, /check-a-reg-v5/);
+  assert.match(auth, /<img src="\/icon\.svg" alt="Check A Reg">/);
+  assert.match(worker, /check-a-reg-v6/);
   assert.match(worker, /"\/favicon-32\.png"/);
   assert.match(worker, /"\/favicon\.ico"/);
   assert.match(manifest, /"src": "\/icon-192\.png"/);
   assert.match(manifest, /"src": "\/icon-512\.png"/);
+
+  const icon = await read("public/icon.svg");
+  assert.match(icon, /viewBox="0 0 256 256"/);
+  assert.match(icon, /clip-path="url\(#plate-shape\)"/);
+  assert.doesNotMatch(icon, /<rect[^>]+width="256"[^>]+fill=/);
 });
 
 test("account page uses real unique elements instead of a global getElementById patch", async () => {
