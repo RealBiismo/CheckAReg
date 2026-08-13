@@ -52,3 +52,16 @@ test("public config never exposes the Supabase server secret", async () => {
   assert.doesNotMatch(configRoute, /res\.json\(authConfig\)/);
   assert.doesNotMatch(configRoute, /supabaseSecretKey\s*:/);
 });
+
+test("vehicle results hide homepage-only navigation and sections", async () => {
+  const [css, preview] = await Promise.all([
+    read("public/full-history-preview.css"),
+    read("public/full-history-preview.js"),
+  ]);
+
+  assert.match(css, /\.vehicle-result-mode \.demo-nav/);
+  assert.match(css, /\.vehicle-result-mode \.demo-features/);
+  assert.match(css, /\.vehicle-result-mode \.demo-how/);
+  assert.match(preview, /classList\.add\("vehicle-result-mode"\)/);
+  assert.match(preview, /classList\.remove\("vehicle-result-mode"\)/);
+});
