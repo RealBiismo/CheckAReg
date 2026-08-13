@@ -59,6 +59,27 @@ test("homepage mobile controls and footer remain centred and accessible", async 
   assert.match(css, /min-height: calc\(88px \+ env\(safe-area-inset-top, 0px\)\)/);
 });
 
+test("selected plate mark is used for favicon, PWA and account access branding", async () => {
+  const pages = ["index.html", "account.html", "credits.html", "ai-mechanic.html", "notifications.html"];
+  for (const page of pages) {
+    const html = await read(`public/${page}`);
+    assert.match(html, /href="\/favicon-32\.png"/);
+    assert.match(html, /href="\/favicon\.ico"/);
+  }
+
+  const [auth, worker, manifest] = await Promise.all([
+    read("public/auth.js"),
+    read("public/sw.js"),
+    read("public/manifest.json"),
+  ]);
+  assert.match(auth, /<img src="\/icon-192\.png" alt="Check A Reg">/);
+  assert.match(worker, /check-a-reg-v5/);
+  assert.match(worker, /"\/favicon-32\.png"/);
+  assert.match(worker, /"\/favicon\.ico"/);
+  assert.match(manifest, /"src": "\/icon-192\.png"/);
+  assert.match(manifest, /"src": "\/icon-512\.png"/);
+});
+
 test("account page uses real unique elements instead of a global getElementById patch", async () => {
   const [html, splash, admin] = await Promise.all([
     read("public/account.html"),
