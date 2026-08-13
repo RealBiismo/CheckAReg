@@ -1,0 +1,306 @@
+/* Shared mobile interaction rules. Loaded last so every Check A Reg surface
+   keeps usable controls at narrow widths and around phone safe areas. */
+
+:where(button, a, input, select, textarea) {
+  -webkit-tap-highlight-color: rgba(7, 151, 255, 0.2);
+}
+
+:where(button, a[role="button"], .button-link, .header-action, .back-link,
+  .primary-button, .secondary-button, .danger-button, .notifications-action) {
+  touch-action: manipulation;
+}
+
+@media (max-width: 760px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  :where(button, a[role="button"], .button-link, .header-action, .back-link,
+    .primary-button, .secondary-button, .danger-button, .account-menu-button,
+    .notifications-action, .notifications-back) {
+    min-height: 44px !important;
+  }
+
+  /* Homepage: logo stays readable while both actions retain full tap areas. */
+  body.home-page .home-header {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: calc(88px + env(safe-area-inset-top, 0px)) !important;
+    height: auto !important;
+    padding: calc(env(safe-area-inset-top, 0px) + 18px)
+      max(14px, env(safe-area-inset-right, 0px)) 8px
+      max(14px, env(safe-area-inset-left, 0px)) !important;
+    display: grid !important;
+    grid-template-columns: minmax(108px, 1fr) auto !important;
+    gap: 10px !important;
+  }
+
+  body.home-page .home-header > .brand {
+    min-width: 0 !important;
+    max-width: 132px !important;
+    flex-basis: auto !important;
+  }
+
+  body.home-page .home-header > .brand img {
+    width: min(125px, 100%) !important;
+    height: auto !important;
+    max-width: 100% !important;
+  }
+
+  body.home-page .home-header-actions {
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-columns: 48px minmax(78px, auto) !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  body.home-page .home-header-actions .header-action {
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 48px !important;
+    padding-inline: 13px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+  }
+
+  body.home-page .home-header-actions .ai-mechanic-entry {
+    width: 48px !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+  }
+
+  body.home-page .home-header-actions .ai-mechanic-entry span {
+    font-size: 22px !important;
+  }
+
+  body.home-page #accountButton {
+    min-width: 78px !important;
+  }
+
+  body.home-page .search-panel > .primary-button {
+    width: min(88%, 360px) !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    margin: 12px auto 0 !important;
+    border-radius: 14px !important;
+    font-size: 15px !important;
+  }
+
+  body.home-page .trust-row {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    place-items: center !important;
+    gap: 10px !important;
+    margin-top: 22px !important;
+    text-align: center !important;
+  }
+
+  body.home-page .trust-row > span {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  body.home-page .demo-footer {
+    min-height: 130px !important;
+    height: auto !important;
+    padding: 28px 0 max(28px, env(safe-area-inset-bottom, 0px)) !important;
+    display: grid !important;
+    justify-items: center !important;
+    gap: 10px !important;
+    text-align: center !important;
+  }
+
+  body.home-page .demo-footer p {
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  body.home-page .demo-footer span {
+    line-height: 1.5 !important;
+  }
+
+  /* Authenticated pages: reserve a fixed tap lane for every header action. */
+  body.account-page .account-header {
+    box-sizing: border-box !important;
+    width: calc(100% - 20px) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    min-height: calc(72px + env(safe-area-inset-top, 0px)) !important;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
+  }
+
+  body.account-page .account-header .brand {
+    display: none !important;
+  }
+
+  body.account-page .account-header-actions {
+    display: grid !important;
+    grid-template-columns: 44px 44px minmax(72px, 1fr) !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  body.account-page .account-header .back-link {
+    flex: 0 1 92px !important;
+    width: auto !important;
+    min-width: 68px !important;
+    height: 44px !important;
+  }
+
+  body.account-page .account-header .ai-mechanic-entry {
+    width: 44px !important;
+    min-width: 44px !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+  }
+
+  body.account-page .account-header .ai-mechanic-entry span {
+    font-size: 20px !important;
+  }
+
+  body.account-page .account-header #signOutButton {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding-inline: 10px !important;
+  }
+
+  body.account-page .account-header .notification-bell {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+  }
+
+  .admin-action-buttons,
+  .admin-user-search > div {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-action-buttons > button,
+  .admin-user-search button,
+  .admin-access-controls button,
+  .admin-direct-notification button,
+  .admin-broadcast-panel button {
+    width: 100% !important;
+  }
+
+  .simple-staff-nav,
+  .simple-activity-switch {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .simple-staff-nav::-webkit-scrollbar,
+  .simple-activity-switch::-webkit-scrollbar {
+    display: none;
+  }
+
+  .simple-staff-nav button,
+  .simple-activity-switch button {
+    flex: 0 0 auto;
+    min-height: 44px !important;
+  }
+
+  /* Credits and notification headers stay clear of the status bar. */
+  body.credit-store-page .store-header,
+  body.notifications-page .notifications-header {
+    box-sizing: border-box !important;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 10px) !important;
+    padding-left: max(12px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(12px, env(safe-area-inset-right, 0px)) !important;
+  }
+
+  body.credit-store-page .store-header .back-link,
+  body.credit-store-page .store-header .header-action,
+  body.notifications-page .notifications-back {
+    min-height: 44px !important;
+  }
+
+  .compact-credit-grid .primary-button,
+  .plus-cta,
+  .ai-pack-button {
+    min-height: 48px !important;
+  }
+
+  /* AI keeps its top actions tappable despite its dense chat layout. */
+  body.ai-page .ai-header {
+    box-sizing: border-box !important;
+    min-height: calc(64px + env(safe-area-inset-top, 0px)) !important;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
+  }
+
+  body.ai-page .ai-header .back-link,
+  body.ai-page .ai-header-actions .header-action,
+  body.ai-page .ai-mobile-chats-button,
+  body.ai-page .ai-remove-chat-button {
+    min-height: 44px !important;
+  }
+
+  body.ai-page .ai-compose-photo,
+  body.ai-page .ai-send-button {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  body.home-page .home-header {
+    grid-template-columns: minmax(96px, 1fr) auto !important;
+    gap: 6px !important;
+  }
+
+  body.home-page .home-header > .brand {
+    max-width: 110px !important;
+  }
+
+  body.home-page .home-header-actions {
+    grid-template-columns: 44px minmax(72px, auto) !important;
+    gap: 6px !important;
+  }
+
+  body.home-page .home-header-actions .header-action {
+    height: 44px !important;
+    padding-inline: 10px !important;
+    font-size: 12px !important;
+  }
+
+  body.home-page .home-header-actions .ai-mechanic-entry {
+    width: 44px !important;
+    font-size: 0 !important;
+  }
+
+  body.account-page .account-header {
+    width: calc(100% - 14px) !important;
+    gap: 5px !important;
+  }
+
+  body.account-page .account-header-actions {
+    grid-template-columns: 44px 44px minmax(68px, 1fr) !important;
+    gap: 5px !important;
+  }
+
+  body.account-page .account-header .back-link {
+    flex-basis: 72px !important;
+    min-width: 64px !important;
+  }
+}
+
+@media (pointer: coarse) {
+  :where(button, a[role="button"], .button-link, .header-action, .back-link,
+    .primary-button, .secondary-button, .danger-button, .account-menu-button,
+    .notifications-action) {
+    min-height: 44px;
+  }
+}

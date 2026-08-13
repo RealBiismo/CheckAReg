@@ -10,6 +10,7 @@
       const link = document.createElement("a");
       link.href = "/ai-mechanic.html";
       link.className = "header-action ai-mechanic-entry";
+      link.setAttribute("aria-label", "Open Check A Reg AI Mechanic");
       link.dataset.aiMechanicEntry = "true";
       link.innerHTML = '<span aria-hidden="true">✦</span> AI Mechanic';
       actions.insertBefore(link, accountButton);
@@ -22,6 +23,7 @@
       const link = document.createElement("a");
       link.href = "/ai-mechanic.html";
       link.className = "header-action ai-mechanic-entry";
+      link.setAttribute("aria-label", "Open Check A Reg AI Mechanic");
       link.dataset.aiMechanicEntry = "true";
       link.innerHTML = '<span aria-hidden="true">✦</span> AI Mechanic';
       actions.insertBefore(link, actions.firstChild);
