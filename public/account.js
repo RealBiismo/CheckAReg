@@ -7,8 +7,10 @@ const freeSearchesRemaining = document.getElementById("freeSearchesRemaining");
 const creditBalance = document.getElementById("creditBalance");
 const accountMenu = document.getElementById("accountMenu");
 const garageMenuButton = document.getElementById("garageMenuButton");
+const profileMenuButton = document.getElementById("profileMenuButton");
 const adminMenuButton = document.getElementById("adminMenuButton");
 const garageView = document.getElementById("garageView");
+const profileView = document.getElementById("profileView");
 const adminView = document.getElementById("adminView");
 const adminUserSearchForm = document.getElementById("adminUserSearchForm");
 const adminUserEmail = document.getElementById("adminUserEmail");
@@ -168,21 +170,28 @@ function renderAllowance(allowance) {
   freeSearchesRemaining.textContent = String(free);
   creditBalance.textContent = String(credits);
   hasAdminAccess = Boolean(allowance.isAdmin);
-  accountMenu.hidden = !hasAdminAccess;
+  accountMenu.hidden = false;
+  adminMenuButton.hidden = !hasAdminAccess;
   if (hasAdminAccess) loadPushAudience();
-  else switchAccountView("garage");
+  else if (adminView.hidden === false) switchAccountView("garage");
 }
 
 function switchAccountView(view) {
   const showAdmin = view === "admin" && hasAdminAccess;
-  garageView.hidden = showAdmin;
+  const showProfile = view === "profile";
+  garageView.hidden = showAdmin || showProfile;
+  profileView.hidden = !showProfile;
   adminView.hidden = !showAdmin;
-  garageMenuButton.classList.toggle("is-active", !showAdmin);
+  garageMenuButton.classList.toggle("is-active", !showAdmin && !showProfile);
+  profileMenuButton.classList.toggle("is-active", showProfile);
   adminMenuButton.classList.toggle("is-active", showAdmin);
-  garageMenuButton.setAttribute("aria-selected", String(!showAdmin));
+  garageMenuButton.setAttribute("aria-selected", String(!showAdmin && !showProfile));
+  profileMenuButton.setAttribute("aria-selected", String(showProfile));
   adminMenuButton.setAttribute("aria-selected", String(showAdmin));
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+window.checkARegSwitchAccountView = switchAccountView;
 
 async function loadAllowance() {
   try {
@@ -631,6 +640,7 @@ async function loadBroadcastHistory() {
 }
 
 garageMenuButton.addEventListener("click", () => switchAccountView("garage"));
+profileMenuButton.addEventListener("click", () => switchAccountView("profile"));
 adminMenuButton.addEventListener("click", () => { switchAccountView("admin"); loadBroadcastHistory(); });
 
 adminUserSearchForm.addEventListener("submit", async (event) => {

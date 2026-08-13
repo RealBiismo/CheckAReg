@@ -1,4 +1,4 @@
-const CACHE_NAME = "check-a-reg-v6";
+const CACHE_NAME = "check-a-reg-v7";
 const CANONICAL_ORIGIN = self.location.origin;
 const LEGACY_HOSTS = new Set();
 const NETWORK_FIRST_ASSETS = new Set([
@@ -8,10 +8,12 @@ const NETWORK_FIRST_ASSETS = new Set([
   "/style.css",
   "/classic.css",
   "/account.html",
+  "/account-hub.js",
   "/credits.html",
   "/credits.js",
   "/credit-store-v2.css",
   "/owner-portal.css",
+  "/account-hub.css",
   "/plan-entitlement-ui.js",
   "/notifications.html",
   "/ai-mechanic.html",
@@ -101,6 +103,7 @@ const STATIC_ASSETS = [
   "/brand-logos.js",
   "/account.html",
   "/account.js",
+  "/account-hub.js",
   "/plan-entitlement-ui.js",
   "/garage-hub.js",
   "/garage-hub-fixes.js",
@@ -117,6 +120,7 @@ const STATIC_ASSETS = [
   "/credits.js",
   "/credit-store-v2.css",
   "/owner-portal.css",
+  "/account-hub.css",
   "/notifications.html",
   "/notifications.js",
   "/notifications.css",

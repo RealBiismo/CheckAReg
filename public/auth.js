@@ -56,7 +56,7 @@
 
   function updateAccountButton() {
     if (!accountButton) return;
-    accountButton.textContent = currentUser ? "My garage" : "Sign in";
+    accountButton.textContent = currentUser ? "Account" : "Sign in";
     accountButton.classList.toggle("is-signed-in", Boolean(currentUser));
   }
 
