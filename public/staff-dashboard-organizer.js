@@ -99,6 +99,7 @@
     panels.forEach((panel, index) => {
       if (index === 0) panel.hidden = activeActivity !== "signups";
       else if (index === 1) panel.hidden = activeActivity !== "searches";
+      else if (index === 2) panel.hidden = activeActivity !== "banned";
       else panel.hidden = true;
     });
 
@@ -119,7 +120,8 @@
     toggle.setAttribute("aria-label", "Recent activity");
     toggle.innerHTML = `
       <button type="button" role="tab" aria-selected="true" data-simple-activity="signups" class="is-active">Recent signups</button>
-      <button type="button" role="tab" aria-selected="false" data-simple-activity="searches">Recent searches</button>`;
+      <button type="button" role="tab" aria-selected="false" data-simple-activity="searches">Recent searches</button>
+      <button type="button" role="tab" aria-selected="false" data-simple-activity="banned">Banned users</button>`;
     activity.prepend(toggle);
     toggle.addEventListener("click", (event) => {
       const button = event.target.closest("[data-simple-activity]");

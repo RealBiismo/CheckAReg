@@ -91,19 +91,10 @@
     if (!rpcClientPromise) {
       rpcClientPromise = (async () => {
         await window.biismoAuth.ready;
-        const response = await fetch("/api/config", { cache: "no-store" });
-        const config = await response.json();
-        if (!response.ok) throw new Error(config.error || "Account services are unavailable.");
-        const client = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey, {
-          auth: {
-            persistSession: true,
-            autoRefreshToken: false,
-            detectSessionInUrl: false,
-          },
-        });
-        const { data, error } = await client.auth.getSession();
-        if (error) throw error;
-        if (!data.session) throw new Error("Sign in again to use the admin dashboard.");
+        const client = window.biismoAuth.getClient?.();
+        if (!client || !window.biismoAuth.getUser?.()) {
+          throw new Error("Sign in again to use the admin dashboard.");
+        }
         return client;
       })();
     }
@@ -280,11 +271,19 @@
 
   function renderDashboard(data) {
     const stats = data?.stats || {};
-    byId("adminMetricTotalUsers").textContent = String(Number(stats.totalUsers) || 0);
-    byId("adminMetricVerifiedUsers").textContent = String(Number(stats.verifiedUsers) || 0);
-    byId("adminMetricBannedUsers").textContent = String(Number(stats.bannedUsers) || 0);
-    byId("adminMetricSearchesToday").textContent = String(Number(stats.searchesToday) || 0);
-    byId("adminMetricPushSubscribers").textContent = String(Number(stats.pushSubscribers) || 0);
+    const total = Number(stats.totalUsers) || 0;
+    const bannedCount = Number(stats.bannedUsers) || 0;
+    const metrics = {
+      adminTotalUsers: total,
+      adminActiveUsers: Math.max(0, total - bannedCount),
+      adminBannedUsers: bannedCount,
+      adminSearchesToday: Number(stats.searchesToday) || 0,
+      adminCreditsTotal: Number(stats.creditsInCirculation) || 0,
+    };
+    Object.entries(metrics).forEach(([id, value]) => {
+      const node = byId(id);
+      if (node) node.textContent = String(value);
+    });
 
     const signups = Array.isArray(data?.recentSignups) ? data.recentSignups : [];
     recentSignupsList.innerHTML = signups.length
@@ -315,15 +314,15 @@
   }
 
   async function loadDashboard() {
-    adminDashboardRefreshButton.disabled = true;
+    if (adminDashboardRefreshButton) adminDashboardRefreshButton.disabled = true;
     try {
       renderDashboard(await rpc("admin_get_dashboard"));
     } catch (error) {
       [recentSignupsList, recentSearchesList, bannedUsersList].forEach((list) => {
-        list.innerHTML = `<p class="notification-empty">${escapeHtml(error.message || "Dashboard data could not be loaded.")}</p>`;
+        if (list) list.innerHTML = `<p class="notification-empty">${escapeHtml(error.message || "Dashboard data could not be loaded.")}</p>`;
       });
     } finally {
-      adminDashboardRefreshButton.disabled = false;
+      if (adminDashboardRefreshButton) adminDashboardRefreshButton.disabled = false;
     }
   }
 

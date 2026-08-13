@@ -8,7 +8,6 @@
 
   let lastEmail = '';
   let loadingEmail = '';
-  let dashboardLoading = false;
 
   function isAdminRole() {
     const role = document.body.dataset.staffRole || '';
@@ -41,69 +40,6 @@
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return 'Unknown date';
     return date.toLocaleString('en-GB', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
-  }
-
-  function renderDashboard(data) {
-    const stats = data?.stats || {};
-    const total = Number(stats.totalUsers) || 0;
-    const banned = Number(stats.bannedUsers) || 0;
-    const values = {
-      adminTotalUsers: total,
-      adminActiveUsers: Math.max(0, total - banned),
-      adminBannedUsers: banned,
-      adminSearchesToday: Number(stats.searchesToday) || 0,
-      adminCreditsTotal: Number(stats.creditsInCirculation) || 0,
-    };
-    Object.entries(values).forEach(([id, value]) => {
-      const node = byId(id);
-      if (node) node.textContent = String(value);
-    });
-
-    const signups = Array.isArray(data?.recentSignups) ? data.recentSignups : [];
-    const signupList = byId('recentSignupsList');
-    if (signupList) signupList.innerHTML = signups.length ? signups.map((item) => `
-      <button class="admin-activity-row" type="button" data-account-email="${escapeHtml(item.email)}">
-        <span class="activity-primary"><span>${escapeHtml(item.email)}</span>${item.owner ? '<span class="owner-crown" aria-label="Owner">♛</span>' : ''}</span>
-        <span class="activity-meta">${item.banned ? 'Banned' : item.confirmed ? 'Verified' : 'Unconfirmed'} · ${escapeHtml(formatDate(item.created_at))}</span>
-      </button>`).join('') : '<p class="notification-empty">No signups yet.</p>';
-
-    const searches = Array.isArray(data?.recentSearches) ? data.recentSearches : [];
-    const searchList = byId('recentSearchesList');
-    if (searchList) searchList.innerHTML = searches.length ? searches.map((item) => `
-      <button class="admin-activity-row" type="button" data-account-email="${escapeHtml(item.email)}">
-        <span class="activity-primary"><strong>${escapeHtml(item.registration)}</strong><small>${escapeHtml(item.email)}</small></span>
-        <span class="activity-meta">${escapeHtml(item.status)} · ${escapeHtml(formatDate(item.created_at))}</span>
-      </button>`).join('') : '<p class="notification-empty">No vehicle searches yet.</p>';
-
-    const bannedUsers = Array.isArray(data?.bannedUsers) ? data.bannedUsers : [];
-    const bannedList = byId('bannedUsersList');
-    if (bannedList) bannedList.innerHTML = bannedUsers.length ? bannedUsers.map((item) => `
-      <button class="admin-activity-row is-banned" type="button" data-account-email="${escapeHtml(item.email)}">
-        <span class="activity-primary">${escapeHtml(item.email)}</span>
-        <span class="activity-meta">Access blocked</span>
-      </button>`).join('') : '<p class="notification-empty">No banned accounts.</p>';
-  }
-
-  async function refreshDashboard() {
-    if (!isAdminRole() || dashboardLoading) return;
-    dashboardLoading = true;
-    const button = byId('adminDashboardRefreshButton');
-    if (button) button.disabled = true;
-    try {
-      await window.biismoAuth.ready;
-      const client = window.biismoAuth.getClient();
-      const { data, error } = await client.rpc('admin_get_dashboard');
-      if (error) throw new Error(error.message || 'Dashboard data could not be loaded.');
-      renderDashboard(data);
-    } catch (error) {
-      ['recentSignupsList','recentSearchesList','bannedUsersList'].forEach((id) => {
-        const node = byId(id);
-        if (node) node.innerHTML = `<p class="notification-empty">${escapeHtml(error.message || 'Dashboard data could not be loaded.')}</p>`;
-      });
-    } finally {
-      dashboardLoading = false;
-      if (button) button.disabled = false;
-    }
   }
 
   function renderLogs(data) {
@@ -205,12 +141,6 @@
     if (node) new MutationObserver(onSelectedUserChanged).observe(node, { childList:true, subtree:true, characterData:true });
     onSelectedUserChanged();
 
-    byId('adminDashboardRefreshButton')?.addEventListener('click', (event) => {
-      event.preventDefault();
-      void refreshDashboard();
-    }, true);
-    byId('adminMenuButton')?.addEventListener('click', () => window.setTimeout(() => void refreshDashboard(), 0), true);
-    void refreshDashboard();
   }
 
   void init();
