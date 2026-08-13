@@ -1,7 +1,7 @@
 /* CHECK A REG-owned presentation for Supabase-backed authentication. */
 .auth-dialog{overflow:hidden!important;border:1px solid rgba(255,255,255,.12)!important;background:linear-gradient(180deg,#0b0f16,#070a0f)!important;box-shadow:0 30px 90px rgba(0,0,0,.6)!important}
 .biismo-auth-brand{display:flex;align-items:center;gap:11px;margin:-2px 0 15px;padding:11px 12px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.035)}
-.biismo-auth-brand img{width:34px;height:34px;border-radius:10px;display:block}
+.biismo-auth-brand img{width:34px;height:34px;border-radius:10px;display:block;object-fit:cover}
 .biismo-auth-brand div{display:flex;flex-direction:column;gap:1px;min-width:0}
 .biismo-auth-brand strong{font-size:12px;letter-spacing:.14em;color:#fff}
 .biismo-auth-brand span{font-size:10px;color:#8d98a9}

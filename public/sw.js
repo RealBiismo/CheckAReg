@@ -1,4 +1,4 @@
-const CACHE_NAME = "check-a-reg-v4";
+const CACHE_NAME = "check-a-reg-v5";
 const CANONICAL_ORIGIN = self.location.origin;
 const LEGACY_HOSTS = new Set();
 const NETWORK_FIRST_ASSETS = new Set([
@@ -121,6 +121,8 @@ const STATIC_ASSETS = [
   "/notifications.js",
   "/notifications.css",
   "/manifest.json",
+  "/favicon-32.png",
+  "/favicon.ico",
   "/icon.svg",
   "/icon-192.png",
   "/icon-512.png",
