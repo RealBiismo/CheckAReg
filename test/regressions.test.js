@@ -81,6 +81,8 @@ test("owner portal redesign stays isolated from the homepage", async () => {
   assert.match(account, /owner-portal\.css/);
   assert.match(credits, /owner-portal\.css/);
   assert.match(portalCss, /body\.owner-portal-page/);
+  assert.match(portalCss, /\.owner-portal-page \.garage-search \{[\s\S]*?display: block;/);
+  assert.match(portalCss, /\.owner-portal-page \.garage-search-row \{[\s\S]*?grid-template-columns: minmax\(0, 1fr\) auto;/);
   assert.doesNotMatch(splash, /referral\.js/);
   assert.doesNotMatch(pwa, /void initializeReferralFeature\(\)/);
   assert.match(worker, /"\/owner-portal\.css"/);
