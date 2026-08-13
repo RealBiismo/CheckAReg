@@ -65,3 +65,40 @@ test("vehicle results hide homepage-only navigation and sections", async () => {
   assert.match(preview, /classList\.add\("vehicle-result-mode"\)/);
   assert.match(preview, /classList\.remove\("vehicle-result-mode"\)/);
 });
+
+test("owner portal redesign stays isolated from the homepage", async () => {
+  const [home, account, credits, portalCss, splash, pwa, worker] = await Promise.all([
+    read("public/index.html"),
+    read("public/account.html"),
+    read("public/credits.html"),
+    read("public/owner-portal.css"),
+    read("public/splash.js"),
+    read("public/pwa.js"),
+    read("public/sw.js"),
+  ]);
+
+  assert.doesNotMatch(home, /owner-portal\.css/);
+  assert.match(account, /owner-portal\.css/);
+  assert.match(credits, /owner-portal\.css/);
+  assert.match(portalCss, /body\.owner-portal-page/);
+  assert.doesNotMatch(splash, /referral\.js/);
+  assert.doesNotMatch(pwa, /void initializeReferralFeature\(\)/);
+  assert.match(worker, /"\/owner-portal\.css"/);
+});
+
+test("credit pricing is consistent across checkout, UI and fulfilment migration", async () => {
+  const [server, creditsPage, migration] = await Promise.all([
+    read("server.js"),
+    read("public/credits.html"),
+    read("supabase/migrations/20260813011034_refresh_credit_pricing.sql"),
+  ]);
+
+  assert.match(server, /id: "starter", credits: 10, amountPence: 149/);
+  assert.match(server, /id: "popular", credits: 30, amountPence: 379/);
+  assert.match(server, /id: "best_value", credits: 80, amountPence: 849/);
+  assert.match(server, /amountPence: 599/);
+  assert.match(creditsPage, /<strong>£5\.99<\/strong>/);
+  assert.match(migration, /'starter', 'Quick check', 10, 149/);
+  assert.match(migration, /'popular', 'Driver', 30, 379/);
+  assert.match(migration, /'best_value', 'Garage', 80, 849/);
+});
