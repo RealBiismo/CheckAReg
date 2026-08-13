@@ -46,7 +46,7 @@ language plpgsql security definer set search_path=''
 as $$
 declare v_user_id uuid:=auth.uid(); v_account private.user_accounts%rowtype; v_plus boolean;
 begin
-  if v_user_id is null then raise insufficient_privilege using message='Sign in to view your BIISMO REG plan.'; end if;
+  if v_user_id is null then raise insufficient_privilege using message='Sign in to view your CHECK A REG plan.'; end if;
   insert into private.user_accounts(user_id) values(v_user_id) on conflict(user_id) do nothing;
   select * into v_account from private.user_accounts where user_id=v_user_id;
   v_plus:=v_account.plan='plus' and v_account.subscription_status in ('active','trialing');
@@ -94,7 +94,7 @@ begin
     v_source:='purchased';
     update private.user_accounts set ai_questions_purchased=ai_questions_purchased-1,updated_at=now() where user_id=v_user_id;
   else
-    raise exception 'You have no AI Mechanic questions left. Unlock 10 questions for 4 credits or upgrade to BIISMO REG+.';
+    raise exception 'You have no AI Mechanic questions left. Unlock 10 questions for 4 credits or upgrade to CHECK A REG+.';
   end if;
   insert into private.ai_question_reservations(user_id,case_id,source) values(v_user_id,p_case_id,v_source) returning id into v_reservation;
   return jsonb_build_object('reservationId',v_reservation,'source',v_source,'remaining',(select ai_questions_plan+ai_questions_purchased from private.user_accounts where user_id=v_user_id));
@@ -127,7 +127,7 @@ language plpgsql security definer set search_path=''
 as $$
 declare v_user_id uuid:=auth.uid(); v_vehicle public.saved_vehicles%rowtype; v_profile public.vehicle_profiles%rowtype; v_case_id uuid; v_has_vehicle boolean:=false;
 begin
-  if v_user_id is null then raise insufficient_privilege using message='Sign in to use Biismo AI.'; end if;
+  if v_user_id is null then raise insufficient_privilege using message='Sign in to use CheckA Reg AI.'; end if;
   if length(trim(coalesce(p_issue_text,'')))<1 or length(p_issue_text)>3000 then raise exception 'Enter a vehicle question up to 3,000 characters.'; end if;
   if coalesce(p_image_count,0) not between 0 and 3 then raise exception 'Attach up to 3 photos.'; end if;
   if p_vehicle_id is not null then
@@ -146,10 +146,10 @@ language plpgsql security definer set search_path=''
 as $$
 declare v_user_id uuid:=auth.uid();
 begin
-  if v_user_id is null then raise insufficient_privilege using message='Sign in to remove a Biismo AI chat.'; end if;
+  if v_user_id is null then raise insufficient_privilege using message='Sign in to remove a CheckA Reg AI chat.'; end if;
   update public.ai_mechanic_cases set user_deleted_at=coalesce(user_deleted_at,now()),user_deleted_reason=coalesce(user_deleted_reason,'user_removed'),updated_at=now()
   where id=p_case_id and user_id=v_user_id and user_deleted_at is null;
-  if not found then raise exception 'Biismo AI chat not found.'; end if;
+  if not found then raise exception 'CheckA Reg AI chat not found.'; end if;
   return jsonb_build_object('deleted',true,'caseId',p_case_id);
 end $$;
 

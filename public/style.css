@@ -475,16 +475,22 @@ main {
 }
 
 .result-plate {
+  --result-gb-width: 48px;
   display: flex;
   overflow: hidden;
   border: 4px solid #151515;
   border-radius: 12px;
-  background: var(--plate);
+  background: linear-gradient(
+    90deg,
+    #0642a0 0 var(--result-gb-width),
+    var(--plate) var(--result-gb-width) 100%
+  );
 }
 
 .result-plate .gb {
-  width: 48px;
-  flex-basis: 48px;
+  width: var(--result-gb-width);
+  flex-basis: var(--result-gb-width);
+  background: transparent;
   font-size: 12px;
 }
 

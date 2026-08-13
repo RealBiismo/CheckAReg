@@ -160,7 +160,7 @@ test("serves health status and rejects unsafe input", async (context) => {
   const invalidAdminNotificationResponse = await fetch(`${baseUrl}/api/admin/send-notification`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: "user@example.com", title: "BIISMO REG", message: "" }),
+    body: JSON.stringify({ email: "user@example.com", title: "CHECK A REG", message: "" }),
   });
   assert.equal(invalidAdminNotificationResponse.status, 400);
   assert.deepEqual(await invalidAdminNotificationResponse.json(), {
@@ -170,7 +170,7 @@ test("serves health status and rejects unsafe input", async (context) => {
   const invalidBroadcastResponse = await fetch(`${baseUrl}/api/admin/send-broadcast`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title: "BIISMO REG", message: "" }),
+    body: JSON.stringify({ title: "CHECK A REG", message: "" }),
   });
   assert.equal(invalidBroadcastResponse.status, 400);
   assert.deepEqual(await invalidBroadcastResponse.json(), {
@@ -195,7 +195,7 @@ test("serves health status and rejects unsafe input", async (context) => {
   const unconfiguredAdminNotificationResponse = await fetch(`${baseUrl}/api/admin/send-notification`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: "user@example.com", title: "BIISMO REG", message: "Test message" }),
+    body: JSON.stringify({ email: "user@example.com", title: "CHECK A REG", message: "Test message" }),
   });
   assert.equal(unconfiguredAdminNotificationResponse.status, 503);
   assert.deepEqual(await unconfiguredAdminNotificationResponse.json(), {
@@ -205,7 +205,7 @@ test("serves health status and rejects unsafe input", async (context) => {
   const unconfiguredBroadcastResponse = await fetch(`${baseUrl}/api/admin/send-broadcast`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title: "BIISMO REG", message: "Test broadcast" }),
+    body: JSON.stringify({ title: "CHECK A REG", message: "Test broadcast" }),
   });
   assert.equal(unconfiguredBroadcastResponse.status, 401);
   assert.deepEqual(await unconfiguredBroadcastResponse.json(), {

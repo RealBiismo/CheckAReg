@@ -82,7 +82,7 @@
       button.disabled = false;
       button.textContent = "Enable MOT & tax reminders";
       button.classList.remove("is-active");
-      note.textContent = "Turns on BIISMO notifications for this saved car.";
+      note.textContent = "Turns on CheckA Reg notifications for this saved car.";
       return;
     }
 

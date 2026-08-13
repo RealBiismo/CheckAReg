@@ -33,7 +33,7 @@ begin
   if v_admin_id is null or not exists (
     select 1 from private.app_admins where user_id = v_admin_id
   ) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can view user credits.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can view user credits.';
   end if;
 
   select id, lower(email), banned_until
@@ -44,7 +44,7 @@ begin
   limit 1;
 
   if v_target_id is null then
-    raise no_data_found using message = 'No verified BIISMO REG account was found for that email.';
+    raise no_data_found using message = 'No verified CHECK A REG account was found for that email.';
   end if;
 
   select exists (select 1 from private.app_admins where user_id = v_target_id)
@@ -96,7 +96,7 @@ begin
   if v_admin_id is null or not exists (
     select 1 from private.app_admins where user_id = v_admin_id
   ) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can manage account access.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can manage account access.';
   end if;
 
   if p_banned is null then
@@ -111,7 +111,7 @@ begin
   limit 1;
 
   if v_target_id is null then
-    raise no_data_found using message = 'No verified BIISMO REG account was found for that email.';
+    raise no_data_found using message = 'No verified CHECK A REG account was found for that email.';
   end if;
 
   if exists (select 1 from private.app_admins where user_id = v_target_id) then

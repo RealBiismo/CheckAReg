@@ -9,7 +9,7 @@
   if (!chatMessages) return;
 
   function isThinkingText(node) {
-    return /biismo ai is thinking/i.test(String(node?.textContent || ''));
+    return /checka reg ai is thinking/i.test(String(node?.textContent || ''));
   }
 
   function removeInlineThinking() {

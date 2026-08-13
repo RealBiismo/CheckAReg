@@ -614,9 +614,8 @@
     max-width: 100%;
   }
 
-  .vehicle-result-mode .result-plate .gb {
-    width: 42px;
-    flex-basis: 42px;
+  .vehicle-result-mode .result-plate {
+    --result-gb-width: 42px;
   }
 
   .vehicle-result-mode .result-reg {

@@ -1,5 +1,5 @@
 (() => {
-  // Never redirect this clone into the production BiismoReg origin.
+  // Never redirect this app into the previous production origin.
   const CANONICAL_ORIGIN = window.location.origin;
   const LEGACY_HOSTS = new Set();
   const REFERRAL_KEY = "checkareg-referral-code-v1";

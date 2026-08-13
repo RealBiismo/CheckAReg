@@ -226,7 +226,7 @@ self.addEventListener("push", (event) => {
       body: payload.body || "A saved vehicle has an upcoming renewal.",
       icon: "/icon-192.png",
       badge: "/icon-192.png",
-      tag: payload.tag || "biismo-vehicle-reminder",
+      tag: payload.tag || "checkareg-vehicle-reminder",
       data: { url: payload.url || "/account.html" },
     })
   );

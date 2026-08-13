@@ -30,7 +30,7 @@ declare
   v_today date := timezone('Europe/London', now())::date;
 begin
   if v_admin_id is null or not exists (select 1 from private.app_admins where user_id = v_admin_id) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can view user accounts.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can view user accounts.';
   end if;
 
   select id, lower(email), banned_until
@@ -41,7 +41,7 @@ begin
   limit 1;
 
   if v_target_id is null then
-    raise no_data_found using message = 'No verified BIISMO REG account was found for that email.';
+    raise no_data_found using message = 'No verified CHECK A REG account was found for that email.';
   end if;
 
   insert into private.user_accounts (user_id) values (v_target_id)
@@ -82,7 +82,7 @@ declare
   v_target_email text;
 begin
   if v_admin_id is null or not exists (select 1 from private.app_admins where user_id = v_admin_id) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can manage account access.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can manage account access.';
   end if;
   if p_banned is null then
     raise invalid_parameter_value using message = 'Choose whether this account should be banned.';
@@ -94,7 +94,7 @@ begin
   limit 1;
 
   if v_target_id is null then
-    raise no_data_found using message = 'No verified BIISMO REG account was found for that email.';
+    raise no_data_found using message = 'No verified CHECK A REG account was found for that email.';
   end if;
   if exists (select 1 from private.app_admins where user_id = v_target_id) then
     raise invalid_parameter_value using message = 'Admin accounts cannot be banned.';
@@ -132,7 +132,7 @@ declare
   v_banned_users jsonb;
 begin
   if v_admin_id is null or not exists (select 1 from private.app_admins where user_id = v_admin_id) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can view dashboard insights.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can view dashboard insights.';
   end if;
 
   select coalesce(jsonb_agg(to_jsonb(item) order by item.created_at desc), '[]'::jsonb)
@@ -191,7 +191,7 @@ declare
   v_deleted uuid;
 begin
   if v_admin_id is null or not exists (select 1 from private.app_admins where user_id = v_admin_id) then
-    raise insufficient_privilege using message = 'Only the BIISMO REG admin can delete broadcast history.';
+    raise insufficient_privilege using message = 'Only the CHECK A REG admin can delete broadcast history.';
   end if;
 
   delete from private.admin_push_notifications
