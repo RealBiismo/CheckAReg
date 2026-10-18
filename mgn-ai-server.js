@@ -5,9 +5,11 @@ import rateLimit from "express-rate-limit";
 const app = express();
 const PORT = Number(process.env.PORT || 3000);
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
+const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4.1-mini";
 const ALLOWED_ORIGINS = new Set([
   "https://mgnautos.co.uk",
   "https://www.mgnautos.co.uk",
+  "https://mgnautos.surge.sh",
   ...(process.env.MGN_ALLOWED_ORIGINS || "")
     .split(",")
     .map((x) => x.trim())
@@ -64,7 +66,7 @@ app.use((req, res, next) => {
     res.setHeader("Vary", "Origin");
   }
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("Referrer-Policy", "no-referrer");
   if (req.method === "OPTIONS") return res.sendStatus(204);
@@ -79,12 +81,15 @@ const limiter = rateLimit({
   message: { error: "Too many assistant messages. Please try again shortly." },
 });
 
-app.get("/", (_req, res) => res.json({ service: "MGN Autos AI", ok: true }));
-app.get("/health", (_req, res) => res.json({ ok: true, configured: Boolean(OPENAI_API_KEY) }));
+app.get("/", (_req, res) => res.json({ service: "MGN Autos AI", ok: true, model: OPENAI_MODEL }));
+app.get("/health", (_req, res) => res.json({ ok: true, configured: Boolean(OPENAI_API_KEY), model: OPENAI_MODEL }));
 
 app.post("/api/assistant", limiter, async (req, res) => {
-  const origin = req.get("origin");
-  if (origin && !ALLOWED_ORIGINS.has(origin)) {
+  const origin = req.get("origin") || "none";
+  console.log(`AI request received from ${origin}`);
+
+  if (origin !== "none" && !ALLOWED_ORIGINS.has(origin)) {
+    console.error(`Blocked origin: ${origin}`);
     return res.status(403).json({ error: "Origin not allowed." });
   }
   if (!OPENAI_API_KEY) {
@@ -109,22 +114,28 @@ app.post("/api/assistant", limiter, async (req, res) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || "gpt-6-luna",
+        model: OPENAI_MODEL,
         instructions: SYSTEM_PROMPT,
         input,
         max_output_tokens: 350,
       }),
-      signal: AbortSignal.timeout(20_000),
+      signal: AbortSignal.timeout(25_000),
     });
 
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
-      console.error("OpenAI error", response.status, data?.error?.message || data);
+      const detail = data?.error?.message || JSON.stringify(data);
+      console.error("OpenAI error", response.status, detail);
       return res.status(502).json({ error: "The assistant could not answer right now." });
     }
 
     const answer = String(data?.output_text || "").trim();
-    if (!answer) return res.status(502).json({ error: "The assistant returned an empty response." });
+    if (!answer) {
+      console.error("OpenAI returned no output_text", JSON.stringify(data).slice(0, 1500));
+      return res.status(502).json({ error: "The assistant returned an empty response." });
+    }
+
+    console.log("AI response succeeded");
     return res.json({ answer });
   } catch (error) {
     console.error("Assistant request failed", error);
@@ -132,6 +143,28 @@ app.post("/api/assistant", limiter, async (req, res) => {
   }
 });
 
+async function validateOpenAIConfiguration() {
+  if (!OPENAI_API_KEY) {
+    console.error("OpenAI startup check: OPENAI_API_KEY is missing");
+    return;
+  }
+  try {
+    const response = await fetch(`https://api.openai.com/v1/models/${encodeURIComponent(OPENAI_MODEL)}`, {
+      headers: { Authorization: `Bearer ${OPENAI_API_KEY}` },
+      signal: AbortSignal.timeout(10_000),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (response.ok) {
+      console.log(`OpenAI startup check OK: ${OPENAI_MODEL}`);
+    } else {
+      console.error("OpenAI startup check failed", response.status, data?.error?.message || data);
+    }
+  } catch (error) {
+    console.error("OpenAI startup check request failed", error);
+  }
+}
+
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`MGN AI backend listening on ${PORT}`);
+  validateOpenAIConfiguration();
 });
