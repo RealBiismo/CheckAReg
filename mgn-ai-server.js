@@ -81,6 +81,24 @@ const limiter = rateLimit({
   message: { error: "Too many assistant messages. Please try again shortly." },
 });
 
+function extractResponseText(data) {
+  if (typeof data?.output_text === "string" && data.output_text.trim()) {
+    return data.output_text.trim();
+  }
+
+  const parts = [];
+  for (const item of Array.isArray(data?.output) ? data.output : []) {
+    for (const content of Array.isArray(item?.content) ? item.content : []) {
+      if (typeof content?.text === "string" && content.text.trim()) {
+        parts.push(content.text.trim());
+      } else if (typeof content?.output_text === "string" && content.output_text.trim()) {
+        parts.push(content.output_text.trim());
+      }
+    }
+  }
+  return parts.join("\n\n").trim();
+}
+
 app.get("/", (_req, res) => res.json({ service: "MGN Autos AI", ok: true, model: OPENAI_MODEL }));
 app.get("/health", (_req, res) => res.json({ ok: true, configured: Boolean(OPENAI_API_KEY), model: OPENAI_MODEL }));
 
@@ -129,9 +147,9 @@ app.post("/api/assistant", limiter, async (req, res) => {
       return res.status(502).json({ error: "The assistant could not answer right now." });
     }
 
-    const answer = String(data?.output_text || "").trim();
+    const answer = extractResponseText(data);
     if (!answer) {
-      console.error("OpenAI returned no output_text", JSON.stringify(data).slice(0, 1500));
+      console.error("OpenAI returned no readable text", JSON.stringify(data).slice(0, 2000));
       return res.status(502).json({ error: "The assistant returned an empty response." });
     }
 
